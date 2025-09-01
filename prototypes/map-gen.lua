@@ -2,166 +2,119 @@
 data:extend{
   {
     type = "noise-expression",
-    name = "harene_spot_size",
-    expression = "7 * sqrt(control:harene:size)"
-  },
-  {
-    type = "noise-expression",
-    name = "harene_area_size",
-    expression = "14 * sqrt(control:harene:size)"
-  },
-  {
-    type = "noise-expression",
     name = "rabbasca_starting_mask",
-    -- exclude random spots from the inner 400 tiles, 120 tile blur
-    expression = "clamp((distance - 400) / 60, -1, 1)"
+    expression = "clamp((distance - 400) / 40, 0, 1)"
+  },
+  {
+    type = "noise-expression",
+    name = "rabbasca_starting_pool",
+    expression = "starting_spot_at_angle{angle = map_seed, distance = 45, radius = rabbasca_pool_size, x_distortion = 0, y_distortion = 0}"
+  },
+  {
+    type = "noise-expression",
+    name = "rabbasca_starting_carrots",
+    expression = "starting_spot_at_angle{angle = map_seed + 225, distance = 55, radius = 21, x_distortion = 0, y_distortion = 0}\z
+             * (1.1 + 0.2 * multioctave_noise{x = x, y = y, persistence = 0.83, seed0 = map_seed, input_scale = 8, seed1 = 'omnom', octaves = 6 })"
+  },
+  {
+    type = "noise-expression",
+    name = "rabbasca_pool_size",
+    expression = "29 * sqrt(control:harene:size)"
   },
   {
     type = "noise-expression",
     name = "rabbasca_carrot_noise",
-    expression = "-1 + 2 * (rabbasca_fertile > 0.9)"
-  },
-  {
-    type = "noise-expression",
-    name = "rabbasca_plateau",
-    expression = "clamp(pow(rabbasca_elevation*2, 5) - 0.5, -1, 1)"
-  },
-  {
-    type = "noise-expression",
-    name = "rabbasca_low",
-    expression = "clamp(-pow(rabbasca_elevation*2, 5) - 0.2, -1, 1)"
+    expression = "2 * (rabbasca_fertile > 1.1)"
   },
   {
     type = "noise-expression",
     name = "rabbasca_icy",
-    expression = "max(rabbasca_low, rabbasca_harene_pools * 0.4)"
+    expression = "0 * rabbasca_down * (elevation + 2) * (rabbasca_harene_pools < 1) \z
+                * (1 + multioctave_noise{x = x, y = y, persistence = 1.12, seed0 = map_seed, input_scale = 1.4, seed1 = 'notglebastillcracked', octaves = 6 })"
   },
   {
     type = "noise-expression",
     name = "rabbasca_rocky",
-    expression = "(rabbasca_plateau * rabbasca_low + rabbasca_elevation) * 0.4 * control:rabbasca_noise:richness"
+    expression = "0.99"
   },
+  {
+    type = "noise-expression",
+    name = "rabbasca_rocky_variance",
+    expression = "multioctave_noise{x = x, y = y, persistence = 1.3, input_scale = 10, seed0 = map_seed, seed1 = 11, octaves = 7 } * 0.01 * rabbasca_elevation"
+  },
+  
   {
     type = "noise-expression",
     name = "rabbasca_rocks",
     expression = "rabbasca_rocky * 0.3 * aquilo_spot_noise{seed = 442,\z
-                                    count = 7,\z
+                                    count = 4,\z
                                     skip_offset = 1,\z
-                                    region_size = 25 + 20 / control:harenetest:frequency,\z
+                                    region_size = 75 + 60 / control:rabbasca_rocks:frequency,\z
                                     density = 0.05,\z
-                                    radius = 3 * sqrt(control:harenetest:size),\z
-                                    favorability = 1} * control:harenetest:size"
+                                    radius = 1 + 0.5 * sqrt(control:rabbasca_rocks:size),\z
+                                    favorability = 1} * control:rabbasca_rocks:size"
   },
   {
     type = "noise-expression",
     name = "rabbasca_fertile",
-    expression = "rabbasca_plateau * 0.7 + aquilo_spot_noise{seed = 931,\z
-                                    count = 7 + control:harenetest:richness,\z
-                                    skip_offset = 1,\z
-                                    region_size = 25 + 80 / control:harenetest:frequency,\z
-                                    density = control:harenetest:frequency,\z
-                                    radius = 12 * sqrt(control:harenetest:size),\z
-                                    favorability = 3} * 0.6"
-  },
-  {
-    type = "noise-expression",
-    name = "rabbasca_harene_spots",
-    expression = "aquilo_spot_noise{seed = 931,\z
-                                    count = 1 + control:harene:richness,\z
-                                    skip_offset = 1,\z
-                                    region_size = 400 + 700 / control:harene:frequency,\z
-                                    density = control:harenetest:frequency,\z
-                                    radius = harene_spot_size,\z
-                                    favorability = 3}"
-  },
-  {
-    type = "noise-expression",
-    name = "rabbasca_harene_areas",
-    expression = "aquilo_spot_noise{seed = 931,\z
-                                    count = 3 * control:harene:richness,\z
-                                    skip_offset = 1,\z
-                                    region_size = 400 + 700 / control:harene:frequency,\z
-                                    density = 2,\z
-                                    radius = harene_area_size,\z
-                                    favorability = 3}"
-  },
-  {
-    type = "noise-expression",
-    name = "rabbasca_starting_harene",
-    expression = "starting_spot_at_angle{angle = aquilo_angle + 180, distance = 35, radius = harene_spot_size, x_distortion = 0, y_distortion = 0}"
-  },
-  {
-    type = "noise-expression",
-    name = "rabbasca_starting_harene_area",
-    expression = "starting_spot_at_angle{angle = aquilo_angle + 180, distance = 35, radius = harene_area_size, x_distortion = 0, y_distortion = 0}"
-  },
-  {
-    type = "noise-expression",
-    name = "rabbasca_harene_center_probability",
-    expression = "(control:harene:size > 0)\z
-                  * (max(rabbasca_starting_harene,\z
-                         min(rabbasca_starting_mask, rabbasca_harene_spots))) * 0.8"
+    expression = "0.3 + max(rabbasca_starting_carrots, \z
+            0.8 * multioctave_noise{x = x/3.2, y = y/2.3, persistence = 0.5, seed0 = map_seed, seed1 = 'yummyrocks', octaves = 8 }\z
+                * multioctave_noise{x = x/4.2, y = y/4.8, persistence = 0.2, seed0 = map_seed, seed1 = 'bewarethehare', octaves = 9 })"
+    -- expression = "0.4 + rabbasca_up * rabbasca_crater + rabbasca_up_variance * (0.8 - rabbasca_elevation)"
   },
   {
     type = "noise-expression",
     name = "rabbasca_harene_pools",
-    expression = "clamp(max(rabbasca_harene_center_probability, (control:harene:size > 0)\z
-                  * (max(rabbasca_starting_harene_area,\z
-                         min(rabbasca_starting_mask, rabbasca_harene_areas))) * 0.8 + clamp(rabbasca_harene_cracks, -0.5, 1) * 0.35), 0, 1)"
+    expression = "0.5 + (rabbasca_down * 1.4 + 0.2 * (rabbasca_harene_cracks + 1)) * rabbasca_crater"
+  },
+  {
+    type = "noise-expression",
+    name = "rabbasca_harene_pools_deep",
+    expression = "pow(rabbasca_harene_pools - 0.5, 3)"
   },
   {
     type = "noise-expression",
     name = "rabbasca_harene_cracks",
-    expression = "multioctave_noise{x = x, y = y, persistence = 0.7, seed0 = map_seed, seed1 = 0, octaves = 5 }"
-  },
-  {
-    type = "noise-expression",
-    name = "rabbasca_harene_vent_probability",
-    expression = "rabbasca_harene_center_probability"
+    expression = "multioctave_noise{x = x, y = y, persistence = 0.7, seed0 = map_seed, seed1 = 0, octaves = 8 }"
   },
   {
     type = "noise-expression",
     name = "rabbasca_harene_richness",
-    expression = "50000 + 2000 * basis_noise{x = x, y = y, seed0 = map_seed, seed1 = 0}"
+    expression = "(50000 + 2000 * basis_noise{x = x, y = y, seed0 = map_seed, seed1 = 'feed_me'}) * control:harene:richness"
   },
   {
     type = "noise-expression",
-    name = "rabbasca_spot_size",
-    expression = 17
+    name = "rabbasca_crater",
+    expression = "(rabbasca_down * (rabbasca_elevation < 0.2)) > 0"
   },
   {
     type = "noise-expression",
-    name = "rabasca_up",
-    expression = "aquilo_spot_noise{seed = 9312,\z
+    name = "rabbasca_down",
+    expression = "clamp(max(rabbasca_starting_pool, \z
+                      min(rabbasca_starting_mask, aquilo_spot_noise{seed = 9312,\z
                                     count = 3 * control:rabbasca_noise:frequency,\z
                                     skip_offset = 0,\z
-                                    region_size = 400 + 700 / control:rabbasca_noise:size,\z
-                                    density = 2,\z
-                                    radius = 13 + 3 * b,\z
-                                    favorability = 3}",
+                                    region_size = 300 + 500 / control:rabbasca_noise:size,\z
+                                    density = 1,\z
+                                    radius = rabbasca_pool_size,\z
+                                    favorability = 3})), 0, 1)",
   },
-  {
+   {
     type = "noise-expression",
-    name = "rabasca_down",
-    expression = "aquilo_spot_noise{seed = 9312,\z
-                                    count = 3 * control:rabbasca_noise:frequency,\z
-                                    skip_offset = 2,\z
-                                    region_size = 400 + 700 / control:rabbasca_noise:size,\z
-                                    density = 2,\z
-                                    radius = harene_area_size * 3,\z
-                                    favorability = 3}",
+    name = "rabbasca_up_variance",
+    expression = "basis_noise{x = x, y = y, seed0 = map_seed, seed1 = 817231}",
   },
   {
     type = "noise-expression",
     name = "rabbasca_elevation",
     --intended_property = "elevation",
-    expression = "up_crater + down_crater + a * 0.05",
+    expression = "clamp(down_mountain + a * 0.062 + b * 0.08, -1, 1) ",
     -- expression = "clamp(1 - lerp(blended, maxed, 0.4) * control:rabbasca_noise:size - rabbasca_harene_pools, -1, 1)",
     local_expressions = {
-      up_crater = "min(rabasca_up, 0.62 - rabasca_up) * 2 * control:rabbasca_noise:richness + 0.03 * b",
-      down_crater = "min(rabasca_down, 0.89 - rabasca_down) * 2 * control:rabbasca_noise:richness + 0.072 * b",
-      a = "multioctave_noise{x = x, y = y, persistence = 0.3, seed0 = map_seed, seed1 = 0, input_scale = 10, octaves = 5 * control:rabbasca_noise:size }",
-      b  = "multioctave_noise{x = x, y = y, persistence = 1.4, seed0 = map_seed, input_scale = 1/3, seed1 = 3, octaves = 7 * control:rabbasca_noise:size }",
+      -- up_mountain = "-rabbasca_up * 0.5 * (control:rabbasca_noise:richness) * (1 + b) ",
+      down_mountain = "min(rabbasca_down, 0.83 - rabbasca_down) * 2.3 * (control:rabbasca_noise:richness)",
+      a = "multioctave_noise{x = x, y = y, persistence = 0.3, seed0 = map_seed, seed1 = 0, input_scale = 3, octaves = 5 * control:rabbasca_noise:size }",
+      b  = "multioctave_noise{x = x, y = y, persistence = 1.4, seed0 = map_seed, input_scale = 1/2, seed1 = 3, octaves = 7 * control:rabbasca_noise:size }",
       voronoi_large = "voronoi_facet_noise{   x = x + aquilo_wobble_x * 2,\z
                                         y = y + aquilo_wobble_y * 2,\z
                                         seed0 = map_seed,\z

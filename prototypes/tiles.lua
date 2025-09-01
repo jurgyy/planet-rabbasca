@@ -56,16 +56,17 @@ local harene_tile = util.merge{table.deepcopy(data.raw["tile"]["oil-ocean-shallo
   subgroup = "aquilo-tiles",
 --   allowed_neighbors = { "water" },
   default_cover_tile = "foundation",
-  autoplace = { probability_expression = "rabbasca_harene_pools * 20" },
+  autoplace = { probability_expression = "rabbasca_harene_pools" },
   effect = "brash-ice-2",
   effect_color = {60,55,97},
   effect_color_secondary = { 70, 40, 120 },
+  map_color = { 0.4, 0.1, 0.65}
 }}
 harene_tile.fluid = nil
 harene_tile.collision_mask = { layers = { harene = true, ground_tile = true } }
 local harene_tile_deep = util.merge{harene_tile, {
     name = "rabbasca-harene-deep",
-    autoplace = { probability_expression = "rabbasca_harene_center_probability * 30" },
+    autoplace = { probability_expression = "rabbasca_harene_pools_deep" },
     effect = "brash-ice-2",
     effect_color = {33,22,61},
     effect_color_secondary = { 90, 77, 100 }
@@ -86,7 +87,7 @@ util.merge{ table.deepcopy(data.raw["tile"]["ice-smooth"]), {
 util.merge{ table.deepcopy(data.raw["tile"]["dust-crests"]), {
     name = "rabbasca-rough",
     collision_mask = tile_collision_masks.ground(),
-    autoplace = { probability_expression = "rabbasca_rocky + multioctave_noise{x = x, y = y, persistence = 1.3, seed0 = map_seed, seed1 = 11, octaves = 7 }" },
+    autoplace = { probability_expression = "rabbasca_rocky + rabbasca_rocky_variance" },
     map_color = {0.07, 0.06, 0.1}
 }},
 util.merge{ table.deepcopy(data.raw["tile"]["volcanic-pumice-stones"]), {

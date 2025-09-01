@@ -2,8 +2,12 @@ local color = {r=0.65, g=0.31, b=0.92}
 
 function restrict_to_harene_pool(bbox)
   return {
-
-  }
+{ 
+  area = bbox, 
+  required_tiles = { layers = { harene = true } },
+  colliding_tiles = { layers = { is_object = true } }, -- must not be empty??
+  remove_on_collision = true 
+}}
 end
 
 function harene_energy_source (volume)
@@ -289,13 +293,7 @@ local moon_chest = util.merge{
     link_id = 12141413,
   }
 }
-moon_chest.tile_buildability_rules = {
-{ 
-  area = {{-0.6, -0.6}, {0.6, 0.6}}, 
-  required_tiles = { layers = { harene = true } },
-  colliding_tiles = { layers = { is_object = true } }, -- must not be empty??
-  remove_on_collision = true 
-}}
+moon_chest.tile_buildability_rules = restrict_to_harene_pool({{-0.6, -0.6}, { 0.6, 0.6}})
 
 data:extend {
   moon_chest,
@@ -366,7 +364,8 @@ local moonstone_inserter = util.merge {
       energy_source = { type = "void" }
   }
 }
-moonstone_inserter.
+moonstone_inserter.tile_buildability_rules = restrict_to_harene_pool({{-0.6, -0.6}, { 0.6, 0.6}})
+
 data:extend {
   moonstone_inserter,
   {
@@ -415,3 +414,4 @@ data:extend {
       map_color = {0.09, 0.12, 0.17}
   }},
 }
+

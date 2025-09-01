@@ -15,7 +15,7 @@ data:extend{
 },
 {
   type = "autoplace-control",
-  name = "harenetest",
+  name = "rabbasca_rocks",
   order = "a-a-a",
   category = "resource",
   richness = true, 
@@ -34,7 +34,7 @@ local map_gen = {
     autoplace_controls = 
     {
         ["harene"] = {},
-        ["harenetest"] = {},
+        ["rabbasca_rocks"] = {},
         ["rabbasca_noise"] = {}
     },
     autoplace_settings = {

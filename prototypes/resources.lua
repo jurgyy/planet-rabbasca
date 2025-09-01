@@ -42,7 +42,7 @@ local harene_resource = {
   selection_box = {{-1.5, -1.5}, {1.5, 1.5}},
   autoplace = {
     tile_restriction = { "rabbasca-harene-deep" },
-    probability_expression = "rabbasca_harene_vent_probability",
+    probability_expression = "rabbasca_harene_pools_deep - 0.2",
     richness_expression = "rabbasca_harene_richness",
   },
   stage_counts = {0},
