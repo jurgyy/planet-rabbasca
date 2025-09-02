@@ -84,7 +84,7 @@ util.merge{ table.deepcopy(data.raw["tile"]["ice-smooth"]), {
     map_color = {0.2, 0.4, 0.7}
 }},
 
-util.merge{ table.deepcopy(data.raw["tile"]["dust-crests"]), {
+util.merge{ table.deepcopy(data.raw["tile"]["volcanic-ash-flats"]), {
     name = "rabbasca-rough",
     collision_mask = tile_collision_masks.ground(),
     autoplace = { probability_expression = "rabbasca_rocky + rabbasca_rocky_variance" },
@@ -94,13 +94,26 @@ util.merge{ table.deepcopy(data.raw["tile"]["volcanic-pumice-stones"]), {
     name = "rabbasca-rough-2",
     collision_mask = tile_collision_masks.ground(),
     autoplace = { probability_expression = "rabbasca_rocky" },
-    map_color = {0.073, 0.061, 0.12}
+    map_color = {0.07, 0.061, 0.1}
 }},
 util.merge{ table.deepcopy(data.raw["tile"]["midland-yellow-crust-2"]), {
     name = "rabbasca-fertile",
-    collision_mask = { layers = { harene = true } },
     autoplace = { probability_expression = "rabbasca_fertile" },
     map_color = {0.61, 0.282, 0.1}
 }},
+util.merge { 
+    table.deepcopy(data.raw["tile"]["foundation"]),
+    {
+      name = "harene-infused-foundation",
+      collision_mask = { layers = { harene = true } },
+    }
+  },
+util.merge { 
+    table.deepcopy(data.raw["tile"]["space-platform-foundation"]),
+    {
+      name = "harene-infused-space-platform",
+      collision_mask = { layers = { harene = true } },
+    }
+},
 harene_tile, harene_tile_deep
 }

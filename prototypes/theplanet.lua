@@ -65,10 +65,11 @@ local map_gen = {
       {
         settings =
         {
-            ["harene-vent"] = {},
-            ["carotenoid"] = {},
-            ["rabbasca-moonstone-rock"] = {},
-
+          ["harene-vent"] = {},
+          ["rabbasca-infused-moonstone-rock"] = {},
+          ["carotenoid"] = {},
+          ["rabbasca-moonstone-rock"] = {},
+          ["moonstone-turret"] = {},
         }
       }
     }

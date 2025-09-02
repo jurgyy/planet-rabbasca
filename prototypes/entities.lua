@@ -135,10 +135,10 @@ local pump_item = {
 }
 
 local assembler = table.deepcopy(data.raw["assembling-machine"]["assembling-machine-3"])
-assembler.minable.result = "rabbasca-harean-assembler"
+assembler.minable.result = "harene-assembler"
 assembler.fluid_boxes = { }
 assembler = util.merge{assembler, {
-    name = "rabbasca-harean-assembler",
+    name = "harene-assembler",
     energy_source = harene_energy_source(1),
     energy_usage = "17MW",
     module_slots = 8,
@@ -149,11 +149,11 @@ assembler = util.merge{assembler, {
 local assembler_item = {
     type = "item",
     icon = "__space-age__/graphics/icons/lithium-brine.png",
-    name = "rabbasca-harean-assembler",
+    name = "harene-assembler",
     stack_size = 5,
     subgroup = "transport",
     order = "b[personal-transport]-c[startertron]",
-    place_result = "rabbasca-harean-assembler",
+    place_result = "harene-assembler",
 }
 
 local synthesizer = util.merge{ table.deepcopy(data.raw["assembling-machine"]["electromagnetic-plant"]),
@@ -251,27 +251,43 @@ thruster_graphics.working_visualisations[5] = {
 }
 
 local harene_pipe = util.merge{ table.deepcopy(data.raw["pipe"]["pipe"]),
-  name = "harene-pipe",
-  minable = { result = "harene-pipe" },
+{ tile_buildability_rules = {0} },
+{
+  name = "moonstone-pipe",
+  minable = { result = "moonstone-pipe" },
+  tile_buildability_rules = restrict_to_harene_pool({{-0.6, -0.6}, { 0.6, 0.6}}),
+  fluid_box = { volume = 1 }
 }
-harene_pipe.fluid_box = table.deepcopy(harene_pipe.fluid_box)
-harene_pipe.fluid_box.volume = 1
-harene_pipe.fluid_box.pipe_connections = {
-  { direction = defines.direction.north, position = {0, 0}, connection_category = {"harene"} },
-  { direction = defines.direction.east, position = {0, 0}, connection_category = {"harene"} },
-  { direction = defines.direction.south, position = {0, 0}, connection_category = {"harene"} },
-  { direction = defines.direction.west, position = {0, 0}, connection_category = {"harene"} }
 }
+harene_pipe.fluid_box.pipe_connections[1].connection_category = {"harene"}
+harene_pipe.fluid_box.pipe_connections[2].connection_category = {"harene"}
+harene_pipe.fluid_box.pipe_connections[3].connection_category = {"harene"}
+harene_pipe.fluid_box.pipe_connections[4].connection_category = {"harene"}
 -- harene_pipe.collision_box = nil
--- local harene_pipe_item = {
---     type = "item",
---     icon = "__space-age__/graphics/icons/lithium-brine.png",
---     name = "harene-pipe",
---     stack_size = 5,
---     subgroup = "transport",
---     order = "b[personal-transport]-c[startertron]",
---     place_result = "harene-pipe",
--- }
+local harene_pipe_item = {
+    type = "item",
+    icon = "__space-age__/graphics/icons/lithium-brine.png",
+    name = "moonstone-pipe",
+    stack_size = 5,
+    subgroup = "transport",
+    order = "b[personal-transport]-c[startertron]",
+    place_result = "moonstone-pipe",
+}
+
+local moonstone_turret = util.merge{ table.deepcopy(data.raw["electric-turret"]["tesla-turret"]),
+{ tile_buildability_rules = {0} },
+{
+  name = "moonstone-turret",
+  minable = { result = "moonstone-turret" },
+  energy_source = { type = "void" },
+  tile_buildability_rules = restrict_to_harene_pool({{-1.6, -1.6}, {1.6, 1.6}}),
+  autoplace = {
+      probability_expression = "rabbasca_starting_mask * (rabbasca_harene_pools - 0.9 + rabbasca_down - rabbasca_harene_pools_deep)",
+      tile_restriction = { "rabbasca-harene" },
+      force = "enemy",
+  },
+  map_generator_bounding_box = {{-3.5, -3.5}, {3.5, 3.5}},
+}}
 
 data:extend{
   tower_item, tower, 
@@ -279,15 +295,16 @@ data:extend{
   pump_item, pump, 
   surface_property, 
   transmuter, transmuter_item, 
-  harene_pipe, -- harene_pipe_item,
-  synthesizer, synthesizer_item
+  harene_pipe, harene_pipe_item,
+  synthesizer, synthesizer_item,
+  moonstone_turret
 }
 
 local moon_chest = util.merge{
   table.deepcopy(data.raw["linked-container"]["linked-chest"]),
   {
-    name = "moonfolk-chest",
-    minable = { result = "moonfolk-chest" },
+    name = "moonstone-chest",
+    minable = { result = "moonstone-chest" },
     hidden = false,
     gui_mode = "none",
     link_id = 12141413,
@@ -300,11 +317,11 @@ data:extend {
   {
     type = "item",
     icon = "__base__/graphics/icons/linked-chest-icon.png",
-    name = "moonfolk-chest",
+    name = "moonstone-chest",
     stack_size = 5,
     subgroup = "transport",
     order = "b[personal-transport]-c[startertron]",
-    place_result = "moonfolk-chest",
+    place_result = "moonstone-chest",
   },
   util.merge {
     table.deepcopy(data.raw["thruster"]["thruster"]),
@@ -379,7 +396,7 @@ data:extend {
   },
   util.merge {
   table.deepcopy(data.raw["simple-entity"]["vulcanus-chimney"]),
-  minable = {0},
+  { minable = {0} },
   { 
     name = "carotenoid",
     minable = {
@@ -393,18 +410,19 @@ data:extend {
       probability_expression = "rabbasca_carrot_noise",
       tile_restriction = { "rabbasca-fertile" },
     },
-    map_color = {0.73, 0.55, 0.1}
+    map_color = {0.73, 0.55, 0.1},
+    map_generator_bounding_box = {{-3.5, -3.5}, {3.5, 3.5}},
   }},
   util.merge {
     table.deepcopy(data.raw["simple-entity"]["big-volcanic-rock"]),
-    minable = {0},
+    { minable = {0}, },
     {
       name = "rabbasca-moonstone-rock",
       minable = { 
         mining_particle = "stone-particle",
         mining_time = 1.5,
         results = {
-          {type = "item", name = "rabbasca-moonstone", amount_min = 3, amount_max = 3},
+          {type = "item", name = "rabbasca-moonstone", amount_min = 3, amount_max = 5},
         }
       },
       autoplace = {
@@ -413,5 +431,33 @@ data:extend {
       },
       map_color = {0.09, 0.12, 0.17}
   }},
+  util.merge {
+    table.deepcopy(data.raw["simple-entity"]["big-volcanic-rock"]),
+    { minable = {0}, },
+    {
+      name = "rabbasca-infused-moonstone-rock",
+      minable = { 
+        mining_particle = "stone-particle",
+        mining_time = 2.5,
+        results = {
+          {type = "item", name = "harene-infused-moonstone", amount = 3},
+        }
+      },
+      autoplace = {
+        probability_expression = "rabbasca_harene_pools - 0.6 + rabbasca_down - rabbasca_harene_pools_deep",
+        tile_restriction = { "rabbasca-harene" },
+      },
+      map_generator_bounding_box = {{-12, -12}, {12, 12}},
+      map_color = {0.31, 0.22, 0.61}
+  }},
+  util.merge {
+    table.deepcopy(data.raw["capsule"]["raw-fish"]),
+    {
+      name = "rabbasca-turbofish",
+      stack_size = 1,
+      spoil_ticks = 92 * second,
+      spoil_result = "harene-nutrients"
+    } 
+  }
 }
 

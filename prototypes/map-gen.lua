@@ -8,23 +8,24 @@ data:extend{
   {
     type = "noise-expression",
     name = "rabbasca_starting_pool",
-    expression = "starting_spot_at_angle{angle = map_seed, distance = 45, radius = rabbasca_pool_size, x_distortion = 0, y_distortion = 0}"
+    expression = "max(starting_spot_at_angle{angle = aquilo_angle, distance = 45, radius = rabbasca_pool_size, x_distortion = 0, y_distortion = 0}\z
+                , starting_spot_at_angle{angle = aquilo_angle + 120, distance = 81, radius = rabbasca_pool_size, x_distortion = 0, y_distortion = 0})"
   },
   {
     type = "noise-expression",
     name = "rabbasca_starting_carrots",
-    expression = "starting_spot_at_angle{angle = map_seed + 225, distance = 55, radius = 21, x_distortion = 0, y_distortion = 0}\z
-             * (1.1 + 0.2 * multioctave_noise{x = x, y = y, persistence = 0.83, seed0 = map_seed, input_scale = 8, seed1 = 'omnom', octaves = 6 })"
+    expression = "starting_spot_at_angle{angle = aquilo_angle + 240, distance = 25, radius = 31, x_distortion = 0, y_distortion = 0}\z
+             * (1.1 + 0.3 * multioctave_noise{x = x, y = y, persistence = 0.83, seed0 = map_seed, input_scale = 3.1, seed1 = 'omnom', octaves = 6 })"
   },
   {
     type = "noise-expression",
     name = "rabbasca_pool_size",
-    expression = "29 * sqrt(control:harene:size)"
+    expression = "18 * sqrt(control:harene:size)"
   },
   {
     type = "noise-expression",
     name = "rabbasca_carrot_noise",
-    expression = "2 * (rabbasca_fertile > 1.1)"
+    expression = "1.5 * (rabbasca_fertile > 1.3) + multioctave_noise{x = x, y = y, persistence = 1.3, input_scale = 3, seed0 = map_seed, seed1 = 'minersareoverrated', octaves = 7 } * 0.6"
   },
   {
     type = "noise-expression",
@@ -57,7 +58,7 @@ data:extend{
   {
     type = "noise-expression",
     name = "rabbasca_fertile",
-    expression = "0.3 + max(rabbasca_starting_carrots, \z
+    expression = "0.3 - rabbasca_harene_pools + max(rabbasca_starting_carrots, \z
             0.8 * multioctave_noise{x = x/3.2, y = y/2.3, persistence = 0.5, seed0 = map_seed, seed1 = 'yummyrocks', octaves = 8 }\z
                 * multioctave_noise{x = x/4.2, y = y/4.8, persistence = 0.2, seed0 = map_seed, seed1 = 'bewarethehare', octaves = 9 })"
     -- expression = "0.4 + rabbasca_up * rabbasca_crater + rabbasca_up_variance * (0.8 - rabbasca_elevation)"
@@ -65,36 +66,41 @@ data:extend{
   {
     type = "noise-expression",
     name = "rabbasca_harene_pools",
-    expression = "0.5 + (rabbasca_down * 1.4 + 0.2 * (rabbasca_harene_cracks + 1)) * rabbasca_crater"
+    expression = "rabbasca_harene_cracks * 0.4 + rabbasca_down * 2 + 0.1"
   },
   {
     type = "noise-expression",
     name = "rabbasca_harene_pools_deep",
-    expression = "pow(rabbasca_harene_pools - 0.5, 3)"
+    expression = "(rabbasca_down > 0.8) * (3 + rabbasca_harene_cracks * 0.5)"
+  },
+  {
+    type = "noise-expression",
+    name = "rabbasca_harene_pools_center",
+    expression = "5 * (rabbasca_down > 0.93)"
   },
   {
     type = "noise-expression",
     name = "rabbasca_harene_cracks",
-    expression = "multioctave_noise{x = x, y = y, persistence = 0.7, seed0 = map_seed, seed1 = 0, octaves = 8 }"
+    expression = "multioctave_noise{x = x, y = y, persistence = 0.21, seed0 = map_seed, input_scale = 24 / rabbasca_pool_size, seed1 = 'purple', octaves = 4 }"
   },
   {
     type = "noise-expression",
     name = "rabbasca_harene_richness",
-    expression = "(50000 + 2000 * basis_noise{x = x, y = y, seed0 = map_seed, seed1 = 'feed_me'}) * control:harene:richness"
+    expression = "(50000 + 2000 * basis_noise{x = x, y = y, seed0 = map_seed, seed1 = 'feedme'}) * control:harene:richness"
   },
   {
     type = "noise-expression",
     name = "rabbasca_crater",
-    expression = "(rabbasca_down * (rabbasca_elevation < 0.2)) > 0"
+    expression = "rabbasca_down > 0.3"
   },
   {
     type = "noise-expression",
     name = "rabbasca_down",
     expression = "clamp(max(rabbasca_starting_pool, \z
                       min(rabbasca_starting_mask, aquilo_spot_noise{seed = 9312,\z
-                                    count = 3 * control:rabbasca_noise:frequency,\z
+                                    count = 3 * control:harene:frequency,\z
                                     skip_offset = 0,\z
-                                    region_size = 300 + 500 / control:rabbasca_noise:size,\z
+                                    region_size = 300 + 500 / control:harene:frequency,\z
                                     density = 1,\z
                                     radius = rabbasca_pool_size,\z
                                     favorability = 3})), 0, 1)",

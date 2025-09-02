@@ -38,11 +38,12 @@ local harene_resource = {
     colliding_tiles = { layers = { is_object = true } },
     remove_on_collision = true 
   }},
-  collision_box = {{ -3.0, -3.0}, {3.0, 3.0}},
+  collision_box = {{ -1.5, -1.5}, {1.5, 1.5}},
   selection_box = {{-1.5, -1.5}, {1.5, 1.5}},
+  map_generator_bounding_box = {{-5, -5}, {5, 5}},
   autoplace = {
     tile_restriction = { "rabbasca-harene-deep" },
-    probability_expression = "rabbasca_harene_pools_deep - 0.2",
+    probability_expression = "rabbasca_harene_pools_center",
     richness_expression = "rabbasca_harene_richness",
   },
   stage_counts = {0},
