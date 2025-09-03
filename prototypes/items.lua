@@ -43,36 +43,6 @@ data:extend {
 {
     type = "item",
     icon = "__space-age__/graphics/icons/fusion-generator.png",
-    name = "ears-core-offering-dummy",
-    stack_size = 1,
-    hidden = true,
-    hidden_in_factoriopedia = true,
-    flags = {"ignore-spoil-time-modifier"},
-    spoil_result = "harene-ears-core",
-    spoil_ticks = 120,
-    spoil_to_trigger_result =
-    {
-      items_per_trigger = 1,
-      trigger =
-      {
-        type = "direct",
-        action_delivery =
-        {
-          type = "instant",
-          source_effects =
-          {
-            {
-              type = "script",
-              effect_id = "rabbasca-ears-core-offering-complete",
-            }
-          }
-        }
-      }
-    }
-},
-{
-    type = "item",
-    icon = "__space-age__/graphics/icons/fusion-generator.png",
     name = "harene-ears-core",
     stack_size = 10,
     subgroup = "transport",
@@ -214,4 +184,37 @@ data:extend {
     fuel_value = "340kJ",
     auto_barrel = true
 },
+{
+    type = "module",
+    name = "rabbascan-security-key",
+    category = "rabbasca-security",
+    icon = "__space-age__/graphics/icons/fluid/ammoniacal-solution.png",
+    tier = 1,
+    effect = { },
+    stack_size = 1,
+    spoil_ticks = 10 * second,
+    spoil_to_trigger_result =
+    {
+      items_per_trigger = 1,
+      trigger =
+      {
+        type = "direct",
+        action_delivery =
+        {
+          type = "instant",
+          source_effects =
+          {
+            {
+              type = "script",
+              effect_id = "rabbasca-hack-monument",
+            }
+          }
+        }
+      }
+    }
+},
+{
+    type = "module-category",
+    name = "rabbasca-security"
+}
 }

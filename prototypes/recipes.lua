@@ -1,5 +1,26 @@
 local recycling = require("__quality__.prototypes.recycling")
 
+function create_offering_recipe(reward, has_no_prequisite, energy)
+data:extend{
+  {
+      type = "recipe",
+      name = "rabbasca-offering-"..reward,
+      preserve_products_in_machine_output = false,
+      enabled = has_no_prequisite,
+      allow_decomposition = false,
+      always_show_products = true,
+      energy_required = energy,
+      ingredients = { { type = "item", name = "harene-infused-moonstone", amount = 1 } },
+      results = { { type = "item", name = reward, amount = 1, percent_spoiled = 0 } },
+      reset_freshness_on_craft = true,
+      result_is_always_fresh = true,
+      main_product = reward,
+      category = "harene-offering",
+      auto_recycle = false,
+  }
+}
+end
+
 function recycle_core(name, retrieved_name)
   local rec  = data.raw["recipe"][name]
   if rec then
@@ -16,25 +37,12 @@ function recycle_core(name, retrieved_name)
   recipe.energy_required = (data.raw.recipe[item.name] and data.raw.recipe[item.name].energy_required or 0.5 )/2
 end
 
-function offering_ears_core(level, input_item, input_amount)
-    return {
-        type = "recipe",
-        name = "rabbasca-offering-"..level,
-        enabled = false,
-        hidden = true,
-        hidden_in_factoriopedia = true,
-        energy_required = 5,
-        ingredients = { { type = "item", name = input_item, amount = input_amount } },
-        results = { { type = "item", name = "ears-core-offering-dummy", amount = 1, percent_spoiled = 0 } },
-        reset_freshness_on_craft = true,
-        result_is_always_fresh = true,
-        main_product = "ears-core-offering-dummy",
-        category = "harene-offering",
-        auto_recycle = false
-    }
-end
-
 data:extend {
+    {
+        type = "item-subgroup",
+        name = "rabbasca",
+        group = "production"
+    },
     {
         type = "recipe-category",
         name = "harene-transmutation"
@@ -347,6 +355,21 @@ data:extend {
         main_product = "protein-powder",
         category = "crafting",
     },
+    {
+        type = "recipe",
+        name = "rabbascan-security-key",
+
+        enabled = false,
+        result_is_always_fresh = true,
+        energy_required = 5,
+        ingredients = { 
+            {type = "item", name = "rabbasca-turbofish", amount = 1 },
+            {type = "item", name = "rabbasca-moonstone", amount = 1 },
+        },
+        results = { {type = "item", name = "rabbascan-security-key", amount = 1} },
+        main_product = "rabbascan-security-key",
+        category = "crafting",
+    }
     -- {
     --     type = "recipe",
     --     name = "harene-ears-core",
@@ -379,19 +402,6 @@ data:extend {
     --     main_product = "harene-glob-core",
     --     category = "crafting",
     -- },
-    offering_ears_core(1, "harene-infused-moonstone", 1 ),
-    offering_ears_core(2, "harene-infused-moonstone", 2 ),
-    offering_ears_core(3, "harene-infused-moonstone", 4 ),
-    offering_ears_core(4, "infused-haronite-plate",  10 ),
-    offering_ears_core(5, "infused-haronite-plate",  100),
-    offering_ears_core(6, "infused-haronite-plate", 1000),
-    offering_ears_core(7, "harene-glob-core",          1),
-    offering_ears_core(8, "harene-glob-core",          2),
-    offering_ears_core(9, "harene-glob-core",          3),
-    offering_ears_core(10, "harene-glob-core",         5),
-    offering_ears_core(11,"harene-glob-core",          8),
-    offering_ears_core(12,"harene-glob-core",         13),
-    offering_ears_core(13,"harene-glob-core",         21),
 }
 
 recycle_core("harenic-chemical-plant", "harene-ears-core")
@@ -400,3 +410,8 @@ recycle_core("harene-transmuter", "harene-ears-core")
 recycle_core("harene-extractor", "harene-cubic-core")
 recycle_core("moonstone-chest", "harene-glob-core")
 recycle_core("small-harenide-collider", "harene-cubic-core")
+
+
+create_offering_recipe("harene-ears-core", false, 5)
+create_offering_recipe("harene-glob-core", false, 2.5)
+create_offering_recipe("harene-cubic-core", false, 7.5)

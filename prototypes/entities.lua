@@ -322,25 +322,35 @@ local harenian_monument = util.merge{
   table.deepcopy(data.raw["assembling-machine"]["assembling-machine-2"]),
   {
     name = "harenian-monument",
-    fixed_recipe = "rabbasca-offering-1",
+    -- fixed_recipe = "rabbasca-offering-1",
+    max_health = 100,
+    crafting_speed = 1.02, -- 2% buffer for fluid consumption tolerance
+    allow_copy_paste = false,
     hidden = true,
-    module_slots = 0,
-    allowed_effects = nil,
-    energy_source = { type = "void" }
+    energy_usage = "1GW",
+    module_slots = 1,
+  }
+}
+harenian_monument.allowed_effects = { "pollution" }
+harenian_monument.allowed_module_categories = {"rabbasca-security"}
+harenian_monument.energy_source = {
+  type = "fluid",
+  burns_fluid = true,
+  fluid_box = {
+    volume = 100,
+    filter = "harene",
+    pipe_connections = { }
   }
 }
 harenian_monument.resistances = {
-  { type = "physical", percent = 100 },
-  { type = "explosion", percent = 100 },
-  { type = "impact", percent = 100 },
+  { type = "physical", percent = 10 },
   { type = "fire", percent = 100 },
   { type = "poison", percent = 100 },
-  { type = "explosion", percent = 100 },
-  { type = "laser", percent = 100 },
-  { type = "electric", percent = 100 },
+  { type = "electric", percent = 25 },
+  { type = "laser", percent = 95 },
 }
 harenian_monument.minable = nil
-harenian_monument.flags = {"placeable-neutral", "not-deconstructable"}
+harenian_monument.flags = {"placeable-neutral", "not-deconstructable", "not-repairable", "no-automated-item-removal", "no-automated-item-insertion" }
 harenian_monument.surface_conditions = nil
 harenian_monument.crafting_categories = {"harene-offering"}
 

@@ -48,6 +48,38 @@ data:extend {
 },
 {
     type = "technology",
+    name = "ears-core-technology",
+    icon = "__space-age__/graphics/technology/fusion-reactor.png",
+    icon_size = 256,
+    prerequisites = { "infusion-reprocessing", "leg-day-everyday" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "harenic-chemical-plant-recycling"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "harenic-chemical-plant",
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "energetic-residue"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "beta-carotene"
+      },
+    },
+    research_trigger =
+    {
+      type = "craft-item",
+      item = "harene-ears-core",
+      amount = "2"
+    }
+},
+{
+    type = "technology",
     name = "infused-haronite-plate",
     icon = "__space-age__/graphics/technology/steel-plate-productivity.png",
     icon_size = 256,
@@ -78,6 +110,10 @@ data:extend {
     prerequisites = { "planet-discovery-rabbasca" },
     effects =
     {
+      {
+        type = "unlock-recipe",
+        recipe = "rabbascan-security-key"
+      },
       {
         type = "unlock-recipe",
         recipe = "protein-powder"
@@ -147,15 +183,11 @@ data:extend {
     {
       {
         type = "unlock-recipe",
-        recipe = "energetic-residue"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "beta-carotene"
-      },
-      {
-        type = "unlock-recipe",
         recipe = "moonstone-pipe"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-offering-harene-ears-core"
       },
     },
     research_trigger =
@@ -197,15 +229,7 @@ data:extend {
       },
       {
         type = "unlock-recipe",
-        recipe = "harenic-chemical-plant-recycling"
-      },
-      {
-        type = "unlock-recipe",
         recipe = "harene-transmuter"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "harenic-chemical-plant",
       },
       -- {
       --   type = "unlock-recipe",
