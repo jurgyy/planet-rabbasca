@@ -1,10 +1,10 @@
 -- Initialize shared table if it doesn't exist
 teleporter_targets = teleporter_targets or {
-    ["nauvis"] = {},
-    ["vulcanus"] = {extra_inputs = {{type = "item", name = "steel-plate", amount = 5}}},
-    ["gleba"] = {extra_inputs = {{type = "item", name = "landfill", amount = 1}}},
+    ["nauvis"] = {unlocked_by = "infused-haronite-plate"},
+    ["vulcanus"] = {unlocked_by = "metallurgic-science-pack", extra_inputs = {{type = "item", name = "steel-plate", amount = 5}}},
+    ["gleba"] = {unlocked_by = "agricultural-science-pack", extra_inputs = {{type = "item", name = "landfill", amount = 1}}},
     ["fulgora"] = {},
-    ["rabbasca"] = {},
+    ["rabbasca"] = {unlocked_by = "infused-haronite-plate"},
     ["aquilo"] = {unlocked_by = "cryogenic-science-pack", extra_inputs = {{type = "item", name = "ice", amount = 10}}}
 }
 

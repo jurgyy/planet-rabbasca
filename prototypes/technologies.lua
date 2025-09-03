@@ -5,7 +5,8 @@ data:extend {
     type = "technology",
     name = "planet-discovery-rabbasca",
     icon = "__space-age__/graphics/technology/gleba.png",
-    prerequisites = { "agriculture" },
+    icon_size = 256,
+    prerequisites = { "planet-discovery-gleba" },
     unit = {
         count = 1000,
         time = 60,
@@ -19,33 +20,143 @@ data:extend {
 },
 {
     type = "technology",
-    name = "harene-infusions",
-    icon = "__space-age__/graphics/technology/gleba.png",
-    prerequisites = { "harene-infusions", "vitaminic-studies" },
+    name = "harene-processing",
+    icon = "__space-age__/graphics/technology/steel-plate-productivity.png",
+    icon_size = 256,
+    prerequisites = { "transmutation-technology", "leg-day-everyday" },
     effects =
     {
       {
         type = "unlock-recipe",
-        recipe = "archonic-science-pack"
-      }
+        recipe = "infused-haronite-plate"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "harene-infused-moonstone"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-turbofish"
+      },
     },
     research_trigger =
     {
       type = "craft-item",
-      entity = "harene-infused-vitamins"
+      item = "smart-solution",
+      amount = "50"
     }
 },
 {
     type = "technology",
-    name = "harene-infusions",
-    icon = "__space-age__/graphics/technology/gleba.png",
+    name = "infused-haronite-plate",
+    icon = "__space-age__/graphics/technology/steel-plate-productivity.png",
+    icon_size = 256,
+    prerequisites = { "harene-processing" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "harene-extractor-recycling"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "harene-extractor"
+      },
+    },
+    research_trigger =
+    {
+      type = "craft-item",
+      item = "infused-haronite-plate",
+      amount = "50"
+    }
+},
+{
+    type = "technology",
+    name = "leg-day-everyday",
+    icon = "__space-age__/graphics/technology/fish-breeding.png",
+    icon_size = 256,
     prerequisites = { "planet-discovery-rabbasca" },
     effects =
     {
       {
         type = "unlock-recipe",
-        recipe = "moonstone-pipe"
+        recipe = "protein-powder"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "smart-solution"
+      },
+    },
+    research_trigger =
+    {
+      type = "mine-entity",
+      entity = "rabbasca-turbofish",
+    }
+},
+{
+    type = "technology",
+    name = "ultranutritious-science-pack",
+    icon = "__space-age__/graphics/technology/metallurgic-science-pack.png",
+    icon_size = 256,
+    prerequisites = { "harene-processing" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "ultranutritious-science-pack"
       }
+    },
+    research_trigger =
+    {
+      type = "craft-item",
+      item = "infused-haronite-plate"
+    }
+},
+{
+    type = "technology",
+    name = "prison-break",
+    icon = "__space-age__/graphics/technology/metallurgic-science-pack.png",
+    icon_size = 256,
+    prerequisites = { "ultranutritious-science-pack", "infused-haronite-plate" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "bunnyhop-engine",
+      },
+      {
+        type = "unlock-space-location",
+        space_location = "nauvis",
+        use_icon_overlay_constant = true
+      }
+    },
+    research_trigger =
+    {
+      type = "craft-item",
+      item = "ultranutritious-science-pack",
+      amount = "100"
+    }
+},
+{
+    type = "technology",
+    name = "infusion-reprocessing",
+    icon = "__space-age__/graphics/technology/gleba.png",
+    icon_size = 256,
+    prerequisites = { "planet-discovery-rabbasca" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "energetic-residue"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "beta-carotene"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "moonstone-pipe"
+      },
     },
     research_trigger =
     {
@@ -55,32 +166,38 @@ data:extend {
 },
 {
     type = "technology",
-    name = "vitaminic-studies",
+    name = "energetic-enrichment",
     icon = "__space-age__/graphics/technology/gleba.png",
-    prerequisites = { "planet-discovery-rabbasca" },
+    icon_size = 256,
+    prerequisites = { "infusion-reprocessing" },
     effects =
     {
       {
         type = "unlock-recipe",
-        recipe = "carotene-inserter"
+        recipe = "haronite"
       }
     },
     research_trigger =
     {
-      type = "mine-entity",
-      entity = "carotenoid"
+      type = "craft-fluid",
+      fluid = "beta-carotene"
     }
 },
 {
     type = "technology",
-    name = "moonstone-ears-technology",
+    name = "transmutation-technology",
     icon = "__space-age__/graphics/technology/gleba.png",
-    prerequisites = { "planet-discovery-rabbasca" },
+    icon_size = 256,
+    prerequisites = { "infusion-reprocessing" },
     effects =
     {
       {
         type = "unlock-recipe",
-        recipe = "harene-extractor"
+        recipe = "harene-transmuter-recycling"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "harenic-chemical-plant-recycling"
       },
       {
         type = "unlock-recipe",
@@ -88,31 +205,24 @@ data:extend {
       },
       {
         type = "unlock-recipe",
-        recipe = "harene-assembler",
+        recipe = "harenic-chemical-plant",
       },
-      {
-          type = "unlock-recipe",
-          recipe = "harene-extractor-recycling"
-        },
-        {
-            type = "unlock-recipe",
-            recipe = "harene-transmuter-recycling"
-        },
-        {
-          type = "unlock-recipe",
-          recipe = "harene-assembler-recycling"
-        },
+      -- {
+      --   type = "unlock-recipe",
+      --   recipe = "haronite-plate"
+      -- },
     },
     research_trigger =
     {
-      type = "mine-entity",
-      entity = "harene-extractor"
+      type = "craft-item",
+      item = "moonstone-pipe"
     }
 },
 {
     type = "technology",
     name = "moonstone-glob-technology",
     icon = "__space-age__/graphics/technology/gleba.png",
+    icon_size = 256,
     prerequisites = { "planet-discovery-rabbasca" },
     effects =
     {
@@ -135,6 +245,7 @@ data:extend {
     type = "technology",
     name = "harene-infused-foundations",
     icon = "__space-age__/graphics/technology/foundation.png",
+    icon_size = 256,
     prerequisites = { "foundation", "planet-discovery-rabbasca" },
     unit = {
         count = 2000,

@@ -3,13 +3,18 @@ data:extend{
   {
     type = "noise-expression",
     name = "rabbasca_starting_mask",
-    expression = "clamp((distance - 400) / 40, 0, 1)"
+    expression = "clamp((distance - 300) / 20, 0, 1)"
   },
   {
     type = "noise-expression",
     name = "rabbasca_starting_pool",
-    expression = "max(starting_spot_at_angle{angle = aquilo_angle, distance = 45, radius = rabbasca_pool_size, x_distortion = 0, y_distortion = 0}\z
-                , starting_spot_at_angle{angle = aquilo_angle + 120, distance = 81, radius = rabbasca_pool_size, x_distortion = 0, y_distortion = 0})"
+    expression = "max(starting_spot_at_angle{angle = aquilo_angle, distance = 45, radius = rabbasca_pool_size, x_distortion = 0, y_distortion = 0},\z
+                      starting_spot_at_angle{angle = aquilo_angle + 120, distance = 77, radius = rabbasca_camp_size, x_distortion = 0, y_distortion = 0})"
+  },
+  {
+    type = "noise-expression",
+    name = "rabbasca_starting_camp",
+    expression = "0"
   },
   {
     type = "noise-expression",
@@ -21,6 +26,11 @@ data:extend{
     type = "noise-expression",
     name = "rabbasca_pool_size",
     expression = "18 * sqrt(control:harene:size)"
+  },
+  {
+    type = "noise-expression",
+    name = "rabbasca_camp_size",
+    expression = "12"
   },
   {
     type = "noise-expression",
@@ -70,6 +80,18 @@ data:extend{
   },
   {
     type = "noise-expression",
+    name = "rabbasca_camps",
+    expression = "clamp(max(rabbasca_starting_camp, \z
+                      min(rabbasca_starting_mask, aquilo_spot_noise{seed = 9312,\z
+                                    count = 3 * control:harene:frequency,\z
+                                    skip_offset = 0,\z
+                                    region_size = 300 + 500 / control:harene:frequency,\z
+                                    density = 1,\z
+                                    radius = rabbasca_camp_size,\z
+                                    favorability = 3})), 0, 1)"
+  },
+  {
+    type = "noise-expression",
     name = "rabbasca_harene_pools_deep",
     expression = "(rabbasca_down > 0.8) * (3 + rabbasca_harene_cracks * 0.5)"
   },
@@ -99,7 +121,7 @@ data:extend{
     expression = "clamp(max(rabbasca_starting_pool, \z
                       min(rabbasca_starting_mask, aquilo_spot_noise{seed = 9312,\z
                                     count = 3 * control:harene:frequency,\z
-                                    skip_offset = 0,\z
+                                    skip_offset = 1,\z
                                     region_size = 300 + 500 / control:harene:frequency,\z
                                     density = 1,\z
                                     radius = rabbasca_pool_size,\z

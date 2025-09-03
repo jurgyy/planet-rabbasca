@@ -1,19 +1,74 @@
+function return_to_monument_trigger()
+ return {
+    type = "direct",
+    action_delivery =
+    {
+      type = "instant",
+      target_effects =
+      {
+        {
+          type = "script",
+          effect_id = "rabbasca_rescue_item"
+        }
+      }
+    }
+  }
+end
+
 data:extend {
 {
     type = "item",
-    icon = "__space-age__/graphics/icons/foundry.png",
-    name = "crystallized-harene",
-    stack_size = 500,
+    icon = "__base__/graphics/icons/stone.png",
+    name = "haronite",
+    stack_size = 50,
     subgroup = "transport",
     order = "b[personal-transport]-c[startertron]",
 },
 {
     type = "item",
     icon = "__base__/graphics/icons/steel-plate.png",
-    name = "haronite-plate",
-    stack_size = 38,
+    name = "infused-haronite-plate",
+    stack_size = 50,
     subgroup = "transport",
     order = "b[personal-transport]-c[startertron]",
+},
+{
+    type = "item",
+    icon = "__space-age__/graphics/icons/bioflux.png",
+    name = "smart-solution",
+    stack_size = 100,
+    subgroup = "transport",
+    order = "b[personal-transport]-c[startertron]",
+},
+{
+    type = "item",
+    icon = "__space-age__/graphics/icons/fusion-generator.png",
+    name = "ears-core-offering-dummy",
+    stack_size = 1,
+    hidden = true,
+    hidden_in_factoriopedia = true,
+    flags = {"ignore-spoil-time-modifier"},
+    spoil_result = "harene-ears-core",
+    spoil_ticks = 120,
+    spoil_to_trigger_result =
+    {
+      items_per_trigger = 1,
+      trigger =
+      {
+        type = "direct",
+        action_delivery =
+        {
+          type = "instant",
+          source_effects =
+          {
+            {
+              type = "script",
+              effect_id = "rabbasca-ears-core-offering-complete",
+            }
+          }
+        }
+      }
+    }
 },
 {
     type = "item",
@@ -22,6 +77,7 @@ data:extend {
     stack_size = 10,
     subgroup = "transport",
     order = "b[personal-transport]-c[startertron]",
+    destroyed_by_dropping_trigger = return_to_monument_trigger()
 },
 {
     type = "item",
@@ -30,20 +86,22 @@ data:extend {
     stack_size = 10,
     subgroup = "transport",
     order = "b[personal-transport]-c[startertron]",
+    destroyed_by_dropping_trigger = return_to_monument_trigger()
 },
 {
     type = "item",
-    icon = "__space-age__/graphics/icons/biolab.png",
-    name = "harene-data-core",
+    icon = "__space-age__/graphics/icons/jelly.png",
+    name = "harene-cubic-core",
     stack_size = 10,
     subgroup = "transport",
     order = "b[personal-transport]-c[startertron]",
+    destroyed_by_dropping_trigger = return_to_monument_trigger()
 },
 {
     type = "item",
     icon = "__base__/graphics/icons/steam-engine.png",
-    name = "harene-engine",
-    stack_size = 10,
+    name = "bunnyhop-engine",
+    stack_size = 1,
     subgroup = "transport",
     order = "b[personal-transport]-c[startertron]",
 },
@@ -67,7 +125,7 @@ data:extend {
     type = "item",
     icon = "__space-age__/graphics/icons/tungsten-ore.png",
     name = "harene-infused-moonstone",
-    stack_size = 1,
+    stack_size = 5,
     subgroup = "transport",
     order = "b[personal-transport]-c[startertron]",
 },
@@ -81,16 +139,8 @@ data:extend {
 },
 {
     type = "item",
-    icon = "__space-age__/graphics/icons/bioflux.png",
-    name = "harene-infused-vitamins",
-    stack_size = 200,
-    subgroup = "transport",
-    order = "b[personal-transport]-c[startertron]",
-},
-{
-    type = "item",
     icon = "__space-age__/graphics/icons/metallurgic-science-pack.png",
-    name = "archonic-science-pack",
+    name = "ultranutritious-science-pack",
     stack_size = 200,
     subgroup = "transport",
     order = "b[personal-transport]-c[startertron]",
@@ -128,57 +178,40 @@ data:extend {
 {
     type = "item",
     icon = "__space-age__/graphics/icons/nutrients.png",
-    name = "harene-nutrients",
-    stack_size = 1,
+    name = "protein-powder",
+    stack_size = 50,
     subgroup = "transport",
     order = "b[personal-transport]-c[startertron]",
     fuel_category = "nutrients",
-    fuel_value = "675MJ",
-    spoil_ticks = 2 * minute,
-    -- spoil_result = "rabbasca-carotene-powder",
-    spoil_to_trigger_result =
-    {
-      items_per_trigger = 1,
-      trigger =
-      {
-        type = "direct",
-        action_delivery =
-        {
-          type = "instant",
-          source_effects =
-          {
-            {
-              type = "create-entity",
-              entity_name = "carotenoid",
-              affects_target = true,
-              show_in_tooltip = true,
-              trigger_created_entity = true,
-              as_enemy = false,
-              find_non_colliding_position = true,
-              non_colliding_search_radius = 3,
-              abort_if_over_space = true,
-              non_colliding_fail_result =
-              {
-                type = "direct",
-                action_delivery =
-                {
-                  type = "instant",
-                  source_effects =
-                  {
-                    {
-                      type = "create-entity",
-                      entity_name = "boompuff-explosion",
-                      affects_target = true,
-                      show_in_tooltip = false,
-                      as_enemy = true,
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+    fuel_value = "180MJ",
+},
+{
+  type = "fluid",
+    name = "harene",
+    icon = "__space-age__/graphics/icons/fluid/electrolyte.png",
+    base_color = {r=0.65, g=0.31, b=0.92},
+    flow_color = {r=0.65, g=0.31, b=0.92},
+    default_temperature = 35.0,
+    fuel_value = "100MJ",
+    auto_barrel = false
+},
+{
+    type = "fluid",
+    name = "beta-carotene",
+    icon = "__space-age__/graphics/icons/fluid/thruster-fuel.png",
+    base_color = { 0.8, 0.42, 0.02 },
+    flow_color = { 0.8, 0.42, 0.02 },
+    default_temperature = 14.0,
+    auto_barrel = true
+},
+{
+    type = "fluid",
+    name = "energetic-residue",
+    icon = "__space-age__/graphics/icons/fluid/ammoniacal-solution.png",
+    base_color = {0, 0.14, 0.53},
+    flow_color = {0, 0.14, 0.53},
+    default_temperature = 72.0,
+    fuel_value = "340kJ",
+    auto_barrel = true
 },
 }

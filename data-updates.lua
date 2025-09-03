@@ -41,7 +41,10 @@ end
 
 function make_recipe(proto, settings) 
    -- build ingredient list
-  local ingredients = {{type = "item", name = "harene-ears-core", amount = 1}}
+  local ingredients = {
+    {type = "item", name = "harene-glob-core", amount = 1},
+    {type = "item", name = "infused-haronite-plate", amount = 10 }, 
+  }
   if settings.extra_inputs then
     for _, ing in pairs(settings.extra_inputs) do
       table.insert(ingredients, table.deepcopy(ing))

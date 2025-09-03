@@ -130,23 +130,4 @@ data:extend{ {
     type = "resource-category",
     name = "harene"
 },
-{
-  type = "fluid",
-    name = "harene",
-    icon = "__space-age__/graphics/icons/fluid/electrolyte.png",
-    base_color = color,
-    flow_color = color,
-    default_temperature = 35.0,
-    fuel_value = "100MJ",
-    auto_barrel = false
-},
-{
-    type = "fluid",
-    name = "beta-carotene",
-    icon = "__space-age__/graphics/icons/fluid/thruster-fuel.png",
-    base_color = { 0.8, 0.42, 0.02 },
-    flow_color = { 0.8, 0.42, 0.02 },
-    default_temperature = 14.0,
-    auto_barrel = true
-},
 }
