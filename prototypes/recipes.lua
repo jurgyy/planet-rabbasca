@@ -8,7 +8,7 @@ data:extend {
         enabled = false,
         energy_required = 30,
         ingredients = {
-            { type = "item", name = "harene-glob-core", amount = 1},
+            { type = "item", name = "harene-copy-core", amount = 1},
             { type = "item", name = item, amount = input},
         },
         results = { { type = "item", name = item, amount = output } },
@@ -414,12 +414,12 @@ data:extend {
         type = "recipe",
         name = "rabbascan-security-key-a",
         enabled = false,
-        energy_required = 0.5,
+        energy_required = 1,
         ingredients = { 
             {type = "item", name = "infused-haronite-plate", amount = 1 },
             {type = "item", name = "rabbasca-turbofin", amount = 2 },
         },
-        results = { {type = "item", name = "rabbascan-security-key-a", amount = 3} },
+        results = { {type = "item", name = "rabbascan-security-key-a", amount = 6} },
         main_product = "rabbascan-security-key-a",
         category = "crafting",
     },
@@ -427,14 +427,40 @@ data:extend {
         type = "recipe",
         name = "rabbascan-security-key-e",
         enabled = false,
-        energy_required = 5,
+        energy_required = 1,
         ingredients = { 
             {type = "item", name = "infused-haronite-plate", amount = 1 },
             {type = "item", name = "rabbasca-turbofin", amount = 1 },
             {type = "item", name = "rabbasca-carotene-powder", amount = 20 },
         },
-        results = { {type = "item", name = "rabbascan-security-key-e", amount = 3} },
+        results = { {type = "item", name = "rabbascan-security-key-e", amount = 4} },
         main_product = "rabbascan-security-key-e",
+        category = "crafting",
+    },
+    {
+        type = "recipe",
+        name = "rabbascan-security-key-p",
+        enabled = false,
+        energy_required = 1,
+        ingredients = { 
+            {type = "item", name = "infused-haronite-plate", amount = 1 },
+            {type = "item", name = "rabbasca-turbofin", amount = 1 },
+        },
+        results = { {type = "item", name = "rabbascan-security-key-p", amount = 2} },
+        main_product = "rabbascan-security-key-p",
+        category = "crafting",
+    },
+    {
+        type = "recipe",
+        name = "rabbascan-automation-science-pack",
+        enabled = false,
+        energy_required = 10,
+        ingredients = { 
+            {type = "item", name = "rabbasca-carotene-powder", amount = 20 },
+            {type = "item", name = "iron-gear-wheel", amount = 1 },
+        },
+        results = { {type = "item", name = "automation-science-pack", amount = 2} },
+        main_product = "automation-science-pack",
         category = "crafting",
     },
 }
@@ -444,17 +470,18 @@ recycle_core("bunnyhop-engine", "harene-ears-core")
 recycle_core("harene-transmuter", "harene-ears-core")
 recycle_core("harene-extractor", "harene-ears-core")
 recycle_core("moonstone-chest", "harene-glob-core")
-recycle_core("small-harenide-collider", "harene-cubic-core")
+-- recycle_core("small-harenide-collider", "harene-cubic-core")
 
 
-create_vault_recipe("harene-ears-core",  1, 8,  false)
-create_vault_recipe("harene-glob-core",  3, 5,  false)
-create_vault_recipe("harene-cubic-core", 1, 10, false)
+create_vault_recipe("harene-ears-core",  1, 20,  false)
+create_vault_recipe("harene-glob-core",  3, 12,  false)
+create_vault_recipe("harene-copy-core",  1, 8,   false)
 create_vault_recipe("rabbascan-encrypted-vault-data", 5, 3, true)
 -- create_vault_recipe("harene-cubic-core", 1, 10, false)
 
 create_duplication_recipe("iron-plate", 1, 100)
 create_duplication_recipe("steel-plate", 1, 20)
+create_duplication_recipe("rabbasca-carotene-powder", 1, 200)
 create_duplication_recipe("electronic-circuit", 1, 150)
 create_duplication_recipe("infused-haronite-plate", 1, 5)
 
@@ -503,6 +530,27 @@ data:extend {
         energy_required = 5,
         ingredients = { 
             {type = "item", name = "rabbascan-security-key-a", amount = 1 },
+        },
+        results = { 
+            { type = "item", name = "rabbasca-vault-access-protocol", amount = 1  },
+        },
+        category = "rabbasca-vault-hacking",
+        auto_recycle = false,
+        reset_freshness_on_craft = true,
+        result_is_always_fresh = true,
+        overload_multiplier = 1,
+        allow_inserter_overload = false,
+        hide_from_player_crafting = true
+    },
+    {
+        type = "recipe",
+        name = "hack-rabbascan-vault-power",
+        icon = "__Krastorio2Assets__/icons/cards/production-tech-card.png",
+        -- enabled = false,
+        -- hidden = true,
+        energy_required = 5,
+        ingredients = { 
+            {type = "item", name = "rabbascan-security-key-p", amount = 1 },
         },
         results = { 
             { type = "item", name = "rabbasca-vault-access-protocol", amount = 1  },

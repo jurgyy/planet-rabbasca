@@ -6,7 +6,7 @@ local access_console = util.merge{
   table.deepcopy(data.raw["assembling-machine"]["assembling-machine-2"]),
   {
     name = "rabbasca-vault-access-terminal",
-    max_health = 1500,
+    max_health = 2400,
     crafting_speed = 1,
     energy_usage = "100MW",
     allow_copy_paste = false,
@@ -14,6 +14,7 @@ local access_console = util.merge{
     return_ingredients_on_change = true,
     collision_box = {{-0.4, -0.4}, {0.4, 0.4}},
     selection_box = {{-0.6, -1}, {0.6, 0.6}},
+    is_military_target = false
   }
 }
 access_console.fluid_boxes = { } 
@@ -23,10 +24,11 @@ access_console.energy_source = {
   emissions_per_minute = { ["vault-activity"] = 0.75 * minute } -- actual numbers are way higher
 }
 access_console.resistances = {
-  { type = "physical", percent = 10 },
-  { type = "fire", percent = 80 },
+  { type = "physical", percent = 70 },
+  { type = "fire", percent = 90 },
   { type = "poison", percent = 100 },
   { type = "laser", percent = 50 },
+  { type = "electric", percent = 30 },
 }
 access_console.created_effect = {
   type = "direct",
@@ -87,6 +89,35 @@ local research_console = util.merge{
 }
 research_console.on_animation = access_console.graphics_set.animation
 research_console.off_animation = access_console.graphics_set.animation
+research_console.energy_source.emissions_per_minute = { ["vault-activity"] = 0.4 * minute } -- actual numbers are way higher
+
+local power_node = util.merge{ 
+    table.deepcopy(data.raw["generator"]["steam-turbine"]),
+    extraction_console,
+{  
+  name = "rabbasca-vault-power-node",
+  type = "generator",
+  burns_fluid = true,
+  scale_fluid_usage = true,
+  fluid_usage_per_tick = 0.05 / second,
+  collision_box = {{-1, -1}, {1, 1}},
+  selection_box = {{-1, -1}, {1, 1}},
+  effectivity = 1,
+  maximum_temperature = 10,
+  max_power_output = nil
+}}
+power_node.fluid_box = {
+    volume = 5,
+    pipe_connections = { },
+    filter = "harene"
+}
+power_node.energy_source = {
+  type = "electric",
+  buffer_capacity = "50MJ",
+  usage_priority = "secondary-output",
+  emissions_per_minute = { ["vault-activity"] = 0.5 * minute } -- actual numbers are way higher
+}
+-- power_node.graphics_set = require ("__planet-rabbasca__.prototypes.fusion-system-pictures").generator_graphics_set
 
 local defender_1 = util.merge{ 
   table.deepcopy(data.raw["unit"]["small-spitter"]), 
@@ -222,7 +253,7 @@ local vault = util.merge{
   max_defensive_friends_around_to_spawn = 0,
   spawning_radius = 12,
   map_generator_bounding_box = {{-10.5, -10.5}, {10.5, 10.5}},
-  map_color = {0.9, 0.3, 0.4},
+  -- map_color = {0.9, 0.3, 0.4},
   collision_box = {{-2.5, -2},{2.5, 3}},
   selection_priority = 30
 }}
@@ -249,6 +280,11 @@ vault.created_effect = {
         type = "create-entity",
         entity_name = "rabbasca-vault-research-terminal",
         offsets = {{-1.5, 2.5}},
+      },
+      {
+        type = "create-entity",
+        entity_name = "rabbasca-vault-power-node",
+        offsets = {{1.7, 0.7}},
       },
       {
         type = "create-entity",
@@ -349,6 +385,7 @@ data:extend {
   access_console, 
   extraction_console, 
   research_console,
+  power_node,
   timer_dummy,
   defender_1, defender_2,
 }

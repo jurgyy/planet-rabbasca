@@ -41,7 +41,7 @@ local tower = util.merge{ table.deepcopy(data.raw["fusion-generator"]["fusion-ge
   max_fluid_usage = 0.01,
   collision_box = {{-1.25, -1.25}, {1.25, 1.25}},
   selection_box = {{-1.5, -1.5}, {1.5, 1.5}},
-  loot = {{item = "harene-cubic-core"}},
+  -- loot = {{item = "harene-cubic-core"}},
   map_generator_bounding_box = {{-10, -10}, {10, 10}},
   autoplace = {
     probability_expression = "(rabbasca_camps > 0.85) * 3",
@@ -130,7 +130,7 @@ pump = util.merge{pump, {
     energy_usage = "1MW",
     resource_categories = {"harene"},
     module_slots = 8,
-    loot = {{item = "harene-cubic-core"}}
+    -- loot = {{item = "harene-cubic-core"}}
 }}
 local pump_item = {
     type = "item",

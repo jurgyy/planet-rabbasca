@@ -1,4 +1,4 @@
-local function gui(player) return player.gui.top end
+local function gui(player) return player.gui.left end
 
 -- Choose which spawner to inspect
 local SPAWNER = "rabbasca-vault"
@@ -67,10 +67,20 @@ local function create_evolution_bar(player)
         caption = "Alertness",
         style = "caption_label"
     }
+    right.add{
+        type = "label", 
+        name = "evolution_subtitle",
+        caption = "Active",
+        style = "caption_label"
+    }
+    right.add{
+        type = "button",
+        name = "rabbasca-global-network-btn"
+    }
     local list = right.add{
         type = "flow",
         direction = "horizontal",
-        name = "spawns",
+        name = "rabbasca_spawns",
     }
     for _, unit in pairs(get_spawn_probabilities()) do
         list.add{
@@ -84,9 +94,8 @@ end
 
 -- Remove UI if not needed
 local function destroy_evolution_bar(player)
-    if gui(player).rabbasca_evo_frame then
-        gui(player).rabbasca_evo_frame.destroy()
-    end
+    local frame = gui(player).rabbasca_evo_frame or player.gui.top.rabbasca_evo_frame
+    if frame then frame.destroy() end
 end
 
 local M = {}
@@ -99,7 +108,7 @@ function M.update()
 
     create_evolution_bar(player)
     local evo = storage.rabbasca_evo_last
-    local spawns = gui(player).rabbasca_evo_frame.right.spawns
+    local spawns = gui(player).rabbasca_evo_frame.right.rabbasca_spawns
     if spawns then
         for _, prob in  pairs(get_spawn_probabilities()) do
             if spawns[prob.name] then
@@ -121,7 +130,23 @@ function M.update()
     if title then
         title.caption = string.format("[img=space-location/rabbasca] Alertness:\t\t%i%%", evo * 100)
     end
-  end
+    local subtitle = gui(player).rabbasca_evo_frame.right.evolution_subtitle
+    if subtitle then
+    subtitle.caption = string.format("Active: [img=item/rabbascan-security-key-e]%i/[img=item/rabbascan-security-key-a]%i/[img=item/rabbascan-security-key-p]%i", 
+        storage.rabbasca_active_vault_crafting or 0, storage.rabbasca_active_vault_research or 0, storage.rabbasca_active_vault_power or 0)
+    end
+    end
 end
+
+script.on_event(defines.events.on_gui_click, function(event)
+    local player = game.get_player(event.player_index)
+    if not player or not event.element.valid then return end
+
+    if event.element.name == "rabbasca-global-network-btn" then
+        player.opened = defines.gui_type.global_electric_network
+    elseif event.element.parent.name == "rabbasca_spawns" then
+        player.open_factoriopedia_gui(prototypes.entity[event.element.name])
+    end
+end)
 
 return M

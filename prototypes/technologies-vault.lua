@@ -12,7 +12,6 @@ data:extend{
         recipe = "rabbasca-offering-harene-ears-core"
       },
     },
-    ignore_tech_cost_multiplier = true,
     unit = {
         count = 100,
         time = 30,
@@ -36,7 +35,6 @@ data:extend{
         recipe = "harenic-chemical-plant",
       },
     },
-    ignore_tech_cost_multiplier = true,
     unit = {
         count = 50,
         time = 20,
@@ -56,10 +54,49 @@ data:extend{
         recipe = "rabbasca-offering-harene-glob-core"
       },
     },
+    unit = {
+        count = 200,
+        time = 30,
+        ingredients = {{"rabbascan-encrypted-vault-data", 1}}
+    }
+},
+{
+    type = "technology",
+    name = "rabbasca-copy-technology",
+    icon = "__Krastorio2Assets__/icons/cards/matter-research-data.png",
+    icon_size = 256,
+    prerequisites = { "rabbascan-lost-technologies" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-offering-harene-copy-core"
+      },
+    },
     ignore_tech_cost_multiplier = true,
     unit = {
-        count = 5,
-        time = 10,
+        count = 10,
+        time = 5,
+        ingredients = {{"rabbascan-encrypted-vault-data", 1}}
+    }
+},
+{
+    type = "technology",
+    name = "rabbascan-security-key-p",
+    icon = "__Krastorio2Assets__/icons/cards/matter-research-data.png",
+    icon_size = 256,
+    prerequisites = { "rabbascan-lost-technologies" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "rabbascan-security-key-p"
+      },
+    },
+    ignore_tech_cost_multiplier = true,
+    unit = {
+        count = 20,
+        time = 5,
         ingredients = {{"rabbascan-encrypted-vault-data", 1}}
     }
 },
@@ -92,7 +129,7 @@ data:extend{
     name = "item-duplication-1",
     icon = "__space-age__/graphics/technology/metallurgic-science-pack.png",
     icon_size = 256,
-    prerequisites = { "rabbasca-glob-technology" },
+    prerequisites = { "rabbasca-copy-technology" },
     effects =
     {
       {
@@ -101,16 +138,17 @@ data:extend{
       },
       {
         type = "unlock-recipe",
-        recipe = "rabbasca-steel-plate-duplication",
+        recipe = "rabbasca-electronic-circuit-duplication",
       },
       {
         type = "unlock-recipe",
-        recipe = "rabbasca-electronic-circuit-duplication",
+        recipe = "rabbasca-rabbasca-carotene-powder-duplication",
       },
     },
+  ignore_multiplier = true,
   unit = {
-    count = 40,
-    time = 10,
+    count = 25,
+    time = 5,
     ingredients = {{"rabbascan-encrypted-vault-data", 1}}
   }
 },
@@ -122,6 +160,10 @@ data:extend{
     prerequisites = { "item-duplication-1" },
     effects =
     {
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-steel-plate-duplication",
+      },
       {
         type = "unlock-recipe",
         recipe = "rabbasca-infused-haronite-plate-duplication",

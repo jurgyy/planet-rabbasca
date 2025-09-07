@@ -196,6 +196,25 @@ data:extend {
 },
 {
     type = "technology",
+    name = "rabbascan-automation-science",
+    icon = "__base__/graphics/technology/automation-science-pack.png",
+    icon_size = 256,
+    prerequisites = { "automation-science-pack", "planet-discovery-rabbasca" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "rabbascan-automation-science-pack",
+      },
+    },
+    research_trigger =
+    {
+      type = "mine-entity",
+      entity = "carotenoid"
+    }
+},
+{
+    type = "technology",
     name = "transmutation-technology",
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,

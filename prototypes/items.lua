@@ -55,7 +55,6 @@ data:extend {
     stack_size = 10,
     subgroup = "rabbasca",
     order = "b[personal-transport]-c[startertron]",
-    destroyed_by_dropping_trigger = return_to_monument_trigger()
 },
 {
     type = "item",
@@ -64,16 +63,14 @@ data:extend {
     stack_size = 10,
     subgroup = "rabbasca",
     order = "b[personal-transport]-c[startertron]",
-    destroyed_by_dropping_trigger = return_to_monument_trigger()
 },
 {
     type = "item",
     icon = "__space-age__/graphics/icons/jelly.png",
-    name = "harene-cubic-core",
+    name = "harene-copy-core",
     stack_size = 10,
     subgroup = "rabbasca",
     order = "b[personal-transport]-c[startertron]",
-    destroyed_by_dropping_trigger = return_to_monument_trigger()
 },
 {
     type = "item",
@@ -205,14 +202,21 @@ data:extend {
     name = "rabbascan-security-key-e",
     category = "rabbasca-security",
     icon = "__Krastorio2Assets__/icons/cards/utility-tech-card.png",
-    stack_size = 1,
+    stack_size = 5,
+},
+{
+    type = "item",
+    name = "rabbascan-security-key-p",
+    category = "rabbasca-security",
+    icon = "__Krastorio2Assets__/icons/cards/production-tech-card.png",
+    stack_size = 5,
 },
 {
     type = "item",
     name = "rabbascan-security-key-a",
     category = "rabbasca-security",
     icon = "__Krastorio2Assets__/icons/cards/matter-tech-card.png",
-    stack_size = 25,
+    stack_size = 5,
 },
 {
     type = "item",

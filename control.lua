@@ -36,16 +36,20 @@ local function handle_teleport_effect(event)
     for _, console in pairs(surface.find_entities(terminal_area)) do
       if console.name == "rabbasca-vault-access-terminal" then
         console.active = true
-        console.operable = true
+        -- console.operable = true
       elseif console.name == "rabbasca-vault-extraction-terminal" then
         surface.spill_inventory{position = position, inventory = console.get_output_inventory(), enable_looted = true}
+        if console.active then storage.rabbasca_active_vault_crafting = (storage.rabbasca_active_vault_crafting or 1) - 1 end
         console.active = false
         -- console.operable = false
         -- console.force = game.forces.neutral
       elseif console.name == "rabbasca-vault-research-terminal" then
+        if console.active then storage.rabbasca_active_vault_research = (storage.rabbasca_active_vault_research or 1) - 1 end
         console.active = false
         -- console.operable = false
         -- console.force = game.forces.neutral
+      elseif console.name == "rabbasca-vault-power-node" then
+        if console.active then storage.rabbasca_active_vault_power = (storage.rabbasca_active_vault_power or 1) - 1 end
       end
     end
     -- surface.create_entity {
@@ -73,29 +77,42 @@ local function handle_teleport_effect(event)
     }
     local recipe = console.get_recipe()
     console.active = false
-    console.operable = false
+    -- console.operable = false
     if not recipe then return end
-    local terminal_area = {{vault.position.x - 2, vault.position.y + 2},{vault.position.x + 2, vault.position.y + 3}}
+    local terminal_area = {{vault.position.x - 2, vault.position.y - 2},{vault.position.x + 2, vault.position.y + 3}}
     local alert_duration_multiplier = 1
+
     if recipe.name == "hack-rabbascan-vault-extraction" then
       for _, console2 in pairs(surface.find_entities_filtered({area = terminal_area, name = "rabbasca-vault-extraction-terminal"})) do
         console2.operable = true
         console2.active = true
         console2.force = game.forces.player
-        alert_duration_multiplier = 0.8
+        alert_duration_multiplier = 0.6
+        storage.rabbasca_active_vault_crafting = (storage.rabbasca_active_vault_crafting or 0) + 1
       end
     elseif recipe.name == "hack-rabbascan-vault-research" then
       for _, console2 in pairs(surface.find_entities_filtered({area = terminal_area, name = "rabbasca-vault-research-terminal"})) do
         console2.operable = true
         console2.active = true
         console2.force = game.forces.player
+        alert_duration_multiplier = 1
+        storage.rabbasca_active_vault_research = (storage.rabbasca_active_vault_research or 0) + 1
+      end
+    elseif recipe.name == "hack-rabbascan-vault-power" then
+      for _, console2 in pairs(surface.find_entities_filtered({area = terminal_area, name = "rabbasca-vault-power-node"})) do
+        console2.operable = true
+        console2.active = true
+        console2.force = game.forces.player
+        console2.insert_fluid({ name = "harene", amount = 50 })
+        alert_duration_multiplier = 0.5
+        storage.rabbasca_active_vault_power = (storage.rabbasca_active_vault_power or 0) + 1
       end
     elseif recipe.name == "rabbasca-sabotage-console" then
       surface.spill_inventory{position = position, inventory = console.get_inventory(defines.inventory.crafter_input), enable_looted = true}
       surface.spill_inventory{position = position, inventory = console.get_output_inventory(), enable_looted = true}
       console.set_recipe(nil)
       console.damage(console.max_health / 1.7, game.forces.player)
-      alert_duration_multiplier = 0.4
+      alert_duration_multiplier = 0.2
     end
     info.insert({name="rabbasca-vault-access-timer", count=1, spoil_percent = 1 - alert_duration_multiplier}) 
     for i = 0, 20 do
