@@ -1,7 +1,7 @@
 {
     "name": "planet-rabbasca",
     "version": "0.0.1",
-    "title": "Rabbasca and the lost remnant",
+    "title": "○🌐 Rabbasca and the lost remnant",
     "factorio_version": "2.0",
     "author": "Me",    
     "dependencies": ["space-age", "PlanetsLib", "Krastorio2Assets", "any-planet-start"]

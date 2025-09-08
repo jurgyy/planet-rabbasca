@@ -70,7 +70,7 @@ local map_gen = {
           ["rabbasca-infused-moonstone-rock"] = {},
           ["carotenoid"] = {},
           ["rabbasca-turbofish"] = {},
-          ["rabbasca-moonstone-rock"] = {},
+          ["moonstone-rock"] = {},
           -- ["moonstone-turret"] = {},
           ["rabbasca-vault"] = {},
         }

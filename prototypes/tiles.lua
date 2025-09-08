@@ -60,10 +60,10 @@ local harene_tile = util.merge{table.deepcopy(data.raw["tile"]["oil-ocean-shallo
   effect = "brash-ice-2",
   effect_color = {60,55,97},
   effect_color_secondary = { 70, 40, 120 },
-  map_color = { 0.4, 0.1, 0.65}
+  map_color = { 0.4, 0.1, 0.65},
 }}
+harene_tile.collision_mask = { layers = { harene = true, ground_tile = true } }
 harene_tile.fluid = nil
-harene_tile.collision_mask = { layers = { harene = true } }
 local harene_tile_deep = util.merge{harene_tile, {
     name = "rabbasca-harene-deep",
     autoplace = { probability_expression = "rabbasca_harene_pools_deep" },
@@ -71,6 +71,7 @@ local harene_tile_deep = util.merge{harene_tile, {
     effect_color = {33,22,61},
     effect_color_secondary = { 90, 77, 100 }
 }}
+harene_tile_deep.collision_mask = { layers = { harene = true } }
 
 data:extend{
 {

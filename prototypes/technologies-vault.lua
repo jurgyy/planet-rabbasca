@@ -9,7 +9,34 @@ data:extend{
     {
       {
         type = "unlock-recipe",
-        recipe = "rabbasca-offering-harene-ears-core"
+        recipe = "harene-ears-core"
+      },
+    },
+    unit = {
+        count = 100,
+        time = 10,
+        ingredients = {{"rabbascan-encrypted-vault-data", 1}}
+    }
+},
+{
+    type = "technology",
+    name = "harene-solvent",
+    icon = "__Krastorio2Assets__/icons/cards/matter-research-data.png",
+    icon_size = 256,
+    prerequisites = { "rabbascan-lost-technologies" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "harene-solvent"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "smart-solution"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "power-solution"
       },
     },
     unit = {
@@ -28,16 +55,51 @@ data:extend{
     {
       {
         type = "unlock-recipe",
-        recipe = "harenic-chemical-plant-recycling"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "harenic-chemical-plant",
+        recipe = "harene-enrichment-center"
       },
     },
     unit = {
         count = 50,
         time = 20,
+        ingredients = {{"rabbascan-encrypted-vault-data", 1}}
+    }
+},
+{
+    type = "technology",
+    name = "rabbasca-vault-infused-crafting",
+    icon = "__Krastorio2Assets__/icons/cards/matter-research-data.png",
+    icon_size = 256,
+    prerequisites = { "rabbasca-vault-simple-transmutation" },
+    effects =
+    {
+      -- filled in data-updates
+    },
+    unit = {
+        count = 500,
+        time = 30,
+        ingredients = {{"rabbascan-encrypted-vault-data", 1}}
+    }
+},
+{
+    type = "technology",
+    name = "harene-synthesis",
+    icon = "__space-age__/graphics/technology/steel-plate-productivity.png",
+    icon_size = 256,
+    prerequisites = { "rabbasca-vault-simple-transmutation", "haronite-catalyst", "foundry" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "harene"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "infused-haronite-plate"
+      },
+    },
+    unit = {
+        count = 100,
+        time = 10,
         ingredients = {{"rabbascan-encrypted-vault-data", 1}}
     }
 },
@@ -51,7 +113,7 @@ data:extend{
     {
       {
         type = "unlock-recipe",
-        recipe = "rabbasca-offering-harene-glob-core"
+        recipe = "harene-glob-core"
       },
     },
     unit = {
@@ -70,7 +132,7 @@ data:extend{
     {
       {
         type = "unlock-recipe",
-        recipe = "rabbasca-offering-harene-copy-core"
+        recipe = "harene-copy-core"
       },
     },
     ignore_tech_cost_multiplier = true,
@@ -153,15 +215,15 @@ data:extend{
     {
       {
         type = "unlock-recipe",
-        recipe = "rabbasca-iron-plate-duplication",
+        recipe = "rabbasca-iron-plate-duplicate",
       },
       {
         type = "unlock-recipe",
-        recipe = "rabbasca-electronic-circuit-duplication",
+        recipe = "rabbasca-electronic-circuit-duplicate",
       },
       {
         type = "unlock-recipe",
-        recipe = "rabbasca-rabbasca-carotene-powder-duplication",
+        recipe = "rabbasca-rabbasca-carotene-powder-duplicate",
       },
     },
   ignore_multiplier = true,
@@ -181,11 +243,11 @@ data:extend{
     {
       {
         type = "unlock-recipe",
-        recipe = "rabbasca-steel-plate-duplication",
+        recipe = "rabbasca-steel-plate-duplicate",
       },
       {
         type = "unlock-recipe",
-        recipe = "rabbasca-infused-haronite-plate-duplication",
+        recipe = "rabbasca-advanced-circuit-duplicate",
       },
     },
   unit = {
@@ -204,11 +266,11 @@ data:extend{
 --     {
 --       {
 --         type = "unlock-recipe",
---         recipe = "rabbasca-offering-iron-plate"
+--         recipe = "iron-plate"
 --       },
 --       {
 --         type = "unlock-recipe",
---         recipe = "rabbasca-offering-copper-plate"
+--         recipe = "copper-plate"
 --       },
 --     },
 --     ignore_tech_cost_multiplier = true,

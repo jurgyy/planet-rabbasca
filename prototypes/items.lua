@@ -23,6 +23,8 @@ data:extend {
     stack_size = 50,
     subgroup = "rabbasca",
     order = "b[personal-transport]-c[startertron]",
+    spoil_ticks = 3 * minute,
+    spoil_result = "rabbasca-moonstone"
 },
 {
     type = "item",
@@ -42,8 +44,32 @@ data:extend {
 },
 {
     type = "item",
+    icon = "__base__/graphics/icons/sulfur.png",
+    name = "harene-solvent",
+    stack_size = 50,
+    subgroup = "rabbasca",
+    order = "b[personal-transport]-c[startertron]",
+},
+{
+    type = "item",
     icon = "__space-age__/graphics/icons/bioflux.png",
     name = "smart-solution",
+    stack_size = 100,
+    subgroup = "rabbasca",
+    order = "b[personal-transport]-c[startertron]",
+},
+{
+    type = "item",
+    icon = "__space-age__/graphics/icons/bioflux.png",
+    name = "power-solution",
+    stack_size = 100,
+    subgroup = "rabbasca",
+    order = "b[personal-transport]-c[startertron]",
+},
+{
+    type = "item",
+    icon = "__space-age__/graphics/icons/bioflux.png",
+    name = "haronite-catalyst",
     stack_size = 100,
     subgroup = "rabbasca",
     order = "b[personal-transport]-c[startertron]",
@@ -64,9 +90,10 @@ data:extend {
     subgroup = "rabbasca",
     order = "b[personal-transport]-c[startertron]",
 },
+
 {
     type = "item",
-    icon = "__space-age__/graphics/icons/jelly.png",
+    icons = {{ icon = "__space-age__/graphics/icons/jelly.png", tint = { 0.42, 0.6, 1 }, scale = 1 }},
     name = "harene-copy-core",
     stack_size = 10,
     subgroup = "rabbasca",
@@ -93,14 +120,6 @@ data:extend {
     icon = "__space-age__/graphics/icons/big-volcanic-rock.png",
     name = "rabbasca-moonstone",
     stack_size = 50,
-    subgroup = "rabbasca",
-    order = "b[personal-transport]-c[startertron]",
-},
-{
-    type = "item",
-    icon = "__space-age__/graphics/icons/tungsten-ore.png",
-    name = "harene-infused-moonstone",
-    stack_size = 5,
     subgroup = "rabbasca",
     order = "b[personal-transport]-c[startertron]",
 },
@@ -171,6 +190,16 @@ data:extend {
     auto_barrel = false
 },
 {
+  type = "fluid",
+    name = "harene-gas",
+    icons = {{ icon = "__space-age__/graphics/icons/fluid/fluorine.png", tint = {r=0.65, g=0.31, b=0.92} }},
+    base_color = {r=0.65, g=0.31, b=0.92},
+    flow_color = {r=0.65, g=0.31, b=0.92},
+    default_temperature = 35.0,
+    fuel_value = "1MJ",
+    auto_barrel = false
+},
+{
     type = "fluid",
     name = "beta-carotene",
     icon = "__space-age__/graphics/icons/fluid/thruster-fuel.png",
@@ -190,6 +219,15 @@ data:extend {
     auto_barrel = true
 },
 {
+    type = "fluid",
+    name = "harenic-sludge",
+    icon = "__space-age__/graphics/icons/fluid/ammoniacal-solution.png",
+    base_color = {0.17, 0.14, 0.53},
+    flow_color = {0.17, 0.14, 0.53},
+    default_temperature = 24.0,
+    auto_barrel = true
+},
+{
     type = "item",
     icon = "__base__/graphics/icons/steam-engine.png",
     name = "supercharged-jellynut-seed",
@@ -205,6 +243,10 @@ data:extend {
     fuel_category = "rabbasca-security-fuel-e",
     icon = "__Krastorio2Assets__/icons/cards/utility-tech-card.png",
     stack_size = 5,
+},
+{
+    type = "fuel-category",
+    name = "rabbasca-infused-core-fuel"
 },
 {
     type = "fuel-category",

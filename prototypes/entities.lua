@@ -89,12 +89,45 @@ local tower_item = {
     place_result = "small-harenide-collider",
 }
 
-local pump =  table.deepcopy(data.raw["mining-drill"]["pumpjack"])
-pump.minable.result = "harene-extractor"
-pump.output_fluid_box = {
-    volume = 10,
-    filter = "harene",
-    minimum_temperature = 15.0,
+local transmuter = table.deepcopy(data.raw["assembling-machine"]["centrifuge"])
+transmuter.minable.result = "harene-enrichment-center"
+transmuter.fluid_boxes = { }
+transmuter.crafting_categories = {"harene-infusion"}
+transmuter.tile_buildability_rules = restrict_to_harene_pool({{-0.6, -0.6}, { 0.6, 0.6}})
+transmuter = util.merge{transmuter, {
+    name = "harene-enrichment-center",
+    energy_source = { type = "void" },
+    energy_usage = "100MW",
+    module_slots = 2,
+    crafting_speed = 2.0,
+}}
+transmuter.fluid_boxes = {
+  {
+    volume = 1000,
+    production_type = "input",
+    pipe_connections = 
+    {
+        {
+          flow_direction = "input",
+          position = {-1, -1},
+          direction = defines.direction.north,
+        },
+    },
+  },
+  {
+    volume = 1000,
+    production_type = "input",
+    pipe_connections = 
+    {
+        {
+          flow_direction = "input",
+          position = {1, -1},
+          direction = defines.direction.north,
+        },
+    },
+  },
+  {
+    volume = 50,
     production_type = "output",
     pipe_connections = 
     {
@@ -102,144 +135,19 @@ pump.output_fluid_box = {
           flow_direction = "output",
           position = {0, 1},
           direction = defines.direction.south,
-          connection_category = {"harene"}
-        },
-        {
-          flow_direction = "output",
-          position = {0, -1},
-          direction = defines.direction.north,
-          connection_category = {"harene"}
-        },
-        {
-          flow_direction = "output",
-          position = {1, 0},
-          direction = defines.direction.east,
-          connection_category = {"harene"}
-        },
-        {
-          flow_direction = "output",
-          position = {-1, 0},
-          direction = defines.direction.west,
-          connection_category = {"harene"}
-        },
-    },
-}
-pump = util.merge{pump, {
-    name = "harene-extractor",
-    energy_source = { type = "void" },
-    energy_usage = "1MW",
-    resource_categories = {"harene"},
-    module_slots = 8,
-    -- loot = {{item = "harene-cubic-core"}}
-}}
-local pump_item = {
-    type = "item",
-    icon = "__space-age__/graphics/icons/heating-tower.png",
-    name = "harene-extractor",
-    stack_size = 5,
-    subgroup = "transport",
-    order = "b[personal-transport]-c[startertron]",
-    place_result = "harene-extractor",
-}
-
-local assembler = table.deepcopy(data.raw["assembling-machine"]["chemical-plant"])
-assembler.minable.result = "harenic-chemical-plant"
--- assembler.fluid_boxes = { }
-assembler.tile_buildability_rules = restrict_to_harene_pool({{-0.6, -0.6}, { 0.6, 0.6}})
-assembler.crafting_categories = {"organic", "organic-or-chemistry"}
-assembler = util.merge{assembler, {
-    name = "harenic-chemical-plant",
-    energy_source = { type = "void" },
-    energy_usage = "17MW",
-    module_slots = 8,
-    crafting_speed = 3.0,
-    loot = {{item = "harene-ears-core"}}
-    -- quality_affects_energy_usage = true,
-}}
-
-local assembler_item = {
-    type = "item",
-    icon = "__space-age__/graphics/icons/biochamber.png",
-    name = "harenic-chemical-plant",
-    stack_size = 5,
-    subgroup = "transport",
-    order = "b[personal-transport]-c[startertron]",
-    place_result = "harenic-chemical-plant",
-}
-
-local synthesizer = util.merge{ table.deepcopy(data.raw["assembling-machine"]["electromagnetic-plant"]),
-{
-  name = "harene-synthesizer",
-  energy_usage = "10.5GW",
-  module_slots = 0,
-  crafting_speed = 1.0,
-  loot = {{item = "harene-ears-core"}}
-}
-}
-synthesizer.crafting_categories = { "harene-synthesis" }
-synthesizer.fluid_boxes = {
-  {
-    volume = 20,
-    filter = "harene",
-    production_type = "output",
-    pipe_connections = 
-    {
-        {
-          flow_direction = "output",
-          position = {1.699, 1},
-          direction = defines.direction.east,
-          connection_category = {"harene"}
-        },
-    },
-  },
-  {
-    volume = 500,
-    filter = "beta-carotene",
-    production_type = "input",
-    pipe_connections = 
-    {
-        {
-          flow_direction = "input",
-          position = {-1.677, -1},
-          direction = defines.direction.west,
         },
     },
   }
 }
 
-local synthesizer_item = {
-    type = "item",
-    icon = "__space-age__/graphics/icons/lithium-brine.png",
-    name = "harene-synthesizer",
-    stack_size = 5,
-    subgroup = "transport",
-    order = "b[personal-transport]-c[startertron]",
-    place_result = "harene-synthesizer",
-}
-
-local transmuter = table.deepcopy(data.raw["assembling-machine"]["assembling-machine-3"])
-transmuter.minable.result = "harene-transmuter"
-transmuter.fluid_boxes = { }
-transmuter.crafting_categories = {"harene-transmutation"}
-assembler.tile_buildability_rules = restrict_to_harene_pool({{-0.6, -0.6}, { 0.6, 0.6}})
-transmuter = util.merge{transmuter, {
-    name = "harene-transmuter",
-    energy_source = { type = "void" },
-    energy_usage = "100MW",
-    module_slots = 2,
-    crafting_speed = 1.0,
-    loot = {{item = "harene-ears-core"}}
-    -- quality_affects_energy_usage = true,
-}}
-
 local transmuter_item = {
     type = "item",
-    icon = "__space-age__/graphics/icons/lithium-brine.png",
-    name = "harene-transmuter",
+    icon = "__base__/graphics/icons/centrifuge.png",
+    name = "harene-enrichment-center",
     stack_size = 5,
-    subgroup = "transport",
-    order = "b[personal-transport]-c[startertron]",
-    place_result = "harene-transmuter",
+    subgroup = "production-machine",
+    order = "f[harene-enrichment-center]",
+    place_result = "harene-enrichment-center",
 }
 
 local thruster_graphics = table.deepcopy(data.raw["thruster"]["thruster"]["graphics_set"])
@@ -255,31 +163,6 @@ thruster_graphics.working_visualisations[5] = {
     shift = {0,3},
     tint = color
   }),
-}
-
-local harene_pipe = util.merge{ table.deepcopy(data.raw["pipe"]["pipe"]),
-{ tile_buildability_rules = {0} },
-{
-  name = "moonstone-pipe",
-  minable = { result = "moonstone-pipe" },
-  tile_buildability_rules = restrict_to_harene_pool({{-0.6, -0.6}, { 0.6, 0.6}}),
-  fluid_box = { volume = 1 },
-  filter = "harene"
-}
-}
-harene_pipe.fluid_box.pipe_connections[1].connection_category = {"harene"}
-harene_pipe.fluid_box.pipe_connections[2].connection_category = {"harene"}
-harene_pipe.fluid_box.pipe_connections[3].connection_category = {"harene"}
-harene_pipe.fluid_box.pipe_connections[4].connection_category = {"harene"}
--- harene_pipe.collision_box = nil
-local harene_pipe_item = {
-    type = "item",
-    icon = "__space-age__/graphics/icons/lithium-brine.png",
-    name = "moonstone-pipe",
-    stack_size = 50,
-    subgroup = "transport",
-    order = "b[personal-transport]-c[startertron]",
-    place_result = "moonstone-pipe",
 }
 
 local moonstone_turret = util.merge{ table.deepcopy(data.raw["electric-turret"]["tesla-turret"]),
@@ -300,11 +183,7 @@ local moonstone_turret = util.merge{ table.deepcopy(data.raw["electric-turret"][
 
 data:extend{
   tower_item, tower, 
-  assembler, assembler_item, 
-  pump_item, pump, 
   transmuter, transmuter_item, 
-  harene_pipe, harene_pipe_item,
-  synthesizer, synthesizer_item,
   moonstone_turret, 
 }
 
@@ -378,32 +257,8 @@ data:extend {
     place_result = "harene-thruster",
   },
 }
-local moonstone_inserter = util.merge {
-  table.deepcopy(data.raw["inserter"]["fast-inserter"]),
-  { 
-      minable = { result = "carotene-inserter" },
-      name = "carotene-inserter",
-      bulk = true,
-      uses_inserter_stack_size_bonus = true,
-      wait_for_full_hand = false,
-      stack_size_bonus = 17,
-      grab_less_to_match_belt_stack = true,
-      energy_source = { type = "void" }
-  }
-}
-moonstone_inserter.tile_buildability_rules = restrict_to_harene_pool({{-0.6, -0.6}, { 0.6, 0.6}})
 
 data:extend {
-  moonstone_inserter,
-  {
-    type = "item",
-    icon = "__space-age__/graphics/icons/stack-inserter.png",
-    name = "carotene-inserter",
-    stack_size = 50,
-    subgroup = "transport",
-    order = "b[personal-transport]-c[startertron]",
-    place_result = "carotene-inserter",
-  },
   util.merge {
   table.deepcopy(data.raw["simple-entity"]["vulcanus-chimney"]),
   { minable = {0} },
@@ -422,7 +277,7 @@ data:extend {
   util.merge {
     table.deepcopy(data.raw["simple-entity"]["big-volcanic-rock"]),
     {
-      name = "rabbasca-moonstone-rock",
+      name = "moonstone-rock",
       minable = { 
         mining_time = 1.5,
       },
@@ -479,9 +334,13 @@ fish_action.attack_parameters.ammo_type.action.action_delivery.target_effects[1]
 
 
 data.raw["capsule"]["rabbasca-turbofish"].capsule_action = fish_action
-data.raw["simple-entity"]["rabbasca-moonstone-rock"].minable.results = {{type = "item", name = "rabbasca-moonstone", amount_min = 9, amount_max = 12}}
+data.raw["simple-entity"]["moonstone-rock"].minable.results = {{type = "item", name = "rabbasca-moonstone", amount_min = 9, amount_max = 12}}
 data.raw["simple-entity"]["carotenoid"].minable.results = {{type = "item", name = "rabbasca-carotene-powder", amount_min = 40, amount_max = 55}}
-data.raw["simple-entity"]["rabbasca-infused-moonstone-rock"].minable.results = {{type = "item", name = "harene-infused-moonstone", amount_min = 7, amount_max = 9}} 
+data.raw["simple-entity"]["rabbasca-infused-moonstone-rock"].minable.results = {
+  {type = "item", name = "rabbasca-moonstone", amount_min = 7, amount_max = 9},
+  {type = "item", name = "haronite", amount_min = 5, amount_max = 7},
+
+} 
 for _, sprite in pairs(data.raw["simple-entity"]["rabbasca-infused-moonstone-rock"].pictures) do
   sprite.tint = {r=0.41, g=0.22, b=0.83}
   sprite.tint_as_overlay = true

@@ -1,12 +1,11 @@
-local color = {r=0.65, g=0.31, b=0.92}
+local color = {r=0.73, g=0.42, b=1}
 
 local harene_resource = {
   type = "resource",
   name = "harene-vent",
-  icon = "__space-age__/graphics/icons/lithium-brine.png",
-  icon_size = 32,
+  icons = {{ icon = "__space-age__/graphics/icons/fluorine-vent.png", tint = color }},
   flags = {"placeable-neutral"},
-  category = "harene",
+  category = "basic-fluid",
   order="a-b-f",
   infinite = true,
   highlight = true,
@@ -24,10 +23,9 @@ local harene_resource = {
     {
       {
         type = "fluid",
-        name = "harene",
+        name = "harenic-sludge",
         amount_min = 1,
         amount_max = 1,
-        probability = 1
       }
     }
   },
@@ -42,8 +40,8 @@ local harene_resource = {
   selection_box = {{-1.5, -1.5}, {1.5, 1.5}},
   map_generator_bounding_box = {{-5, -5}, {5, 5}},
   autoplace = {
-    tile_restriction = { "rabbasca-harene-deep" },
-    probability_expression = "rabbasca_harene_pools_center",
+    tile_restriction = { "rabbasca-harene" },
+    probability_expression = "rabbasca_harene_pools",
     richness_expression = "rabbasca_harene_richness",
   },
   stage_counts = {0},
@@ -56,7 +54,7 @@ local harene_resource = {
         priority = "extra-high",
         frame_count = 4,
         scale = 1.0,
-        tint = util.multiply_color(color, 0.3)
+        tint = color
       })
     }
   },
@@ -72,8 +70,8 @@ local harene_resource = {
         priority = "extra-high",
         frame_count = 64,
         animation_speed = 0.35,
-        tint = util.multiply_color(color, 1),
-        scale = 1.0
+        tint = color,
+        scale = 1.0,
         --shift = util.by_pixel( 0.5, -54.0)
       })
     },
@@ -86,7 +84,7 @@ local harene_resource = {
         frame_count = 64,
         animation_speed = 0.35,
         tint = util.multiply_color(color, 0.5),
-        scale = 1.0
+        scale = 1.0,
         --shift = util.by_pixel( 0.5, -54.0)
       })
     },
@@ -102,7 +100,7 @@ local harene_resource = {
         animation_speed = 0.5,
         shift = util.by_pixel(-2, -40),
         scale = 1.0,
-        tint = util.multiply_color(color, 0.1)
+        tint = util.multiply_color(color, 0.2)
       }
     },
     {

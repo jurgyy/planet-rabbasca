@@ -20,58 +20,6 @@ data:extend {
 },
 {
     type = "technology",
-    name = "harene-processing",
-    icon = "__space-age__/graphics/technology/steel-plate-productivity.png",
-    icon_size = 256,
-    prerequisites = { "transmutation-technology", "leg-day-everyday" },
-    effects =
-    {
-      {
-        type = "unlock-recipe",
-        recipe = "infused-haronite-plate"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "harene-infused-moonstone"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-turbofish"
-      },
-    },
-    research_trigger =
-    {
-      type = "craft-item",
-      item = "smart-solution",
-      amount = "50"
-    }
-},
-{
-    type = "technology",
-    name = "infused-haronite-plate",
-    icon = "__space-age__/graphics/technology/steel-plate-productivity.png",
-    icon_size = 256,
-    prerequisites = { "harene-processing" },
-    effects =
-    {
-      {
-        type = "unlock-recipe",
-        recipe = "harene-extractor-recycling"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "harene-extractor"
-      },
-    },
-    research_trigger =
-    {
-      type = "craft-item",
-      item = "infused-haronite-plate",
-      amount = "50"
-    }
-},
-{
-    type = "technology",
     name = "leg-day-everyday",
     icon = "__space-age__/graphics/technology/fish-breeding.png",
     icon_size = 256,
@@ -99,25 +47,6 @@ data:extend {
 },
 {
     type = "technology",
-    name = "ultranutritious-science-pack",
-    icon = "__space-age__/graphics/technology/metallurgic-science-pack.png",
-    icon_size = 256,
-    prerequisites = { "harene-processing" },
-    effects =
-    {
-      {
-        type = "unlock-recipe",
-        recipe = "ultranutritious-science-pack"
-      }
-    },
-    research_trigger =
-    {
-      type = "craft-item",
-      item = "infused-haronite-plate"
-    }
-},
-{
-    type = "technology",
     name = "rabbascan-vault-accessibility",
     icon = "__Krastorio2Assets__/icons/cards/utility-tech-card.png",
     icon_size = 256,
@@ -136,7 +65,7 @@ data:extend {
     research_trigger =
     {
       type = "mine-entity",
-      entity = "rabbasca-moonstone-rock"
+      entity = "moonstone-rock"
     }
 },
 {
@@ -160,35 +89,35 @@ data:extend {
 },
 {
     type = "technology",
-    name = "energetic-enrichment",
+    name = "haronite-catalyst",
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
-    prerequisites = { "rabbasca-ears-technology" },
+    prerequisites = { "harene-solvent", "beta-carotene" },
     effects =
     {
       {
         type = "unlock-recipe",
-        recipe = "haronite"
+        recipe = "haronite-catalyst"
       }
     },
     research_trigger =
     {
-      type = "craft-fluid",
-      fluid = "beta-carotene"
+      type = "craft-item",
+      item = "smart-solution"
     }
 },
 {
     type = "technology",
-    name = "rabbascan-automation-science",
+    name = "beta-carotene",
     icon = "__base__/graphics/technology/automation-science-pack.png",
     icon_size = 256,
-    prerequisites = { "automation-science-pack", "planet-discovery-rabbasca" },
+    prerequisites = { "planet-discovery-rabbasca" },
     effects =
     {
       {
         type = "unlock-recipe",
-        recipe = "rabbascan-automation-science-pack",
-      },
+        recipe = "beta-carotene",
+      }
     },
     research_trigger =
     {
@@ -198,37 +127,10 @@ data:extend {
 },
 {
     type = "technology",
-    name = "transmutation-technology",
-    icon = "__space-age__/graphics/technology/gleba.png",
-    icon_size = 256,
-    prerequisites = { "rabbasca-ears-technology" },
-    effects =
-    {
-      {
-        type = "unlock-recipe",
-        recipe = "harene-transmuter-recycling"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "harene-transmuter"
-      },
-      -- {
-      --   type = "unlock-recipe",
-      --   recipe = "haronite-plate"
-      -- },
-    },
-    research_trigger =
-    {
-      type = "craft-item",
-      item = "moonstone-pipe"
-    }
-},
-{
-    type = "technology",
     name = "harene-infused-foundations",
     icon = "__space-age__/graphics/technology/foundation.png",
     icon_size = 256,
-    prerequisites = { "foundation", "planet-discovery-rabbasca" },
+    prerequisites = { "foundation", "harene-synthesis" },
     unit = {
         count = 2000,
         time = 60,
@@ -250,5 +152,5 @@ data:extend {
         recipe = "harene-infused-space-platform"
       },
     },
-}
+},
 }
