@@ -36,7 +36,11 @@ data:extend {
       },
       {
         type = "unlock-recipe",
-        recipe = "smart-solution"
+        recipe = "harenic-sludge-skimming-fine"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "harenic-sludge-skimming-rough"
       },
     },
     research_trigger =
@@ -47,16 +51,12 @@ data:extend {
 },
 {
     type = "technology",
-    name = "rabbascan-vault-accessibility",
+    name = "rabbasca-kickstart",
     icon = "__Krastorio2Assets__/icons/cards/utility-tech-card.png",
     icon_size = 256,
     prerequisites = { "planet-discovery-rabbasca" },
     effects =
     {
-      {
-        type = "unlock-recipe",
-        recipe = "rabbascan-security-key-e"
-      },
       {
         type = "unlock-recipe",
         recipe = "rabbasca-console-scrap-recycling"
@@ -65,26 +65,132 @@ data:extend {
     research_trigger =
     {
       type = "mine-entity",
-      entity = "moonstone-rock"
+      entity = "rabbascan-scrap"
     }
 },
 {
     type = "technology",
-    name = "rabbascan-lost-technologies",
-    icon = "__Krastorio2Assets__/icons/cards/matter-tech-card.png",
+    name = "rabbascan-vault-accessibility",
+    icon = "__Krastorio2Assets__/icons/cards/utility-tech-card.png",
     icon_size = 256,
-    prerequisites = { "rabbascan-vault-accessibility" },
+    prerequisites = { "rabbasca-kickstart" },
     effects =
     {
       {
         type = "unlock-recipe",
-        recipe = "rabbascan-security-key-a"
+        recipe = "harene-copy-core"
       },
     },
     research_trigger =
     {
       type = "craft-item",
-      item = "rabbascan-encrypted-vault-data"
+      item = "blank-vault-key"
+    }
+},
+{
+    type = "technology",
+    name = "harene-gas-processing",
+    icon = "__space-age__/graphics/technology/gleba.png",
+    icon_size = 256,
+    prerequisites = { "oil-gathering", "concrete", "planet-discovery-rabbasca" },
+    effects =
+    {
+      {
+          type = "unlock-recipe",
+          recipe = "chemical-plant"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "harene-enrichment-center"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "power-solution"
+      },
+    },
+    research_trigger =
+    {
+        type = "mine-entity",
+        entity = "harene-vent"
+    }
+},
+{
+    type = "technology",
+    name = "blank-vault-key",
+    icon = "__space-age__/graphics/technology/gleba.png",
+    icon_size = 256,
+    prerequisites = { "rabbascan-vault-accessibility", "beta-carotene" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "blank-vault-key"
+      }
+    },
+    research_trigger =
+    {
+      type = "craft-item",
+      item = "blank-vault-key",
+      count = 10
+    }
+},
+{
+    type = "technology",
+    name = "rabbasca-vault-core-extraction",
+    icon = "__space-age__/graphics/technology/gleba.png",
+    icon_size = 256,
+    prerequisites = { "harene-gas-processing" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "harene-ears-core-protocol"
+      }
+    },
+    research_trigger =
+    {
+      type = "craft-item",
+      item = "rabbasca-energetic-concrete",
+      count = 50
+    }
+},
+{
+    type = "technology",
+    name = "rabbasca-ears-technology",
+    icon = "__space-age__/graphics/technology/gleba.png",
+    icon_size = 256,
+    prerequisites = { "rabbasca-vault-core-extraction", "blank-vault-key" },
+    effects =
+    {
+
+    },
+    research_trigger =
+    {
+      type = "mine-entity",
+      entity = "harene-ears-core-capsule"
+    }
+},
+{
+    type = "technology",
+    name = "ultranutritious-science-pack",
+    icon = "__Krastorio2Assets__/icons/cards/matter-research-data.png",
+    icon_size = 256,
+    prerequisites = { "harene-gas-processing", "rabbasca-ears-technology" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "smart-solution"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "ultranutritious-science-pack"
+      },
+    },
+    research_trigger =
+    {
+      type = "craft-item",
+      item = "power-solution"
     }
 },
 {
@@ -92,7 +198,7 @@ data:extend {
     name = "haronite-catalyst",
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
-    prerequisites = { "harene-solvent", "beta-carotene" },
+    prerequisites = { "ultranutritious-science-pack", "beta-carotene" },
     effects =
     {
       {

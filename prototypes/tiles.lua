@@ -51,27 +51,29 @@ return {
     }}
 end
 
-local harene_tile = util.merge{table.deepcopy(data.raw["tile"]["oil-ocean-shallow"]), {
+local harene_tile = util.merge{table.deepcopy(data.raw["tile"]["ammoniacal-ocean"]), {
   name = "rabbasca-harene",
-  subgroup = "aquilo-tiles",
+  -- subgroup = "aquilo-tiles",
 --   allowed_neighbors = { "water" },
   default_cover_tile = "foundation",
   autoplace = { probability_expression = "rabbasca_harene_pools" },
+  destroys_dropped_items = true,
   effect = "brash-ice-2",
   effect_color = {60,55,97},
   effect_color_secondary = { 70, 40, 120 },
   map_color = { 0.4, 0.1, 0.65},
 }}
-harene_tile.collision_mask = { layers = { harene = true, ground_tile = true } }
-harene_tile.fluid = nil
-local harene_tile_deep = util.merge{harene_tile, {
-    name = "rabbasca-harene-deep",
-    autoplace = { probability_expression = "rabbasca_harene_pools_deep" },
-    effect = "brash-ice-2",
-    effect_color = {33,22,61},
-    effect_color_secondary = { 90, 77, 100 }
-}}
-harene_tile_deep.collision_mask = { layers = { harene = true } }
+-- harene_tile.collision_mask = { layers = { harene = true, ground_tile = true } }
+harene_tile.fluid = "harenic-sludge"
+-- local harene_tile_deep = util.merge{harene_tile, {
+--     name = "rabbasca-harene-deep",
+--     autoplace = { probability_expression = "rabbasca_harene_pools_deep" },
+--     effect = "brash-ice-2",
+--     effect_color = {33,22,61},
+--     effect_color_secondary = { 90, 77, 100 }
+-- }}
+-- harene_tile_deep.collision_mask = { layers = { harene = true, water_tile = true } }
+-- harene_tile_deep.fluid = "harenic-sludge"
 
 data:extend{
 {
@@ -103,21 +105,27 @@ util.merge{ table.deepcopy(data.raw["tile"]["midland-yellow-crust-2"]), {
     map_color = {0.61, 0.282, 0.1}
 }},
 util.merge { 
+    table.deepcopy(data.raw["tile"]["concrete"]),
+    {
+      name = "rabbasca-energetic-concrete",
+      collision_mask = { layers = { harene = true } },
+      effect_color = {60,55,97},
+    }
+},
+util.merge { 
     table.deepcopy(data.raw["tile"]["foundation"]),
     {
       name = "harene-infused-foundation",
       collision_mask = { layers = { harene = true } },
-      autoplace = {
-        probability_expression = "(rabbasca_camps > 0) * 5",
-        force = "enemy",
-      }
+      effect_color = {60,55,97},
     }
-  },
+},
 util.merge { 
     table.deepcopy(data.raw["tile"]["space-platform-foundation"]),
     {
       name = "harene-infused-space-platform",
       collision_mask = { layers = { harene = true } },
+      effect_color = {60,55,97},
     }
 },
 harene_tile, harene_tile_deep

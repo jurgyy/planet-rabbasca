@@ -15,10 +15,12 @@ local function handle_teleport_effect(event)
   if effect_id == "rabbasca_init_terminal" then
     local console = event.target_entity or event.source_entity
     if not console then return end
-    if console.name == "rabbasca-vault-access-terminal" then
+    if console.name == "rabbasca-vault-extraction-terminal" then
       -- console.active = false
       -- console.operable = false
-      -- console.force = game.forces.neutral
+      console.force = game.forces.player
+    elseif console.name == "rabbasca-vault-access-terminal" then
+      console.force = game.forces.neutral
     elseif console.name == "rabbasca-vault-timer" then
       console.operable = false
       console.destructible = false
@@ -47,25 +49,43 @@ local function handle_teleport_effect(event)
   if effect_id == "rabbasca_on_hack_console" then
     local console = event.target_entity or event.source_entity
     if not console then return end
-    if console.name ~= "rabbasca-vault-access-terminal" then return end
     local surface = console.surface
     local position = console.position
     local vault = surface.find_entity("rabbasca-vault", position)
     if not vault then return end
-    vault.active = true
-    vault.force = game.forces.enemy
-    local info = surface.find_entity("rabbasca-vault-timer", vault.position) or surface.create_entity { -- just in case I guess
-      name = "rabbasca-vault-timer",
-      position = vault.position,
-      force = game.forces.neutral,
-    }
     local recipe = console.get_recipe()
     if not recipe then return end
     local terminal_area = {{vault.position.x - 2, vault.position.y - 2},{vault.position.x + 2, vault.position.y + 3}}
     local alert_duration_multiplier = 1
     local console_damage = console.max_health - console.health
-    if recipe.name == "hack-rabbascan-vault-extraction" then
-      surface.spill_inventory{position = position, inventory = console.get_inventory(defines.inventory.crafter_input), enable_looted = true}
+    if recipe.name == "rabbasca-vault-regenerate-ears-core" then
+      console.recipe_locked = false
+      console.set_recipe(nil)
+    elseif recipe.name == "harene-ears-core-protocol" then
+      local out_pos = surface.find_non_colliding_position("harene-ears-core-capsule", position, 5, 1)
+      if not out_pos then return end
+      local capsule = surface.create_entity {
+        name = "harene-ears-core-capsule",
+        position = out_pos,
+        force = game.forces.neutral,
+      }
+      if not capsule then return end
+      local fuel = console.get_inventory(defines.inventory.fuel)
+      if fuel then 
+        surface.spill_inventory{position = position, inventory = fuel, enable_looted = true}
+      end
+      console.destroy{}
+      local next = surface.create_entity {
+        name = "rabbasca-vault-access-terminal",
+        position = position,
+        force = game.forces.neutral,
+      }
+      next.damage(console_damage, game.forces.neutral)
+      vault.active = false
+      vault.force = game.forces.neutral
+      next.set_recipe("rabbasca-vault-regenerate-ears-core")
+      next.recipe_locked = true
+    elseif recipe.name == "rabbasca-vault-activate" then
       console.destroy{}
       local next = surface.create_entity {
         name = "rabbasca-vault-extraction-terminal",
@@ -73,15 +93,22 @@ local function handle_teleport_effect(event)
         force = game.forces.player,
       }
       next.damage(console_damage, game.forces.neutral)
-    elseif recipe.name == "hack-rabbascan-vault-research" then
-      surface.spill_inventory{position = position, inventory = console.get_inventory(defines.inventory.crafter_input), enable_looted = true}
+      vault.active = true
+      vault.force = game.forces.enemy
+    elseif recipe.name == "rabbasca-vault-deactivate" then
+      local fuel = console.get_inventory(defines.inventory.fuel)
+      if fuel then 
+        surface.spill_inventory{position = position, inventory = fuel, enable_looted = true}
+      end
       console.destroy{}
       local next = surface.create_entity {
-        name = "rabbasca-vault-research-terminal",
+        name = "rabbasca-vault-access-terminal",
         position = position,
-        force = game.forces.player,
+        force = game.forces.neutral,
       }
       next.damage(console_damage, game.forces.neutral)
+      vault.active = false
+      vault.force = game.forces.neutral
     elseif recipe.name == "hack-rabbascan-vault-power" then
       surface.spill_inventory{position = position, inventory = console.get_inventory(defines.inventory.crafter_input), enable_looted = true}
       console.destroy{}
@@ -98,17 +125,18 @@ local function handle_teleport_effect(event)
       console.damage(console.max_health / 1.7, game.forces.player)
       alert_duration_multiplier = 0.2
     end
-    info.insert({name="rabbasca-vault-access-timer", count=1, spoil_percent = 1 - alert_duration_multiplier}) 
-    for i = 0, 20 do
-      info.insert({name="rabbasca-vault-access-indicator", count=5, spoil_percent= 1 - (i * 0.05 * alert_duration_multiplier)})
-    end
+    -- info.insert({name="rabbasca-vault-access-timer", count=1, spoil_percent = 1 - alert_duration_multiplier}) 
+    -- for i = 0, 20 do
+    --   info.insert({name="rabbasca-vault-access-indicator", count=5, spoil_percent= 1 - (i * 0.05 * alert_duration_multiplier)})
+    -- end
     return
   end
   -- if effect_id == "rabbasca_vault_spawned" then
   --   event.target_entity.insert_fluid({name = "harene", amount = 100}) 
   --   return
   -- end
-  if not effect_id or not effect_id:find("^rabbasca_teleport_") then return end
+  if not effect_id or not effect_id:find("^rabbasca_teleport") then return end
+  
 
   -- Extract planet name
   local planet = effect_id:gsub("^rabbasca_teleport_", "")
@@ -143,6 +171,7 @@ end
 script.on_event(defines.events.on_script_trigger_effect, handle_teleport_effect)
 
 script.on_event(defines.events.on_surface_created, function(event)
+  if not game.planets["rabbasca"] or not game.planets["rabbasca"].surface then return end
   if event.surface_index ~= game.planets["rabbasca"].surface.index then return end
   game.forces.enemy.set_evolution_factor_by_time(0, event.surface_index)
   game.forces.enemy.set_evolution_factor_by_pollution(1, event.surface_index)
@@ -153,39 +182,33 @@ script.on_nth_tick(120,
 function(event) 
   local surface = game.surfaces["rabbasca"]
   if not surface then return end
-  local last_evo = storage.rabbasca_evo_last or 0.01
-  local now_evo = game.forces.enemy.get_evolution_factor(surface)
-  local delta = math.max(now_evo - last_evo, 0) * 100
-  storage.rabbasca_evo_last = math.max(0, math.min(last_evo + delta, 1)) * 0.95
-  game.forces.enemy.set_evolution_factor(storage.rabbasca_evo_last, surface)
+  -- local last_evo = storage.rabbasca_evo_last or 0.01
+  -- local now_evo = game.forces.enemy.get_evolution_factor(surface)
+  -- local delta = math.max(now_evo - last_evo, 0) * 100
+  -- storage.rabbasca_evo_last = math.max(0, math.min(last_evo + delta, 1)) * 0.95
+  -- game.forces.enemy.set_evolution_factor(storage.rabbasca_evo_last, surface)
 
-  rui.update()
+  -- rui.update()
 end)
 
-script.on_init(function()
-  if settings.startup["aps-planet"].value ~= "rabbasca" and settings.startup["aps-planet"].value ~= "aps-planet-rabbasca" then return end
+
+local function give_starter_items()
+  if settings.startup["aps-planet"].value ~= "rabbasca" then return end
   if not remote.interfaces["freeplay"] then return end
   remote.call("freeplay", "set_ship_items", 
   {
-      ["iron-plate"] = 200,
-      ["copper-plate"] = 200,
+      ["iron-plate"] = 50,
   })
   remote.call("freeplay", "set_created_items", {
-      ["foundry"] = 5,
-      ["medium-electric-pole"] = 20,
+      ["assembling-machine-2"] = 5,
       ["transport-belt"] = 100,
-      ["inserter"] = 100,
-      ["energized-microcube"] = 10,
-      ["carbon"] = 100,
-      ["calcite"] = 100,
-      ["recycler"] = 2,
-      ["assembling-machine-2"] = 1,
-      ["solar-panel"] = 10,
-      ["accumulator"] = 2,
-      ["heating-tower"] = 1,
+      ["inserter"] = 50,
+      ["chemical-plant"] = 5,
+      ["gun-turret"] = 4,
   })
   remote.call("freeplay", "set_debris_items", {
-      ["iron-plate"] = 50,
-      ["copper-plate"] = 50,
+      ["iron-plate"] = 5
   })
-end)
+end
+
+script.on_init(give_starter_items)

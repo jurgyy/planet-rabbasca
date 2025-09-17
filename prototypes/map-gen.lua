@@ -62,8 +62,8 @@ data:extend{
                                     count = 4,\z
                                     skip_offset = 1,\z
                                     region_size = 75 + 60 / control:rabbasca_rocks:frequency,\z
-                                    density = 0.05,\z
-                                    radius = 1 + 0.5 * sqrt(control:rabbasca_rocks:size),\z
+                                    density = 0.32,\z
+                                    radius = 2 + 0.5 * sqrt(control:rabbasca_rocks:size),\z
                                     favorability = 1} * control:rabbasca_rocks:size"
   },
   {
@@ -105,6 +105,12 @@ data:extend{
     type = "noise-expression",
     name = "rabbasca_harene_cracks",
     expression = "multioctave_noise{x = x, y = y, persistence = 0.21, seed0 = map_seed, input_scale = 24 / rabbasca_pool_size, seed1 = 'purple', octaves = 4 }"
+  },
+  {
+    type = "noise-expression",
+    name = "rabbasca_scrap",
+    expression = "starting_spot_at_angle{angle = aquilo_angle, distance = 17, radius = 10, x_distortion = 0, y_distortion = 0}\z
+                * (1.1 + 0.3 * multioctave_noise{x = x, y = y, persistence = 0.53, seed0 = map_seed, input_scale = 3.1, seed1 = 'notascrapyard', octaves = 6 })"
   },
   {
     type = "noise-expression",

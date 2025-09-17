@@ -1,91 +1,10 @@
 data:extend{
 {
     type = "technology",
-    name = "rabbasca-ears-technology",
-    icon = "__Krastorio2Assets__/icons/cards/matter-research-data.png",
-    icon_size = 256,
-    prerequisites = { "rabbascan-lost-technologies" },
-    effects =
-    {
-      {
-        type = "unlock-recipe",
-        recipe = "harene-ears-core"
-      },
-    },
-    unit = {
-        count = 100,
-        time = 10,
-        ingredients = {{"rabbascan-encrypted-vault-data", 1}}
-    }
-},
-{
-    type = "technology",
-    name = "harene-solvent",
-    icon = "__Krastorio2Assets__/icons/cards/matter-research-data.png",
-    icon_size = 256,
-    prerequisites = { "rabbascan-lost-technologies" },
-    effects =
-    {
-      {
-        type = "unlock-recipe",
-        recipe = "harene-solvent"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "smart-solution"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "power-solution"
-      },
-    },
-    unit = {
-        count = 100,
-        time = 10,
-        ingredients = {{"rabbascan-encrypted-vault-data", 1}}
-    }
-},
-{
-    type = "technology",
-    name = "rabbasca-vault-simple-transmutation",
-    icon = "__Krastorio2Assets__/icons/cards/matter-research-data.png",
-    icon_size = 256,
-    prerequisites = { "rabbasca-ears-technology" },
-    effects =
-    {
-      {
-        type = "unlock-recipe",
-        recipe = "harene-enrichment-center"
-      },
-    },
-    unit = {
-        count = 50,
-        time = 20,
-        ingredients = {{"rabbascan-encrypted-vault-data", 1}}
-    }
-},
-{
-    type = "technology",
-    name = "rabbasca-vault-infused-crafting",
-    icon = "__Krastorio2Assets__/icons/cards/matter-research-data.png",
-    icon_size = 256,
-    prerequisites = { "rabbasca-vault-simple-transmutation" },
-    effects =
-    {
-      -- filled in data-updates
-    },
-    unit = {
-        count = 500,
-        time = 30,
-        ingredients = {{"rabbascan-encrypted-vault-data", 1}}
-    }
-},
-{
-    type = "technology",
     name = "harene-synthesis",
     icon = "__space-age__/graphics/technology/steel-plate-productivity.png",
     icon_size = 256,
-    prerequisites = { "rabbasca-vault-simple-transmutation", "haronite-catalyst", "foundry" },
+    prerequisites = { "haronite-catalyst", "foundry" },
     effects =
     {
       {
@@ -100,7 +19,7 @@ data:extend{
     unit = {
         count = 100,
         time = 10,
-        ingredients = {{"rabbascan-encrypted-vault-data", 1}}
+        ingredients = {{"automation-science-pack", 1}}
     }
 },
 {
@@ -108,7 +27,7 @@ data:extend{
     name = "rabbasca-glob-technology",
     icon = "__Krastorio2Assets__/icons/cards/matter-research-data.png",
     icon_size = 256,
-    prerequisites = { "rabbascan-lost-technologies" },
+    prerequisites = { "ultranutritious-science-pack" },
     effects =
     {
       {
@@ -117,9 +36,18 @@ data:extend{
       },
     },
     unit = {
-        count = 100,
-        time = 10,
-        ingredients = {{"rabbascan-encrypted-vault-data", 1}}
+        count = 1000,
+        time = 30,
+        ingredients = {
+          {"automation-science-pack", 1},
+          {"logistic-science-pack", 1},
+          {"chemical-science-pack", 1},
+          {"space-science-pack", 1},
+          {"metallurgic-science-pack", 1},
+          {"agricultural-science-pack", 1},
+          {"electromagnetic-science-pack", 1},
+          {"ultranutritious-science-pack", 1},
+        }
     }
 },
 {
@@ -127,7 +55,7 @@ data:extend{
     name = "rabbasca-copy-technology",
     icon = "__Krastorio2Assets__/icons/cards/matter-research-data.png",
     icon_size = 256,
-    prerequisites = { "rabbascan-lost-technologies" },
+    prerequisites = { "rabbascan-vault-accessibility" },
     effects =
     {
       {
@@ -139,27 +67,7 @@ data:extend{
     unit = {
         count = 10,
         time = 5,
-        ingredients = {{"rabbascan-encrypted-vault-data", 1}}
-    }
-},
-{
-    type = "technology",
-    name = "rabbascan-security-key-p",
-    icon = "__Krastorio2Assets__/icons/cards/production-tech-card.png",
-    icon_size = 256,
-    prerequisites = { "rabbascan-lost-technologies" },
-    effects =
-    {
-      {
-        type = "unlock-recipe",
-        recipe = "rabbascan-security-key-p"
-      },
-    },
-    ignore_tech_cost_multiplier = true,
-    unit = {
-        count = 20,
-        time = 5,
-        ingredients = {{"rabbascan-encrypted-vault-data", 1}}
+        ingredients = {{"automation-science-pack", 1}}
     }
 },
 {
@@ -167,7 +75,7 @@ data:extend{
   name = "bunnyhop-engine",
   icon = "__base__/graphics/technology/engine.png",
   icon_size = 256,
-  prerequisites = { "rabbasca-glob-technology", "rabbasca-ears-technology" },
+  prerequisites = { "rabbasca-ears-technology", "chemical-science-pack" },
   effects =
   {
     {
@@ -175,15 +83,18 @@ data:extend{
       recipe = "bunnyhop-engine",
     },
     {
-      type = "unlock-space-location",
-      space_location = "nauvis",
-      use_icon_overlay_constant = true
-    }
+      type = "unlock-recipe",
+      recipe = "space-science",
+    },
   },
   unit = {
-    count = 100,
+    count = 500,
     time = 30,
-    ingredients = {{"rabbascan-encrypted-vault-data", 1}}
+    ingredients = {
+      {"automation-science-pack", 1},
+      {"logistic-science-pack", 1},
+      {"chemical-science-pack", 1},
+    }
   }
 },
 {
@@ -191,7 +102,7 @@ data:extend{
     name = "rabbasca-global-chest",
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
-    prerequisites = { "rabbasca-glob-technology" },
+    prerequisites = { "ultranutritious-science-pack", "space-science-pack" },
     effects =
     {
       {
@@ -200,9 +111,12 @@ data:extend{
       },
     },
     unit = {
-      count = 30,
-      time = 15,
-      ingredients = {{"rabbascan-encrypted-vault-data", 1}}
+      count = 2000,
+      time = 30,
+      ingredients = {
+        {"space-science-pack", 1},
+        {"ultranutritious-science-pack", 1},
+      }
     }
 },
 {
@@ -210,7 +124,7 @@ data:extend{
     name = "item-duplication-1",
     icon = "__space-age__/graphics/technology/metallurgic-science-pack.png",
     icon_size = 256,
-    prerequisites = { "rabbasca-copy-technology" },
+    prerequisites = { "rabbascan-vault-accessibility" },
     effects =
     {
       {
@@ -226,12 +140,12 @@ data:extend{
         recipe = "rabbasca-rabbasca-carotene-powder-duplicate",
       },
     },
-  ignore_multiplier = true,
-  unit = {
-    count = 25,
-    time = 5,
-    ingredients = {{"rabbascan-encrypted-vault-data", 1}}
-  }
+    research_trigger =
+    {
+      type = "craft-item",
+      item = "harene-copy-core",
+      count = 1,
+    }
 },
 {
     type = "technology",
@@ -250,11 +164,12 @@ data:extend{
         recipe = "rabbasca-advanced-circuit-duplicate",
       },
     },
-  unit = {
-    count = 200,
-    time = 30,
-    ingredients = {{"rabbascan-encrypted-vault-data", 1}}
-  }
+      research_trigger =
+    {
+      type = "craft-item",
+      item = "harene-copy-core",
+      count = 50,
+    }
 },
 -- {
 --     type = "technology",
@@ -277,7 +192,7 @@ data:extend{
 --     unit = {
 --         count = 5,
 --         time = 10,
---         ingredients = {{"rabbascan-encrypted-vault-data", 1}}
+--         ingredients = {{"automation-science-pack", 1}}
 --     }
 -- },
 }

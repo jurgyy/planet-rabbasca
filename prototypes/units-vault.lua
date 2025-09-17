@@ -14,6 +14,7 @@ local defender_1 = util.merge{
     max_pursue_distance = 50,
     absorptions_to_join_attack = { ["vault-activity"] = 500 },
     -- loot = { { item = "firearm-magazine", count_min = 3, count_max = 3 } },
+    -- radar_range = 1,
     ai_settings = {
       join_attacks = true,
       size_in_group = 1,

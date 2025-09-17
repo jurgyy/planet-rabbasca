@@ -33,67 +33,11 @@ return {
     }
 end
 
-local tower = util.merge{ table.deepcopy(data.raw["fusion-generator"]["fusion-generator"]),
-{  
-  name = "small-harenide-collider",
-  icon  = "__space-age__/graphics/icons/heating-tower.png",
-  minable = { result = "small-harenide-collider" },
-  max_fluid_usage = 0.01,
-  collision_box = {{-1.25, -1.25}, {1.25, 1.25}},
-  selection_box = {{-1.5, -1.5}, {1.5, 1.5}},
-  -- loot = {{item = "harene-cubic-core"}},
-  map_generator_bounding_box = {{-10, -10}, {10, 10}},
-  autoplace = {
-    probability_expression = "(rabbasca_camps > 0.85) * 3",
-    tile_restriction = { "harene-infused-foundation" },
-    force = "enemy",
-  }
-}}
-tower.graphics_set = require ("__planet-rabbasca__.prototypes.fusion-system-pictures").generator_graphics_set
-tower.input_fluid_box = {
-    volume = 10,
-    filter = "harene",
-    minimum_temperature = 15.0,
-    production_type = "input",
-    pipe_connections = 
-    {
-        {
-          flow_direction = "input",
-          position = {0, 1},
-          direction = defines.direction.south,
-          connection_category = {"harene"}
-        }
-    },
-}
-tower.output_fluid_box = {
-    volume = 10,
-    filter = "beta-carotene",
-    minimum_temperature = 52.0,
-    production_type = "output",
-    pipe_connections = 
-    {
-        {
-          flow_direction = "output",
-          position = {0, -1},
-          direction = defines.direction.north,
-        }
-    },
-}
-local tower_item = {
-    type = "item",
-    icon = "__space-age__/graphics/icons/heating-tower.png",
-    name = "small-harenide-collider",
-    stack_size = 5,
-    subgroup = "transport",
-    order = "b[personal-transport]-c[startertron]",
-    place_result = "small-harenide-collider",
-}
-
 local transmuter = table.deepcopy(data.raw["assembling-machine"]["centrifuge"])
 transmuter.minable.result = "harene-enrichment-center"
 transmuter.fluid_boxes = { }
 transmuter.crafting_categories = {"harene-infusion"}
-transmuter.tile_buildability_rules = restrict_to_harene_pool({{-0.6, -0.6}, { 0.6, 0.6}})
+-- transmuter.tile_buildability_rules = restrict_to_harene_pool({{-0.6, -0.6}, { 0.6, 0.6}})
 transmuter = util.merge{transmuter, {
     name = "harene-enrichment-center",
     energy_source = { type = "void" },
@@ -182,7 +126,6 @@ local moonstone_turret = util.merge{ table.deepcopy(data.raw["electric-turret"][
 }}
 
 data:extend{
-  tower_item, tower, 
   transmuter, transmuter_item, 
   moonstone_turret, 
 }
@@ -256,6 +199,19 @@ data:extend {
     order = "b[personal-transport]-c[startertron]",
     place_result = "harene-thruster",
   },
+  {
+    type = "electric-energy-interface",
+    name = "rabbasca-energy-source",
+    icon = "__muluna-graphics__/graphics/moon-icon-mipped.png",
+    energy_production = "10MW",
+    energy_source = { type = "electric", usage_priority = "primary-output", buffer_capacity = "27MJ" },
+    gui_mode = "none",
+    flags = { "placeable-neutral", "placeable-off-grid", "not-on-map", "not-deconstructable", "not-selectable-in-game" },
+    autoplace = {
+      probability_expression = "distance < 2",
+    },
+    map_generator_bounding_box = {{-20, -20}, {20,  20}}
+  }
 }
 
 data:extend {
@@ -290,6 +246,14 @@ data:extend {
   util.merge {
     table.deepcopy(data.raw["simple-entity"]["big-volcanic-rock"]),
     {
+      name = "harene-ears-core-capsule",
+      minable = { 
+        mining_time = 3,
+      }
+  }},
+  util.merge {
+    table.deepcopy(data.raw["simple-entity"]["big-volcanic-rock"]),
+    {
       name = "rabbasca-infused-moonstone-rock",
       minable = { 
         mining_time = 2.5,
@@ -315,8 +279,8 @@ data:extend {
       name = "rabbasca-turbofish",
       minable = { result = "rabbasca-turbofish" },
       autoplace = { probability_expression = "rabbasca_harene_pools - 0.5" },
-      collision_mask = { layers = { ground_tile = true } }
-      -- map_generator_bounding_box = {{-3.5, -3.5}, {3.5, 3.5}},
+      -- collision_mask = { layers = { ground_tile = true } }
+      map_generator_bounding_box = {{-1.5, -1.5}, {1.5, 1.5}},
     },
   },
   util.merge{
@@ -334,8 +298,9 @@ fish_action.attack_parameters.ammo_type.action.action_delivery.target_effects[1]
 
 
 data.raw["capsule"]["rabbasca-turbofish"].capsule_action = fish_action
-data.raw["simple-entity"]["moonstone-rock"].minable.results = {{type = "item", name = "rabbasca-moonstone", amount_min = 9, amount_max = 12}}
+data.raw["simple-entity"]["moonstone-rock"].minable.results = {{type = "item", name = "stone", amount_min = 18, amount_max = 23}}
 data.raw["simple-entity"]["carotenoid"].minable.results = {{type = "item", name = "rabbasca-carotene-powder", amount_min = 40, amount_max = 55}}
+data.raw["simple-entity"]["harene-ears-core-capsule"].minable.results = {{type = "item", name = "harene-ears-core", amount_min = 2, amount_max = 2}}
 data.raw["simple-entity"]["rabbasca-infused-moonstone-rock"].minable.results = {
   {type = "item", name = "rabbasca-moonstone", amount_min = 7, amount_max = 9},
   {type = "item", name = "haronite", amount_min = 5, amount_max = 7},

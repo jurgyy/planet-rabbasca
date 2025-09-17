@@ -91,6 +91,7 @@ function create_infused_crafter(crafter)
     new_item.icons = icons
     new_item.place_result = "harene-infused-"..original.name
     new_item.subgroup = "production-machine-infused"
+    new_item.factoriopedia_alternative = original.name
 
     new.name = "harene-infused-"..original.name
     -- new.next_upgrade =  original.name
@@ -119,15 +120,16 @@ function create_infused_crafter(crafter)
         energy_required = 30,
         ingredients = {
             { type = "item", name = "harene-ears-core", amount = 1 },
-            { type = "fluid", name = "energetic-residue", amount = 200 },
+            { type = "fluid", name = "harene-gas", amount = 50 },
             { type = "item", name = original.name, amount = 1},
         },
         results = { { type = "item", name = "harene-infused-"..original.name, amount = 1 } },
         main_product = "harene-infused-"..original.name,
-        category = "crafting-with-fluid",
+        category = "harene-infusion",
+        maximum_productivity = 0
       }
     }
-    local unlocks = data.raw["technology"]["rabbasca-vault-infused-crafting"].effects
+    local unlocks = data.raw["technology"]["rabbasca-ears-technology"].effects
     table.insert(unlocks,       
     {
         type = "unlock-recipe",
@@ -163,6 +165,12 @@ for _, pole in pairs(data.raw["electric-pole"]) do
     table.insert(pole.surface_conditions, {property = "harenic-energy-signatures", max = 0.5})
   else
     pole.surface_conditions = {{property = "harenic-energy-signatures", max = 0.5}}
+  end
+end
+
+for _, lab in pairs(data.raw["lab"]) do 
+  if lab.inputs[1] == "automation-science-pack" then
+    table.insert(lab.inputs, "ultranutritious-science-pack")
   end
 end
 

@@ -24,7 +24,7 @@ data:extend {
     subgroup = "rabbasca",
     order = "b[personal-transport]-c[startertron]",
     spoil_ticks = 3 * minute,
-    spoil_result = "rabbasca-moonstone"
+    spoil_result = "stone"
 },
 {
     type = "item",
@@ -81,6 +81,7 @@ data:extend {
     stack_size = 10,
     subgroup = "rabbasca",
     order = "b[personal-transport]-c[startertron]",
+    auto_recycle = false,
 },
 {
     type = "item",
@@ -93,19 +94,49 @@ data:extend {
 
 {
     type = "item",
-    icons = {{ icon = "__space-age__/graphics/icons/jelly.png", tint = { 0.42, 0.6, 1 }, scale = 1 }},
+    icon = "__space-age__/graphics/icons/jelly.png",
     name = "harene-copy-core",
     stack_size = 10,
     subgroup = "rabbasca",
     order = "b[personal-transport]-c[startertron]",
 },
 {
-    type = "item",
+    type = "capsule",
     icon = "__base__/graphics/icons/steam-engine.png",
     name = "bunnyhop-engine",
-    stack_size = 1,
+    stack_size = 10,
     subgroup = "rabbasca",
     order = "b[personal-transport]-c[startertron]",
+    capsule_action = {
+      type = "use-on-self",
+      uses_stack = true,
+      attack_parameters = {
+        type = "projectile",
+        activation_type = "consume",
+        ammo_category = "capsule",
+        cooldown = 1 * minute,
+        range = 0,
+        ammo_type =
+        {
+          target_type = "position",
+          action =
+          {
+            type = "direct",
+            action_delivery =
+            {
+              type = "instant",
+              target_effects =
+              {
+                {
+                  type = "script",
+                  effect_id = "rabbasca_teleport"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
 },
 {
     type = "item",
@@ -132,10 +163,11 @@ data:extend {
     order = "b[personal-transport]-c[startertron]",
 },
 {
-    type = "item",
+    type = "tool",
     icon = "__space-age__/graphics/icons/metallurgic-science-pack.png",
     name = "ultranutritious-science-pack",
     stack_size = 200,
+    durability = 1,
     subgroup = "rabbasca",
     order = "b[personal-transport]-c[startertron]",
 },
@@ -229,11 +261,41 @@ data:extend {
 },
 {
     type = "item",
-    icon = "__base__/graphics/icons/steam-engine.png",
-    name = "supercharged-jellynut-seed",
+    icon = "__space-age__/graphics/icons/jellynut.png",
+    name = "megabrain",
     stack_size = 20,
     subgroup = "rabbasca",
     order = "b[personal-transport]-c[startertron]",
+},
+{
+    type = "item",
+    name = "harene-infused-brick",
+    icons = { { icon = "__base__/graphics/icons/stone-brick.png", tint = {r=0.65, g=0.31, b=0.92} } },
+    stack_size = 50,
+    spoil_ticks = 90 * second,
+    spoil_result = "stone-brick"
+},
+util.merge{
+  data.raw["item"]["concrete"],
+  {
+    type = "item",
+    name = "rabbasca-energetic-concrete",
+    icons = { { icon = "__base__/graphics/icons/concrete.png", tint = {r=0.65, g=0.31, b=0.92} } },
+    stack_size = 50,
+    place_as_tile =
+    {
+      result = "rabbasca-energetic-concrete",
+    }
+  }
+},
+{
+    type = "item",
+    name = "blank-vault-key",
+    category = "rabbasca-security",
+    fuel_value = "60MJ",
+    fuel_category = "rabbasca-security-fuel-e",
+    icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png",
+    stack_size = 20,
 },
 {
     type = "item",
@@ -243,10 +305,7 @@ data:extend {
     fuel_category = "rabbasca-security-fuel-e",
     icon = "__Krastorio2Assets__/icons/cards/utility-tech-card.png",
     stack_size = 5,
-},
-{
-    type = "fuel-category",
-    name = "rabbasca-infused-core-fuel"
+    
 },
 {
     type = "fuel-category",
@@ -285,7 +344,7 @@ data:extend {
     type = "item",
     name = "rabbasca-console-scrap",
     icon = "__space-age__/graphics/icons/scrap-5.png",
-    stack_size = 5,
+    stack_size = 500,
 },
 {
     type = "tool",
@@ -303,6 +362,7 @@ data:extend {
     icon = "__Krastorio2Assets__/icons/cards/advanced-tech-card.png",
     hidden = true,
     hidden_in_factoriopedia = true,
+    auto_recycle = false,
     stack_size = 1,
     spoil_ticks = 1,
     -- spoil_result = "rabbasca-vault-access-timer",
@@ -315,7 +375,7 @@ data:extend {
         action_delivery =
         {
           type = "instant",
-          target_effects =
+          source_effects =
           {
             {
               type = "script",
@@ -333,6 +393,7 @@ data:extend {
     icon = "__Krastorio2Assets__/icons/cards/advanced-tech-card.png",
     hidden = true,
     hidden_in_factoriopedia = true,
+    auto_recycle = false,
     stack_size = 1,
     spoil_ticks = 90 * second,
     spoil_to_trigger_result =
@@ -349,6 +410,36 @@ data:extend {
             {
               type = "script",
               effect_id = "rabbasca_on_hack_expire"
+            }
+          }
+        }
+      }
+    }
+},
+{
+    type = "item",
+    name = "harene-ears-core-protocol",
+    category = "rabbasca-security",
+    icon = "__Krastorio2Assets__/icons/cards/advanced-tech-card.png",
+    hidden = true,
+    hidden_in_factoriopedia = true,
+    auto_recycle = false,
+    stack_size = 1,
+    spoil_ticks = 1,
+    spoil_to_trigger_result =
+    {
+      items_per_trigger = 1,
+      trigger =
+      {
+        type = "direct",
+        action_delivery =
+        {
+          type = "instant",
+          target_effects =
+          {
+            {
+              type = "script",
+              effect_id = "rabbasca_on_hack_console"
             }
           }
         }

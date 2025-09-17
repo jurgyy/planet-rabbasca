@@ -42,7 +42,6 @@ local map_gen = {
       {
         settings =
         {
-          ["rabbasca-harene-deep"] = {},
           ["rabbasca-harene"] = {},
           ["rabbasca-fertile"] = {},
           ["rabbasca-rough"] = {},
@@ -66,6 +65,8 @@ local map_gen = {
       {
         settings =
         {
+          ["rabbascan-scrap"] = {},
+          ["rabbasca-energy-source"] = {},
           ["harene-vent"] = {},
           ["rabbasca-infused-moonstone-rock"] = {},
           ["carotenoid"] = {},
@@ -109,8 +110,8 @@ local rabbasca =
     surface_properties = {
         ["solar-power"] = 0,
         ["pressure"] = 0,
-        ["magnetic-field"] = 0.01,
         ["day-night-cycle"] = 0,
+        ["magnetic-field"] = 0.01,
         ["harenic-energy-signatures"] = 1,
     },
     map_gen_settings = map_gen,
@@ -121,17 +122,13 @@ local rabbasca =
       parent = {
         type = "planet",
         name = parent_planet,
-        },
-        sprite = {
-          type = "sprite",
-          filename = "__muluna-graphics__/graphics/orbits/orbit-muluna.png",
-          size = 412,
-          scale = 0.25,
-        }
-    },
-    surface_render_parameters = {
-      shadow_opacity = 0.2,
-      space_dust_foreground = data.raw["space-platform-hub"]["space-platform-hub"].surface_render_parameters.space_dust_foreground
+      },
+      sprite = {
+        type = "sprite",
+        filename = "__muluna-graphics__/graphics/orbits/orbit-muluna.png",
+        size = 412,
+        scale = 0.25,
+      }
     },
     platform_procession_set =
     {
