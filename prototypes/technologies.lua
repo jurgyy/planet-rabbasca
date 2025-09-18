@@ -7,8 +7,13 @@ data:extend {
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
     prerequisites = { "planet-discovery-gleba" },
+    effects = {{
+        type = "unlock-space-location",
+        space_location = "rabbasca",
+        use_icon_overlay_constant = true
+    }},
     unit = {
-        count = 1000,
+        count = 400,
         time = 60,
         ingredients = {
             {"automation-science-pack", 1},

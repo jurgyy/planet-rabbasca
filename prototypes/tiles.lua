@@ -109,7 +109,8 @@ util.merge {
     {
       name = "rabbasca-energetic-concrete",
       collision_mask = { layers = { harene = true } },
-      effect_color = {60,55,97},
+      material_background = { tint  = {60,55,97}, },
+      minable = { result = "rabbasca-energetic-concrete" }
     }
 },
 util.merge { 
@@ -118,6 +119,7 @@ util.merge {
       name = "harene-infused-foundation",
       collision_mask = { layers = { harene = true } },
       effect_color = {60,55,97},
+      minable = { result = "harene-infused-foundation" }
     }
 },
 util.merge { 
@@ -126,6 +128,7 @@ util.merge {
       name = "harene-infused-space-platform",
       collision_mask = { layers = { harene = true } },
       effect_color = {60,55,97},
+      minable = { result = "harene-infused-space-platform" }
     }
 },
 harene_tile, harene_tile_deep

@@ -104,12 +104,12 @@ data:extend {
     type = "capsule",
     icon = "__base__/graphics/icons/steam-engine.png",
     name = "bunnyhop-engine",
-    stack_size = 10,
+    stack_size = 1,
     subgroup = "rabbasca",
     order = "b[personal-transport]-c[startertron]",
     capsule_action = {
       type = "use-on-self",
-      uses_stack = true,
+      uses_stack = false,
       attack_parameters = {
         type = "projectile",
         activation_type = "consume",

@@ -483,18 +483,6 @@ data:extend {
         results = { {type = "item", name = "rabbascan-security-key-p", amount = 1} },
         main_product = "rabbascan-security-key-p",
         category = "crafting",
-    },
-    {
-        type = "recipe",
-        name = "rabbasca-vault-regenerate-ears-core",
-        icon = "__base__/graphics/icons/stone.png",
-        enabled = true,
-        hidden = true,
-        energy_required = 3600,
-        ingredients = { },
-        results = { {type = "item", name = "rabbasca-vault-access-protocol", amount = 1} },
-        category = "rabbasca-vault-hacking",
-        auto_recycle = false,
     }
 }
 
@@ -605,9 +593,8 @@ data:extend {
         main_product = "rabbasca-vault-access-protocol",
         category = "rabbasca-vault-hacking",
         auto_recycle = false,
-        reset_freshness_on_craft = true,
-        result_is_always_fresh = true,
         overload_multiplier = 1,
+        result_is_always_fresh = true,
         allow_inserter_overload = false,
         hide_from_player_crafting = true
     },
@@ -624,10 +611,25 @@ data:extend {
         subgroup = "rabbasca-vault-extraction",
         order = "z[vault]-z[shutdown]",
         auto_recycle = false,
-        reset_freshness_on_craft = true,
-        result_is_always_fresh = true,
         overload_multiplier = 1,
+        result_is_always_fresh = true,
         allow_inserter_overload = false,
         hide_from_player_crafting = true
     },
+    {
+        type = "recipe",
+        name = "rabbasca-vault-regenerate-ears-core",
+        icon = "__base__/graphics/icons/stone.png",
+        enabled = true,
+        hidden = true,
+        energy_required = 3600,
+        ingredients = { },
+        results = { {type = "item", name = "rabbasca-vault-access-protocol", amount = 1} },
+        category = "rabbasca-vault-hacking",
+        auto_recycle = false,
+        overload_multiplier = 1,
+        result_is_always_fresh = true,
+        allow_inserter_overload = false,
+        hide_from_player_crafting = true
+    }
 }

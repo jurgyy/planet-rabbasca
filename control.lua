@@ -1,4 +1,42 @@
 local rui = require("__planet-rabbasca__.scripts.vault-ui")
+local bunnyhop = require("__planet-rabbasca__/bunnyhop")
+
+local function show_teleport_ui(player, max_range)
+    local surface = player.surface
+    local reachable_surfaces = bunnyhop.get_connections(surface.name, max_range)
+
+    if #reachable_surfaces == 0 then 
+      player.print("[item=bunnyhop-engine] No discovered planet within "..max_range.."km")
+      return 
+    end
+
+    if player.gui.screen.bunnyhop_ui then
+        player.gui.screen.bunnyhop_ui.destroy()
+    end
+
+    local frame = player.gui.screen.add{
+        type = "frame",
+        name = "bunnyhop_ui",
+        caption = "Bunnyhop within "..max_range.."km",
+        direction = "vertical"
+    }
+    frame.auto_center = true
+    local pb = frame.add{
+        type = "progressbar",
+        name = "bunnyhop_charge",
+        value = 1
+    }
+    pb.style.horizontally_stretchable = true
+    -- pb.tags = { last_x = player.position.x, last_y = player.position.y }
+
+    local list = frame.add{ 
+      type = "list-box", 
+      name = "bunnyhop_surface_list",
+      selected_index = current_index,
+      items = reachable_surfaces 
+    }
+    list.selected_index = 1
+end
 
 local function handle_teleport_effect(event)
   local effect_id = event.effect_id
@@ -136,35 +174,11 @@ local function handle_teleport_effect(event)
   --   return
   -- end
   if not effect_id or not effect_id:find("^rabbasca_teleport") then return end
-  
-
-  -- Extract planet name
-  local planet = effect_id:gsub("^rabbasca_teleport_", "")
-
-  -- Safety: check player exists
-  local player = event.target_entity.player
-  if not player then return end
-
-  -- Unlock research if it exists
-  local tech_name = "planet-discovery-" .. planet
-  for _, force in pairs(game.forces) do
-    local tech = force.technologies[tech_name]
-    if tech and not tech.researched then
-      tech.researched = true
-    end
+  local engine = event.source_entity or event.target_entity
+  local player = engine.player or engine.owner_location.player
+  if player then 
+    show_teleport_ui(player, 1000)
   end
-
-  -- Check surface exists
-  local surface = game.planets[planet].surface or game.planets[planet].create_surface()
-  if not surface then return end
-  local radius = surface.get_starting_area_radius()
-  player.force.chart(surface, {{-radius, -radius}, {radius, radius}})
-
-  local start_pos = surface.find_non_colliding_position("character", {0, 0}, surface.get_starting_area_radius(), 1)  or {0, 0}
-
-  -- Teleport player
-  if not player.teleport(start_pos, surface) then return end
-  player.print("[Teleport] You have been teleported to " .. planet)
 end
 
 -- Register event
