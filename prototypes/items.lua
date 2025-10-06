@@ -18,6 +18,44 @@ end
 data:extend {
 {
     type = "item",
+    icon = "__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-icon.png",
+    name = "machining-assembler",
+    place_result = "machining-assembler",
+    stack_size = 1,
+    subgroup = "production-machine",
+    order = "fr[machining-assembler]",
+},
+{
+    type = "item",
+    icon = "__base__/graphics/icons/centrifuge.png",
+    name = "harene-enrichment-center",
+    stack_size = 5,
+    subgroup = "production-machine",
+    order = "fr[harene-enrichment-center]",
+    place_result = "harene-enrichment-center",
+},
+{
+    type = "item",
+    name = "rabbasca-remote-builder",
+    icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png",
+    stack_size = 5,
+    place_result = "rabbasca-remote-builder",
+    group = "logistics",
+    subgroup = "logistic-network",
+    order = "c[signal]-r[rabbasca-remote-builder]",
+},
+{
+    type = "item",
+    name = "rabbasca-remote-receiver",
+    icon = "__FFF339BeaconGraphics__/graphics/alt_beacon_icon.png",
+    stack_size = 5,
+    place_result = "rabbasca-remote-receiver",
+    group = "logistics",
+    subgroup = "logistic-network",
+    order = "c[signal]-r[rabbasca-remote-receiver]",
+},
+{
+    type = "item",
     icon = "__Krastorio2Assets__/icons/items/imersite-2.png",
     name = "haronite",
     stack_size = 50,
@@ -60,6 +98,15 @@ data:extend {
 },
 {
     type = "item",
+    icons = { { icon = "__base__/graphics/icons/electronic-circuit.png", tint = { 0.2, 1, 1 } } },
+    name = "vision-circuit",
+    stack_size = 100,
+    group = "intermediate-products",
+    subgroup = "intermediate-product",
+    order = "b[circuits]-d[vision-circuit]",
+},
+{
+    type = "item",
     icon = "__space-age__/graphics/icons/bioflux.png",
     name = "power-solution",
     stack_size = 100,
@@ -91,11 +138,18 @@ data:extend {
     subgroup = "rabbasca",
     order = "b[personal-transport]-c[startertron]",
 },
-
 {
     type = "item",
     icon = "__space-age__/graphics/icons/jelly.png",
     name = "harene-copy-core",
+    stack_size = 10,
+    subgroup = "rabbasca",
+    order = "b[personal-transport]-c[startertron]",
+},
+{
+    type = "item",
+    icon = "__space-age__/graphics/icons/jelly.png",
+    name = "harene-copy-core-recharging",
     stack_size = 10,
     subgroup = "rabbasca",
     order = "b[personal-transport]-c[startertron]",
@@ -147,22 +201,6 @@ data:extend {
     order = "b[personal-transport]-c[startertron]",
 },
 {
-    type = "item",
-    icon = "__space-age__/graphics/icons/big-volcanic-rock.png",
-    name = "rabbasca-moonstone",
-    stack_size = 50,
-    subgroup = "rabbasca",
-    order = "b[personal-transport]-c[startertron]",
-},
-{
-    type = "item",
-    icon = "__space-age__/graphics/icons/tesla-turret.png",
-    name = "moonstone-turret",
-    stack_size = 5,
-    subgroup = "rabbasca",
-    order = "b[personal-transport]-c[startertron]",
-},
-{
     type = "tool",
     icon = "__space-age__/graphics/icons/metallurgic-science-pack.png",
     name = "ultranutritious-science-pack",
@@ -209,7 +247,7 @@ data:extend {
     subgroup = "rabbasca",
     order = "b[personal-transport]-c[startertron]",
     fuel_category = "nutrients",
-    fuel_value = "180MJ",
+    fuel_value = "3MJ",
 },
 {
   type = "fluid",
@@ -252,12 +290,12 @@ data:extend {
 },
 {
     type = "fluid",
-    name = "harenic-sludge",
+    name = "rabbasca-copyslop",
     icon = "__space-age__/graphics/icons/fluid/ammoniacal-solution.png",
-    base_color = {0.17, 0.14, 0.53},
-    flow_color = {0.17, 0.14, 0.53},
-    default_temperature = 24.0,
-    auto_barrel = true
+    base_color = {0.17, 0.42, 0.53},
+    flow_color = {0.17, 0.42, 0.53},
+    default_temperature = -32.0,
+    auto_barrel = false
 },
 {
     type = "item",
@@ -292,53 +330,8 @@ util.merge{
     type = "item",
     name = "blank-vault-key",
     category = "rabbasca-security",
-    fuel_value = "60MJ",
-    fuel_category = "rabbasca-security-fuel-e",
     icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png",
     stack_size = 20,
-},
-{
-    type = "item",
-    name = "rabbascan-security-key-e",
-    category = "rabbasca-security",
-    fuel_value = "3GW",
-    fuel_category = "rabbasca-security-fuel-e",
-    icon = "__Krastorio2Assets__/icons/cards/utility-tech-card.png",
-    stack_size = 5,
-    
-},
-{
-    type = "fuel-category",
-    name = "rabbasca-security-fuel-e",
-    fuel_value_type = {"description.rabbasca-security-energy-value"}
-},
-{
-    type = "item",
-    name = "rabbascan-security-key-p",
-    category = "rabbasca-security",
-    fuel_value = "3GW",
-    fuel_category = "rabbasca-security-fuel-p",
-    icon = "__Krastorio2Assets__/icons/cards/production-tech-card.png",
-    stack_size = 5,
-},
-{
-    type = "fuel-category",
-    name = "rabbasca-security-fuel-p",
-    fuel_value_type = {"description.rabbasca-security-energy-value"}
-},
-{
-    type = "item",
-    name = "rabbascan-security-key-a",
-    category = "rabbasca-security",
-    fuel_value = "3GW",
-    fuel_category = "rabbasca-security-fuel-a",
-    icon = "__Krastorio2Assets__/icons/cards/matter-tech-card.png",
-    stack_size = 5,
-},
-{
-    type = "fuel-category",
-    name = "rabbasca-security-fuel-a",
-    fuel_value_type = {"description.rabbasca-security-energy-value"}
 },
 {
     type = "item",
@@ -388,36 +381,6 @@ util.merge{
 },
 {
     type = "item",
-    name = "rabbasca-vault-access-timer",
-    category = "rabbasca-security",
-    icon = "__Krastorio2Assets__/icons/cards/advanced-tech-card.png",
-    hidden = true,
-    hidden_in_factoriopedia = true,
-    auto_recycle = false,
-    stack_size = 1,
-    spoil_ticks = 90 * second,
-    spoil_to_trigger_result =
-    {
-      items_per_trigger = 1,
-      trigger =
-      {
-        type = "direct",
-        action_delivery =
-        {
-          type = "instant",
-          target_effects =
-          {
-            {
-              type = "script",
-              effect_id = "rabbasca_on_hack_expire"
-            }
-          }
-        }
-      }
-    }
-},
-{
-    type = "item",
     name = "harene-ears-core-protocol",
     category = "rabbasca-security",
     icon = "__Krastorio2Assets__/icons/cards/advanced-tech-card.png",
@@ -455,9 +418,34 @@ util.merge{
     hidden_in_factoriopedia = true,
     stack_size = 5,
     spoil_ticks = 90 * second,
-},
+}
+}
+
+local starter_pack = util.merge {
+  data.raw["space-platform-starter-pack"]["space-platform-starter-pack"],
+  {
+    name = "harene-powered-space-platform-starter-pack",
+    surface = "harene-powered-space-platform",
+  }}
+starter_pack.trigger =
 {
-    type = "module-category",
-    name = "rabbasca-security"
+  {
+    type = "direct",
+    action_delivery =
+    {
+      type = "instant",
+      source_effects =
+      {
+        {
+          type = "create-entity",
+          entity_name = "harene-space-platform-hub"
+        },
+        {
+          type = "create-entity",
+          entity_name = "harene-platform-energy-source"
+        }
+      }
+    }
+  }
 }
-}
+data:extend{ starter_pack }

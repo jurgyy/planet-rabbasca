@@ -1,3 +1,4 @@
+require("__planet-rabbasca__/scripts/remote-builder")
 local rui = require("__planet-rabbasca__.scripts.vault-ui")
 local bunnyhop = require("__planet-rabbasca__/bunnyhop")
 
@@ -11,7 +12,7 @@ local function show_teleport_ui(player, max_range)
     end
 
     if player.gui.screen.bunnyhop_ui then
-        player.gui.screen.bunnyhop_ui.destroy()
+        rui.clear_bunnyhop_ui()
     end
 
     local frame = player.gui.screen.add{
@@ -36,6 +37,7 @@ local function show_teleport_ui(player, max_range)
       items = reachable_surfaces 
     }
     list.selected_index = 1
+    rui.extend_bunnyhop_ui(player)
 end
 
 local function handle_teleport_effect(event)
@@ -191,20 +193,6 @@ script.on_event(defines.events.on_surface_created, function(event)
   game.forces.enemy.set_evolution_factor_by_pollution(1, event.surface_index)
   game.planets["rabbasca"].surface.create_global_electric_network()
 end)
-
-script.on_nth_tick(120,
-function(event) 
-  local surface = game.surfaces["rabbasca"]
-  if not surface then return end
-  -- local last_evo = storage.rabbasca_evo_last or 0.01
-  -- local now_evo = game.forces.enemy.get_evolution_factor(surface)
-  -- local delta = math.max(now_evo - last_evo, 0) * 100
-  -- storage.rabbasca_evo_last = math.max(0, math.min(last_evo + delta, 1)) * 0.95
-  -- game.forces.enemy.set_evolution_factor(storage.rabbasca_evo_last, surface)
-
-  -- rui.update()
-end)
-
 
 local function give_starter_items()
   if settings.startup["aps-planet"].value ~= "rabbasca" then return end

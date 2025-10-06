@@ -68,7 +68,6 @@ local map_gen = {
           ["rabbascan-scrap"] = {},
           ["rabbasca-energy-source"] = {},
           ["harene-vent"] = {},
-          ["rabbasca-infused-moonstone-rock"] = {},
           ["carotenoid"] = {},
           ["rabbasca-turbofish"] = {},
           ["moonstone-rock"] = {},
@@ -81,7 +80,7 @@ local map_gen = {
 
 }
 
-local rabbasca = 
+PlanetsLib:extend({
 {
     type = "planet",
     name = "rabbasca",
@@ -148,11 +147,21 @@ local rabbasca =
 
     
 }
-
-PlanetsLib:extend({rabbasca})
+})
 
 data:extend{
-  {
+util.merge{ data.raw["surface"]["space-platform"], {
+  type = "surface",
+  name = "harene-powered-space-platform",
+  surface_properties = {
+    gravity = 0,
+    pressure = 0,
+    ["magnetic-field"] = 0,
+    ["day-night-cycle"] = 0 ,
+    ["harenic-energy-signatures"] = 0.7, 
+  }
+}},
+{
   type = "space-connection",
   name = "gleba-rabbasca",
   order = "a-b-c",

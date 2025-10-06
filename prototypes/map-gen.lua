@@ -69,9 +69,16 @@ data:extend{
   {
     type = "noise-expression",
     name = "rabbasca_fertile",
-    expression = "0.3 - rabbasca_harene_pools + max(rabbasca_starting_carrots, \z
-            0.8 * multioctave_noise{x = x/3.2, y = y/2.3, persistence = 0.5, seed0 = map_seed, seed1 = 'yummyrocks', octaves = 8 }\z
-                * multioctave_noise{x = x/4.2, y = y/4.8, persistence = 0.2, seed0 = map_seed, seed1 = 'bewarethehare', octaves = 9 })"
+    expression = "- 2 * rabbasca_down - 0.2 + \z
+            min(rabbasca_starting_mask, 0.8 * multioctave_noise{x = x, y = y, persistence = 0.8, input_scale = 1/3.5, seed0 = map_seed, seed1 = 'yummyrocks', octaves = 8 })\z
+            * aquilo_spot_noise{seed = 71632,\z
+                                    count = 4 + 3 * control:harene:frequency,\z
+                                    skip_offset = 2,\z
+                                    region_size = 800 + 300 / control:harene:frequency,\z
+                                    density = 1,\z
+                                    radius = 32,\z
+                                    favorability = 1}"
+                -- * multioctave_noise{x = x/4.2, y = y/4.8, persistence = 0.2, seed0 = map_seed, seed1 = 'bewarethehare', octaves = 9 })"
     -- expression = "0.4 + rabbasca_up * rabbasca_crater + rabbasca_up_variance * (0.8 - rabbasca_elevation)"
   },
   {
@@ -109,8 +116,14 @@ data:extend{
   {
     type = "noise-expression",
     name = "rabbasca_scrap",
-    expression = "starting_spot_at_angle{angle = aquilo_angle, distance = 17, radius = 10, x_distortion = 0, y_distortion = 0}\z
-                * (1.1 + 0.3 * multioctave_noise{x = x, y = y, persistence = 0.53, seed0 = map_seed, input_scale = 3.1, seed1 = 'notascrapyard', octaves = 6 })"
+    expression = "clamp(max(starting_spot_at_angle{angle = aquilo_angle, distance = 17, radius = 7, x_distortion = 0, y_distortion = 0}, \z
+                      min(rabbasca_starting_mask, aquilo_spot_noise{seed = 1234,\z
+                                    count = 5,\z
+                                    skip_offset = 5,\z
+                                    region_size = 50 + 600 / control:harene:frequency,\z
+                                    density = 1,\z
+                                    radius = 11,\z
+                                    favorability = 2})), 0, 1)"
   },
   {
     type = "noise-expression",

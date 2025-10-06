@@ -1,16 +1,5 @@
 require("__base__.prototypes.entity.combinator-pictures")
 
-local function vault_access_burner_source(suffix, emissions)
-return {
-  type = "burner",
-  fuel_inventory_size = 1,
-  fuel_categories = {"rabbasca-security-fuel-"..suffix},
-  -- initial_fuel = "rabbascan-security-key-"..suffix,
-  -- initial_fuel_percent = 1,
-  emissions_per_minute = { ["vault-activity"] = emissions * minute / 50 } -- actual numbers are way higher
-}
-end
-
 local access_console = util.merge{
   table.deepcopy(data.raw["assembling-machine"]["assembling-machine-2"]),
   {
@@ -87,30 +76,7 @@ local extraction_console = util.merge{
   } 
 }
 extraction_console.crafting_categories = { "rabbasca-vault-extraction" }
-extraction_console.energy_source = vault_access_burner_source("e", 1.2)
-
-local power_node = util.merge{ 
-    extraction_console,
-{  
-  name = "rabbasca-vault-power-node",
-  type = "burner-generator",
-  -- burns_fluid = true,
-  -- scale_fluid_usage = true,
-  -- fluid_usage_per_tick = 0.05 / second,
-  collision_box = {{-1, -1}, {1, 1}},
-  selection_box = {{-1, -1}, {1, 1}},
-  effectivity = 1,
-  maximum_temperature = 10,
-  max_power_output = "50MW",
-}}
-power_node.burner = vault_access_burner_source("p", 2)
--- power_node.burner.initial_fuel_percent = nil
-power_node.energy_source = {
-  type = "electric",
-  buffer_capacity = "5MJ",
-  usage_priority = "secondary-output",
-  emissions_per_minute = { ["vault-activity"] = 0.5 * minute } -- actual numbers are way higher
-}
+extraction_console.energy_source = { type = "void" }
 
 local vault = util.merge{ 
   table.deepcopy(data.raw["unit-spawner"]["spitter-spawner"]), 
@@ -154,11 +120,11 @@ vault.created_effect = {
       --   entity_name = "rabbasca-vault-extraction-terminal",
       --   offsets = {{-2, 2.5}},
       -- },
-      {
-        type = "create-entity",
-        entity_name = "rabbasca-vault-power-node",
-        offsets = {{1.5, 1.5}},
-      },
+      -- {
+      --   type = "create-entity",
+      --   entity_name = "rabbasca-vault-power-node",
+      --   offsets = {{1.5, 1.5}},
+      -- },
       -- {
       --   type = "create-entity",
       --   entity_name = "rabbasca-vault-timer",

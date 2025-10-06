@@ -10,21 +10,23 @@ local scrap_resource = util.merge {
 }
 scrap_resource.minable =
 {
-  mining_time = 0.5,
+  mining_time = 0.25,
   results =
   {
-    {
-      type = "item",
-      name = "rabbasca-console-scrap",
-      amount_min = 21,
-      amount_max = 45,
-    }
+    { type = "item", name = "iron-plate", amount_min = 3, amount_max = 7, probability = 0.25 },
+    { type = "item", name = "electronic-circuit", amount_min = 2, amount_max = 5, probability = 0.33 },
+    { type = "item", name = "steel-plate", amount = 1, probability = 0.15 },
+    { type = "item", name = "advanced-circuit",  amount = 1, probability = 0.1 },
+    { type = "item", name = "blank-vault-key",  amount = 1, probability = 0.05 },
   }
 }
+scrap_resource.collision_mask = { layers = { resource = true } }
 scrap_resource.autoplace = {
   tile_restriction = { "rabbasca-rough", "rabbasca-rough-2" },
   probability_expression = "rabbasca_scrap",
-  richness_expression = "1",
+  richness_expression = "4 + 2.5\z 
+    * multioctave_noise{x = x, y = y, persistence = 0.44, seed0 = map_seed, input_scale = 1.3, seed1 = 'scrappening', octaves = 6 }\z
+    * lerp(1, 10, distance / 5000)",
 }
 
 local harene_resource = {
@@ -59,8 +61,8 @@ local harene_resource = {
   collision_mask = { layers = { resource = true } },
   tile_buildability_rules = {{ 
     area = {{-2.4, -2.4}, {2.4, 2.4}}, 
-    required_tiles = { layers = { harene = true } },
-    colliding_tiles = { layers = { is_object = true } },
+    required_tiles = { layers = { ground_tile = true } },
+    colliding_tiles = { layers = { is_object = true, water_tile = true } },
     remove_on_collision = true 
   }},
   collision_box = {{ -1.5, -1.5}, {1.5, 1.5}},
@@ -68,7 +70,10 @@ local harene_resource = {
   map_generator_bounding_box = {{-5, -5}, {5, 5}},
   autoplace = {
     tile_restriction = { "rabbasca-rough", "rabbasca-rough-2" },
-    probability_expression = "rabbasca_crater",
+    probability_expression = "(rabbasca_down > 0)\z
+      * multioctave_noise{x = x, y = y, persistence = 0.44, seed0 = map_seed, input_scale = 3.6, seed1 = 'atomizedfish', octaves = 4 }\z
+      * multioctave_noise{x = x, y = y, persistence = 0.62, seed0 = map_seed, input_scale = 4.3, seed1 = 'unlimitedpower', octaves = 7 }\z
+      * multioctave_noise{x = x, y = y, persistence = 0.62, seed0 = map_seed, input_scale = 4.3, seed1 = 'canthisspreadbetterplease', octaves = 7 }",
     richness_expression = "rabbasca_harene_richness",
   },
   stage_counts = {0},

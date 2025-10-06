@@ -164,7 +164,7 @@ script.on_event(defines.events.on_gui_opened, function(event)
     }
     local current_index = 0
     if entity.name == "rabbasca-vault-extraction-terminal" then current_index = 2 end
-    if entity.name == "rabbasca-vault-power-node"          then current_index = 3 end
+    -- if entity.name == "rabbasca-vault-power-node"          then current_index = 3 end
     frame.add{type = "label", caption = "Change vault mode", style = "caption_label"}
     local list = frame.add{ type = "list-box", 
     name = "rabbasca-vault-selector",
@@ -239,16 +239,15 @@ end)
 --     end
 -- end)
 
-script.on_event(defines.events.on_player_controller_changed, function(event)
-    local player = game.get_player(event.player_index)
-    if not player then return end
-
-    if player.gui.screen.bunnyhop_ui then
-        player.gui.screen.bunnyhop_ui.destroy()
+function M.clear_bunnyhop_ui(player)
+    player.gui.screen.bunnyhop_ui.destroy()
+    storage.rabbasca_bunnyhopping = (storage.rabbasca_bunnyhopping or 1) - 1
+    if storage.rabbasca_bunnyhopping == 0 then
+        script.on_event(defines.events.on_player_changed_position, nil)
     end
-end)
+end
 
-script.on_event(defines.events.on_player_changed_position, function(event)
+local function on_charge_bunnyhop(event)
     local player = game.get_player(event.player_index)
     if not player then return end
 
@@ -261,7 +260,7 @@ script.on_event(defines.events.on_player_changed_position, function(event)
     
     local is_character = player.controller_type == defines.controllers.character
     if not is_character then 
-        frame.destroy()
+        M.clear_bunnyhop_ui(player)
         return
     end
     
@@ -276,7 +275,7 @@ script.on_event(defines.events.on_player_changed_position, function(event)
     local list = frame.bunnyhop_surface_list
     local icon = list.get_item(list.selected_index)[2]
     local planet = string.match(icon, "%[img=space%-location/(.-)%]")
-    frame.destroy()
+    M.clear_bunnyhop_ui(player)
 
     if not planet or not game.planets[planet] then return end
 
@@ -297,7 +296,20 @@ script.on_event(defines.events.on_player_changed_position, function(event)
 
     -- Teleport player
     if not player.teleport(start_pos, surface) then return end
-end)
+end
 
+function M.extend_bunnyhop_ui(player)
+    storage.rabbasca_bunnyhopping = (storage.rabbasca_bunnyhopping or 0) + 1
+    script.on_event(defines.events.on_player_changed_position, on_charge_bunnyhop)
+end
+
+script.on_event(defines.events.on_player_controller_changed, function(event)
+    local player = game.get_player(event.player_index)
+    if not player then return end
+
+    if player.gui.screen.bunnyhop_ui then
+        M.clear_bunnyhop_ui(player)
+    end
+end)
 
 return M

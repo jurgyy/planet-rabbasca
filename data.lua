@@ -1,14 +1,13 @@
+require("prototypes.items")
 require("prototypes.units-vault")
 require("prototypes.entities")
 require("prototypes.entities-vault")
 require("prototypes.resources")
-require("prototypes.theplanet")
-require("prototypes.items")
+require("prototypes.surfaces")
 require("prototypes.map-gen")
 require("prototypes.tiles")
 require("prototypes.recipes")
 require("prototypes.technologies")
-require("prototypes.technologies-vault")
 
 if mods["any-planet-start"] then
     APS.add_planet{
