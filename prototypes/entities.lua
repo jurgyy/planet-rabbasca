@@ -32,7 +32,7 @@ local assembler = util.merge { data.raw["assembling-machine"]["assembling-machin
     minable = { result = "machining-assembler" },
     crafting_speed = 1,
     perceived_performance = 0.5,
-    collision_box = {{-2.4, -2.4}, {2.4, 2.4}},
+    collision_box = {{-2.2, -2.2}, {2.2, 2.2}},
     selection_box = {{-2.5, -2.5}, {2.5, 2.5}},
     energy_usage = "9MW",
     module_slots = 6,
@@ -47,12 +47,12 @@ assembler.fluid_boxes = {
     {
         {
           flow_direction = "input-output",
-          position = {0, -2.3},
+          position = {0, -2.2},
           direction = defines.direction.north,
         },
         {
           flow_direction = "input-output",
-          position = {0, 2.3},
+          position = {0, 2.2},
           direction = defines.direction.south,
         },
     },
@@ -161,7 +161,7 @@ data:extend {
     name = "rabbasca-energy-source",
     icon = "__muluna-graphics__/graphics/moon-icon-mipped.png",
     energy_production = "50MW",
-    energy_source = { type = "electric", usage_priority = "primary-output", buffer_capacity = "135MJ" },
+    energy_source = { type = "electric", usage_priority = "primary-output", buffer_capacity = "10MJ" },
     gui_mode = "none",
     flags = { "placeable-neutral", "placeable-off-grid", "not-on-map", "not-deconstructable", "not-selectable-in-game" },
     autoplace = {
@@ -176,7 +176,7 @@ data:extend {
     icon =  data.raw["item"]["harene-ears-core"].icon,
     icons = data.raw["item"]["harene-ears-core"].icons,
     energy_production = "10MW",
-    energy_source = { type = "electric", usage_priority = "primary-output", buffer_capacity = "27MJ" },
+    energy_source = { type = "electric", usage_priority = "primary-output", buffer_capacity = "0.5MJ" },
     gui_mode = "none",
     flags = { "placeable-neutral", "placeable-off-grid", "not-on-map", "not-deconstructable", "not-selectable-in-game" },
     collision_mask = { layers = { } },
@@ -292,12 +292,12 @@ unpacker.graphics_set =
 data:extend{ unpacker,
 {
     type = "item",
-    icon = "__space-age__/graphics/icons/small-wriggler.png",
+    icon = "__base__/graphics/icons/distractor-capsule.png",
     name = "rabbasca-copy-unpacker",
     stack_size = 50,
     place_result = "rabbasca-copy-unpacker",
-    subgroup = "rabbasca",
-    order = "b[personal-transport]-c[startertron]",
+    subgroup = "smelting-machine",
+    order = "r[copy-unpacker]",
 }
 }
 
@@ -307,8 +307,8 @@ fish_action.attack_parameters.ammo_type.action.action_delivery.target_effects[1]
 data.raw["electric-energy-interface"]["rabbasca-energy-source"].collision_box = nil
 data.raw["capsule"]["rabbasca-turbofish"].capsule_action = fish_action
 data.raw["simple-entity"]["moonstone-rock"].minable.results = {
-  {type = "item", name = "haronite", amount_min = 18, amount_max = 23}, 
-  {type = "item", name = "calcite", amount_min = 25, amount_max = 29 }
+  {type = "item", name = "haronite", amount_min = 12, amount_max = 18}, 
+  {type = "item", name = "calcite", amount_min = 4, amount_max = 7 }
 }
 data.raw["simple-entity"]["carotenoid"].minable.results = {{type = "item", name = "rabbasca-carotene-powder", amount_min = 40, amount_max = 55}}
 data.raw["simple-entity"]["harene-ears-core-capsule"].minable.results = {

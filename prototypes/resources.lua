@@ -13,13 +13,14 @@ scrap_resource.minable =
   mining_time = 0.25,
   results =
   {
-    { type = "item", name = "electronic-circuit", amount_min = 2, amount_max = 5, probability = 0.29 },
-    { type = "item", name = "iron-plate", amount_min = 3, amount_max = 7, probability = 0.25 },
+    { type = "item", name = "electronic-circuit", amount_min = 2, amount_max = 4, probability = 0.29 },
+    { type = "item", name = "iron-plate", amount_min = 2, amount_max = 5, probability = 0.25 },
     { type = "item", name = "steel-plate", amount = 1, probability = 0.12 },
-    { type = "item", name = "ice",  amount = 1, probability = 0.1 },
+    { type = "item", name = "ice",  amount_min = 1, amount_max = 3, probability = 0.1 },
     { type = "item", name = "advanced-circuit",  amount = 1, probability = 0.1 },
-    { type = "item", name = "tungsten-plate",   amount = 1, probability = 0.05 },
-    { type = "item", name = "blank-vault-key",  amount = 1, probability = 0.01 },
+    { type = "item", name = "tungsten-plate",   amount = 1, probability = 0.06 },
+    { type = "item", name = "battery",   amount = 1, probability = 0.02 },
+    { type = "item", name = "blank-vault-key",  amount = 1, probability = 0.015 },
   }
 }
 scrap_resource.collision_mask = { layers = { resource = true } }

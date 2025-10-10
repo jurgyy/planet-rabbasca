@@ -67,6 +67,15 @@ local function handle_teleport_effect(event)
       console.destructible = false
       -- console.force = game.forces.neutral
     end
+  elseif effect_id == "rabbasca_terminal_died" then
+    local console = event.target_entity or event.source_entity
+    if not console then return end
+    local surface = console.surface
+    local position = console.position
+    local vault = surface.find_entity("rabbasca-vault", position)
+    if not vault then return end
+    vault.active = false
+    vault.force = game.forces.neutral
   elseif effect_id == "make_invulnerable" then
     local monument = event.target_entity or event.source_entity
     if not monument then return end
@@ -79,7 +88,10 @@ local function handle_teleport_effect(event)
     local surface = console.surface
     local position = console.position
     local vault = surface.find_entity("rabbasca-vault", position)
-    if not vault then return end
+    if not vault then 
+      console.die()
+      return 
+    end
     local recipe = console.get_recipe()
     if not recipe then return end
     if recipe.name == "rabbasca-vault-regenerate-core" then
@@ -87,13 +99,19 @@ local function handle_teleport_effect(event)
     elseif recipe.name == "rabbasca-vault-activate" then
       vault.active = true
       vault.force = game.forces.enemy
+      local input = console.get_inventory(defines.inventory.crafter_input)
+      if input then 
+        surface.spill_inventory{position = position, inventory = input, enable_looted = true}
+      end
       console.recipe_locked = false
       console.set_recipe(nil)
+      console.force = game.forces.player
     elseif recipe.name == "rabbasca-vault-deactivate" then
       vault.active = false
       vault.force = game.forces.neutral
       console.set_recipe("rabbasca-vault-activate")
       console.recipe_locked = true
+      console.force = game.forces.neutral
     else
       local out_pos = surface.find_non_colliding_position(recipe.name, position, 5, 1)
       if not out_pos then return end
@@ -103,6 +121,7 @@ local function handle_teleport_effect(event)
         force = game.forces.neutral,
       }
       if not capsule then return end
+      capsule.order_deconstruction(game.forces.player)
       console.set_recipe("rabbasca-vault-regenerate-core")
       console.recipe_locked = true
     end

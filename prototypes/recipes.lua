@@ -4,17 +4,21 @@ local r = require("__planet-rabbasca__.util")
 data:extend {
     {
         type = "item-subgroup",
-        name = "rabbasca",
-        group = "production"
+        name = "rabbasca-processes",
+        group = "intermediate-products",
+        order = data.raw["item-subgroup"]["fulgora-processes"].name .."-b"
     },
-    util.merge {
-        table.deepcopy(data.raw["item-subgroup"]["production-machine"]),
-        { name = "production-machine-infused" }
+    {
+        type = "item-subgroup",
+        name = "rabbasca-vault-access",
+        group = "rabbasca-extensions",
+        order = "z"
     },
     {
         type = "item-subgroup",
         name = "rabbasca-vault-extraction",
-        group = "intermediate-products"
+        group = "rabbasca-extensions",
+        order = "a"
     },
     {
         type = "item-subgroup",
@@ -25,6 +29,13 @@ data:extend {
         type = "item-subgroup",
         name = "rabbasca-matter-printer-unpack",
         group = "intermediate-products"
+    },
+    {
+        type = "item-group",
+        name = "rabbasca-extensions",
+        icon = data.raw["item"]["harene-ears-core"].icon,
+        icon_size = 64,
+        order = "fr"
     },
     {
         type = "recipe-category",
@@ -45,20 +56,6 @@ data:extend {
     {
         type = "recipe-category",
         name = "rabbasca-vault-hacking",
-    },
-    {
-        type = "recipe",
-        name = "smart-solution",
-        enabled = false,
-        energy_required = 5.0,
-        ingredients = { 
-            {type = "fluid", name = "beta-carotene", amount = 30 },
-            {type = "item", name = "protein-powder", amount = 3 },
-            {type = "item", name = "megabrain", amount = 1 },
-        },
-        results = { { type = "item", name = "smart-solution", amount = 5 } },
-        main_product = "smart-solution",
-        category = "organic-or-chemistry",
     },
     {
         type = "recipe",
@@ -272,22 +269,6 @@ data:extend {
     },
     {
         type = "recipe",
-        name = "megabrain",
-        enabled = false,
-        energy_required = 5,
-        ingredients = { 
-            {type = "item", name = "jellynut", amount = 1 },
-            {type = "fluid", name = "harene-gas", amount = 100 },
-            {type = "fluid", name = "beta-carotene", amount = 100 },
-        },
-        results = { 
-            { type = "item", name = "megabrain", amount = 1 },
-        },
-        main_product = "megabrain",
-        category = "organic",
-    },
-    {
-        type = "recipe",
         name = "vision-circuit",
         enabled = false,
         energy_required = 7,
@@ -309,17 +290,19 @@ data:extend {
         enabled = false,
         energy_required = 15,
         ingredients = { 
-            {type = "item", name = "harene-ears-core", amount = 1 },
+            {type = "item", name = "harene-ears-subcore", amount = 1 },
             -- {type = "item", name = "harene-glob-core", amount = 1 },
             {type = "item", name = "power-solution", amount = 20 },
             {type = "item", name = "engine-unit", amount = 5 },
             {type = "item", name = "rabbasca-turbofin", amount = 100 },
+            {type = "item", name = "vision-circuit", amount = 10 }
         },
         results = { 
             { type = "item", name = "bunnyhop-engine", amount = 1 },
         },
+        hide_from_player_crafting = true,
         main_product = "bunnyhop-engine",
-        category = "crafting",
+        category = "complex-machinery",
     },
     {
         type = "recipe",
@@ -369,12 +352,13 @@ data:extend {
         enabled = false,
         energy_required = 8,
         ingredients = { 
-            { type = "fluid", name = "rabbasca-copyslop", amount = 100 },
+            { type = "fluid", name = "rabbasca-copyslop", amount = 250 },
             -- {type = "fluid", name = "energetic-residue", amount = 5 },
         },
         results = { {type = "item", name = "harene-copy-core", amount = 1, ignored_by_productivity = 1} },
         main_product = "harene-copy-core",
         category = "crafting-with-fluid",
+        hide_from_player_crafting = true,
         surface_conditions = {{property = "harenic-energy-signatures", min = 50}}
     },
     {
@@ -385,7 +369,7 @@ data:extend {
         ingredients = { 
             { type = "item", name = "harene-copy-core-recharging", amount = 1 }
         },
-        results = { {type = "fluid", name = "rabbasca-copyslop", amount = 100, ignored_by_productivity = 100 } },
+        results = { {type = "fluid", name = "rabbasca-copyslop", amount = 245, ignored_by_productivity = 245 } },
         hide_from_player_crafting = true,
         main_product = "rabbasca-copyslop",
         category = "crafting-with-fluid",
@@ -449,8 +433,8 @@ data:extend {
 }
 
 -- r.create_vault_recipe("harene-glob-core",  3, 35,  false)
-r.create_vault_recipe("harene-ears-core-capsule", 120,  false)
-r.create_vault_recipe("harene-copy-core-capsule", 60,   true)
+r.create_vault_recipe(data.raw["simple-entity"]["harene-ears-core-capsule"], 120,  false)
+r.create_vault_recipe(data.raw["simple-entity"]["harene-copy-core-capsule"], 60,   true)
 -- r.create_vault_recipe("harenic-stabilizer",    1, 2.5, false)
 -- create_vault_recipe("rabbascan-encrypted-vault-data", 10, 3, true)
 -- create_vault_recipe("harene-cubic-core", 1, 10, false)
@@ -477,11 +461,11 @@ data:extend {
         category = "chemistry",
         hide_from_player_crafting = true,
         energy_required = 7,
-        results = {{type = "item", name = "harenic-stabilizer", amount = 3 }},
+        results = {{type = "item", name = "harenic-stabilizer", amount = 1 }},
         ingredients = {
-            { type = "item", name = "calcite", amount = 2 },
+            { type = "item", name = "calcite", amount = 6 },
             { type = "item", name = "rabbasca-carotene-powder", amount = 15 },
-            { type = "fluid", name = "water", amount = 20 },
+            { type = "fluid", name = "water", amount = 120 },
         }
     },
     {
@@ -493,9 +477,9 @@ data:extend {
         result_is_always_fresh = true,
         hide_from_player_crafting = true,
         energy_required = 10,
-        results = {{type = "item", name = "haronite-brick", amount = 3 }},
+        results = {{type = "item", name = "haronite-brick", amount = 1 }},
         ingredients = {
-            { type = "item", name = "haronite", amount = 2 },
+            { type = "item", name = "haronite", amount = 1 },
         }
     },
     {
@@ -559,7 +543,7 @@ data:extend {
         results = {{ type = "item", name = "rabbasca-vault-access-protocol", amount = 1 }},
         main_product = "rabbasca-vault-access-protocol",
         category = "rabbasca-vault-hacking",
-        subgroup = "rabbasca-vault-extraction",
+        subgroup = "rabbasca-vault-access",
         auto_recycle = false,
         overload_multiplier = 1,
         result_is_always_fresh = true,
@@ -576,7 +560,7 @@ data:extend {
         results = {{ type = "item", name = "rabbasca-vault-access-protocol", amount = 1 }},
         main_product = "rabbasca-vault-access-protocol",
         category = "rabbasca-vault-hacking",
-        subgroup = "rabbasca-vault-extraction",
+        subgroup = "rabbasca-vault-access",
         order = "z[vault]-z[shutdown]",
         auto_recycle = false,
         overload_multiplier = 1,
@@ -587,13 +571,14 @@ data:extend {
     {
         type = "recipe",
         name = "rabbasca-vault-regenerate-core",
-        icon = "__base__/graphics/icons/stone.png",
+        icon = data.raw["virtual-signal"]["signal-hourglass"].icon,
         enabled = true,
         hidden = true,
         energy_required = 3600,
         ingredients = { },
         results = { {type = "item", name = "rabbasca-vault-access-protocol", amount = 1} },
         category = "rabbasca-vault-hacking",
+        subgroup = "rabbasca-vault-access",
         auto_recycle = false,
         overload_multiplier = 1,
         result_is_always_fresh = true,

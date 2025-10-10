@@ -6,7 +6,7 @@ data:extend {
     name = "planet-discovery-rabbasca",
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
-    prerequisites = { "planet-discovery-gleba" },
+    prerequisites = { "planet-discovery-gleba", "gun-turret" },
     effects = {{
         type = "unlock-space-location",
         space_location = "rabbasca",
@@ -61,10 +61,6 @@ data:extend {
       {
         type = "unlock-recipe",
         recipe = "rabbasca-copyslop"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "lubricant-from-copyslop"
       },
     },
     research_trigger =
@@ -124,7 +120,7 @@ data:extend {
     name = "rabbasca-vault-core-extraction",
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
-    prerequisites = { "machining-assembler" },
+    prerequisites = { "machining-assembler", "harene-gas-processing" },
     effects =
     {
       {
@@ -178,7 +174,7 @@ data:extend {
     name = "machining-assembler",
     icon = "__space-age__/graphics/technology/foundry.png",
     icon_size = 256,
-    prerequisites = { "harenic-stabilizer", "harene-gas-processing", "leg-day-everyday", "item-duplication-2" },
+    prerequisites = { "harenic-stabilizer", "leg-day-everyday", "item-duplication-2" },
     effects =
     {
       {
@@ -188,6 +184,10 @@ data:extend {
       {
         type = "unlock-recipe",
         recipe = "machining-assembler"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "lubricant-from-copyslop"
       },
     },
     research_trigger =
@@ -229,7 +229,7 @@ data:extend {
     name = "harene-synthesis",
     icon = "__space-age__/graphics/technology/steel-plate-productivity.png",
     icon_size = 256,
-    prerequisites = { "harene-ears-core", "metallurgic-science-pack", "cryogenic-science-pack" },
+    prerequisites = { "rabbasca-ears-technology", "metallurgic-science-pack", "cryogenic-science-pack" },
     effects =
     {
       {
@@ -405,7 +405,7 @@ data:extend {
     name = "self-replicating-firearm-magazine",
     icon = "__base__/graphics/technology/military.png",
     icon_size = 256,
-    prerequisites = { "harene-ears-core", "military-3" },
+    prerequisites = { "rabbasca-ears-technology", "military-3" },
     effects =
     {
       {

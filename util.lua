@@ -27,7 +27,8 @@ function output.create_vault_recipe(reward, cost, has_no_prequisite)
 data:extend{
   {
       type = "recipe",
-      name = reward,
+      name = reward.name,
+      icons = reward.icons,
       preserve_products_in_machine_output = false,
       enabled = has_no_prequisite,
       hide_from_player_crafting = true,
@@ -49,7 +50,10 @@ end
 
 function output.create_duplication_recipe(item, input, output)
     if not data.raw["item"][item] then return end
-    local icons = {{icon = data.raw["item"]["harene-copy-core"].icon, scale = 0.7 }}
+    local icons = {}
+    for _, icon in pairs(table.deepcopy(data.raw["item"]["harene-copy-core"].icons)) do 
+        table.insert(icons, icon)
+    end
     if data.raw["item"][item].icon then
         table.insert(icons, { icon = data.raw["item"][item].icon, scale = 0.5 })
     elseif data.raw["item"][item].icons then
@@ -127,9 +131,12 @@ function get_type(crafter)
 end
 
 function create_infused_thing_with_effect(crafter, effect, add_effect_amount)
+    log("infuseing "..crafter)
     local type = get_type(crafter) -- TODO: how to raise error?
+    log("... is ".. (type or "nothing"))
+    if not type or crafter:find("^harene%-infused") then return end 
     local original = data.raw[type][crafter]
-    local new_name = effect and "harene-infused-"..original.name.."-"..effect or "harene-infused-"..original.name
+    local new_name = effect and ("harene-infused-"..original.name.."-"..effect) or ("harene-infused-"..original.name)
     local new = table.deepcopy(original)
     local icons = {}
     if data.raw["item"][crafter].icon then
@@ -140,7 +147,9 @@ function create_infused_thing_with_effect(crafter, effect, add_effect_amount)
             table.insert(icons, icon)
         end
     end
+    log("... made icon")
     local needed_core = type == "inserter" and "harene-ears-subcore" or "harene-ears-core"
+    log("... core ".. needed_core)
     table.insert(icons, { icon = data.raw["item"][needed_core].icon, scale = 0.5, shift = {0, 12} })
     if effect then
         local effect_icon = "efficiency-module-3"
@@ -158,7 +167,7 @@ function create_infused_thing_with_effect(crafter, effect, add_effect_amount)
     new_item.hidden = true
     new_item.icons = icons
     new_item.place_result = new_name
-    new_item.subgroup = type == inserter and "inserter-infused" or "production-machine-infused" 
+    new_item.subgroup = new_item.subgroup .. "-with-ears-core" 
     new_item.factoriopedia_alternative = original.name
 
     new.name = new_name
@@ -182,6 +191,15 @@ function create_infused_thing_with_effect(crafter, effect, add_effect_amount)
         { type = "void" }
     }
 
+    if not data.raw["item-subgroup"][new_item.subgroup] then
+        data:extend { util.merge {
+            table.deepcopy(data.raw["item-subgroup"][data.raw["item"][crafter].subgroup]),
+            { 
+                name = new_item.subgroup,
+                group = "rabbasca-extensions" 
+            }
+        } }
+    end
     data:extend {
       new,
       new_item,
@@ -192,13 +210,14 @@ function create_infused_thing_with_effect(crafter, effect, add_effect_amount)
         energy_required = 30,
         ingredients = {
             { type = "item", name = needed_core, amount = 1 },
-            { type = "fluid", name = "harene-gas", amount = needed_core == "harene_ears_core" and 50 or 3 },
+            { type = "fluid", name = "harene-gas", amount = needed_core == "harene-ears-core" and 50 or 3 },
             { type = "item", name = original.name, amount = 1},
         },
         results = { { type = "item", name = new_name, amount = 1 } },
         main_product = new_name,
+        hide_from_player_crafting = true,
         category = "install-ears-core",
-        maximum_productivity = 0
+        maximum_productivity = 1
       }
     }
     local unlocks = data.raw["technology"]["rabbasca-ears-technology"].effects

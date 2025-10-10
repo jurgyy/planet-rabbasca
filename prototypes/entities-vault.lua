@@ -6,14 +6,15 @@ local access_console = util.merge{
     name = "rabbasca-vault-access-terminal",
     -- fixed_recipe = "rabbasca-vault-activate",
     max_health = 2400,
+    healing_per_tick = 0.1 / second,
     crafting_speed = 1,
-    energy_usage = "1MW",
+    energy_usage = "2MW",
     allow_copy_paste = false,
-    module_slots = 1,
+    module_slots = 2,
     return_ingredients_on_change = true,
     collision_box = {{-0.4, -0.4}, {0.4, 0.4}},
     selection_box = {{-0.6, -1}, {0.6, 0.6}},
-    is_military_target = false
+    is_military_target = true
   }
 }
 access_console.allowed_effects = { "speed", "consumption", "pollution" }
@@ -23,7 +24,8 @@ access_console.fluid_boxes = { }
 access_console.energy_source = {
   type = "electric",
   usage_priority = "primary-input",
-  emissions_per_minute = { ["vault-activity"] = 0.75 } -- actual numbers are way higher
+  emissions_per_minute = { ["vault-activity"] = 2 }, -- actual numbers are way higher
+  drain = "0kW"
 }
 access_console.resistances = {
   { type = "physical", percent = 70 },
@@ -31,6 +33,10 @@ access_console.resistances = {
   { type = "poison", percent = 100 },
   { type = "laser", percent = 50 },
   { type = "electric", percent = 30 },
+}
+access_console.dying_trigger_effect = {
+  type = "script",
+  effect_id = "rabbasca_terminal_died"
 }
 access_console.created_effect = {
   type = "direct",
@@ -47,7 +53,7 @@ access_console.created_effect = {
   } 
 }
 access_console.collision_mask = { layers = { } }
-access_console.loot = {{ item = "rabbasca-console-scrap", count_min = 165, count_max = 173 }}
+-- access_console.loot = {{ item = "rabbasca-console-scrap", count_min = 165, count_max = 173 }}
 access_console.minable = nil -- { mining_time = 5, results = {{ type = "item", name = "rabbasca-console-scrap", amount_min = 165, amount_max = 173 }} }
 access_console.flags = {"placeable-player", "not-deconstructable", "not-rotatable", "placeable-off-grid"}
 access_console.surface_conditions = nil

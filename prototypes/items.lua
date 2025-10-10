@@ -50,7 +50,7 @@ data:extend {
     icon = "__Krastorio2Assets__/icons/items/imersite-2.png",
     name = "haronite",
     stack_size = 50,
-    subgroup = "rabbasca",
+    subgroup = "rabbasca-processes",
     order = "b[personal-transport]-c[startertron]",
     spoil_ticks = 3 * minute,
     spoil_result = "stone"
@@ -60,7 +60,7 @@ data:extend {
     icon = "__Krastorio2Assets__/icons/items/imersium-plate.png",
     name = "infused-haronite-plate",
     stack_size = 50,
-    subgroup = "rabbasca",
+    subgroup = "rabbasca-processes",
     order = "b[personal-transport]-c[startertron]",
 },
 {
@@ -68,7 +68,7 @@ data:extend {
     icon = "__Krastorio2Assets__/icons/items/lithium-2.png",
     name = "rabbasca-turbofin",
     stack_size = 200,
-    subgroup = "rabbasca",
+    subgroup = "rabbasca-processes",
     order = "b[personal-transport]-c[startertron]",
 },
 {
@@ -76,15 +76,7 @@ data:extend {
     icon = "__base__/graphics/icons/sulfur.png",
     name = "harenic-stabilizer",
     stack_size = 50,
-    subgroup = "rabbasca",
-    order = "b[personal-transport]-c[startertron]",
-},
-{
-    type = "item",
-    icon = "__space-age__/graphics/icons/bioflux.png",
-    name = "smart-solution",
-    stack_size = 100,
-    subgroup = "rabbasca",
+    subgroup = "rabbasca-processes",
     order = "b[personal-transport]-c[startertron]",
 },
 {
@@ -101,15 +93,27 @@ data:extend {
     icon = "__space-age__/graphics/icons/bioflux.png",
     name = "power-solution",
     stack_size = 100,
-    subgroup = "rabbasca",
+    subgroup = "rabbasca-processes",
     order = "b[personal-transport]-c[startertron]",
 },
 {
     type = "item",
     icon = "__space-age__/graphics/icons/fusion-generator.png",
     name = "harene-ears-core",
-    stack_size = 10,
-    subgroup = "rabbasca",
+    stack_size = 5,
+    subgroup = "rabbasca-processes",
+    order = "b[personal-transport]-c[startertron]",
+    auto_recycle = false,
+},
+{
+    type = "item",
+    icon = "__space-age__/graphics/icons/fusion-generator.png",
+    -- icons = {
+    --   { icon = "__space-age__/graphics/icons/fusion-generator.png", scale = 0.4 }
+    -- },
+    name = "harene-ears-subcore",
+    stack_size = 50,
+    subgroup = "rabbasca-processes",
     order = "b[personal-transport]-c[startertron]",
     auto_recycle = false,
 },
@@ -118,23 +122,27 @@ data:extend {
     icon = "__space-age__/graphics/icons/small-wriggler.png",
     name = "harene-glob-core",
     stack_size = 10,
-    subgroup = "rabbasca",
+    subgroup = "rabbasca-processes",
     order = "b[personal-transport]-c[startertron]",
 },
 {
     type = "item",
-    icon = "__space-age__/graphics/icons/jelly.png",
+    icons = {
+      { icon = "__space-age__/graphics/icons/jelly.png", tint = { 0.7, 0.6, 0.8 } }
+    },
     name = "harene-copy-core",
     stack_size = 10,
-    subgroup = "rabbasca",
+    subgroup = "rabbasca-processes",
     order = "b[personal-transport]-c[startertron]",
 },
 {
     type = "item",
-    icon = "__space-age__/graphics/icons/jelly.png",
+    icons = {
+      { icon = "__space-age__/graphics/icons/jelly.png", tint = { 0.7, 0.4, 0.5 } }
+    },
     name = "harene-copy-core-recharging",
     stack_size = 10,
-    subgroup = "rabbasca",
+    subgroup = "rabbasca-processes",
     order = "b[personal-transport]-c[startertron]",
 },
 {
@@ -142,7 +150,7 @@ data:extend {
     icon = "__base__/graphics/icons/steam-engine.png",
     name = "bunnyhop-engine",
     stack_size = 1,
-    subgroup = "rabbasca",
+    subgroup = "rabbasca-processes",
     order = "b[personal-transport]-c[startertron]",
     capsule_action = {
       type = "use-on-self",
@@ -180,16 +188,7 @@ data:extend {
     icons = {{ icon = "__Krastorio2Assets__/icons/items/imersite-powder-2-light.png", tint = {0.8, 0.32, 0.06} }},
     name = "rabbasca-carotene-powder",
     stack_size = 200,
-    subgroup = "rabbasca",
-    order = "b[personal-transport]-c[startertron]",
-},
-{
-    type = "tool",
-    icon = "__space-age__/graphics/icons/metallurgic-science-pack.png",
-    name = "ultranutritious-science-pack",
-    stack_size = 200,
-    durability = 1,
-    subgroup = "rabbasca",
+    subgroup = "rabbasca-processes",
     order = "b[personal-transport]-c[startertron]",
 },
 {
@@ -197,7 +196,7 @@ data:extend {
     icon = "__space-age__/graphics/icons/foundation.png",
     name = "harene-infused-foundation",
     stack_size = 20,
-    subgroup = "rabbasca",
+    subgroup = "rabbasca-processes",
     order = "b[personal-transport]-c[startertron]",
     place_as_tile =
     {
@@ -212,7 +211,7 @@ data:extend {
     icon = "__space-age__/graphics/icons/space-platform-foundation.png",
     name = "harene-infused-space-platform",
     stack_size = 50,
-    subgroup = "rabbasca",
+    subgroup = "rabbasca-processes",
     order = "b[personal-transport]-c[startertron]",
     place_as_tile =
     {
@@ -227,18 +226,21 @@ data:extend {
     icon = "__space-age__/graphics/icons/nutrients.png",
     name = "protein-powder",
     stack_size = 200,
-    subgroup = "rabbasca",
+    subgroup = "rabbasca-processes",
     order = "b[personal-transport]-c[startertron]",
     fuel_category = "nutrients",
-    fuel_value = "3MJ",
+    fuel_value = "2MJ",
 },
 {
   type = "fluid",
     name = "harene",
-    icon = "__space-age__/graphics/icons/fluid/electrolyte.png",
+    icons = {
+      { icon = "__space-age__/graphics/icons/fluid/fluorine.png", tint = { r=0.65, g=0.31, b=0.92 } },
+      { icon = "__space-age__/graphics/icons/fluid/electrolyte.png", tint = { 0.9, 0.8, 1 } },
+    },
     base_color = {r=0.65, g=0.31, b=0.92},
     flow_color = {r=0.65, g=0.31, b=0.92},
-    default_temperature = 35.0,
+    default_temperature = 1032.0,
     fuel_value = "100MJ",
     auto_barrel = false
 },
@@ -248,7 +250,7 @@ data:extend {
     icons = {{ icon = "__space-age__/graphics/icons/fluid/fluorine.png", tint = {r=0.65, g=0.31, b=0.92} }},
     base_color = {r=0.65, g=0.31, b=0.92},
     flow_color = {r=0.65, g=0.31, b=0.92},
-    default_temperature = 35.0,
+    default_temperature = -35.0,
     fuel_value = "1MJ",
     auto_barrel = false
 },
@@ -275,18 +277,11 @@ data:extend {
     type = "fluid",
     name = "rabbasca-copyslop",
     icon = "__space-age__/graphics/icons/fluid/ammoniacal-solution.png",
+    subgroup = "fluid",
     base_color = {0.17, 0.42, 0.53},
     flow_color = {0.17, 0.42, 0.53},
     default_temperature = -32.0,
     auto_barrel = false
-},
-{
-    type = "item",
-    icon = "__space-age__/graphics/icons/jellynut.png",
-    name = "megabrain",
-    stack_size = 20,
-    subgroup = "rabbasca",
-    order = "b[personal-transport]-c[startertron]",
 },
 {
     type = "item",
@@ -332,22 +327,6 @@ util.merge{
     category = "rabbasca-security",
     icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png",
     stack_size = 20,
-},
-{
-    type = "item",
-    name = "rabbasca-console-scrap",
-    icon = "__space-age__/graphics/icons/scrap-5.png",
-    stack_size = 500,
-    weight = 0.1 * kg,
-},
-{
-    type = "tool",
-    name = "rabbascan-encrypted-vault-data",
-    category = "rabbasca-security",
-    icon = "__Krastorio2Assets__/icons/cards/matter-research-data.png",
-    stack_size = 200,
-    weight = 1 * kg,
-    durability = 1,
 },
 {
     type = "item",

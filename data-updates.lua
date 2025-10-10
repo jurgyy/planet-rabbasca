@@ -53,19 +53,11 @@ for _, thing in pairs(data.raw["space-platform-starter-pack"]) do
 end
 
 rutil.make_complex_machinery(data.raw["item"]["space-platform-foundation"])
-
-for _, lab in pairs(data.raw["lab"]) do 
-  if lab.inputs[1] == "automation-science-pack" then
-    table.insert(lab.inputs, "ultranutritious-science-pack")
-  end
-end
-
 for _, thing in pairs(data.raw["inserter"]) do
   if thing.name ~= "burner-inserter" then
-    rutil.create_infused_mini(thing)
+    rutil.create_infused_mini(thing.name)
   end
 end
-
 rutil.create_infused_crafter("assembling-machine-2")
 rutil.create_infused_crafter("assembling-machine-3")
 rutil.create_infused_crafter("chemical-plant")
