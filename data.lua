@@ -13,8 +13,8 @@ require("prototypes.equipment")
 if mods["any-planet-start"] then
     APS.add_planet{
         name = "rabbasca" , 
-        filename = "__planet-rabbasca__/any-planet-start", 
-        fixes_filename = "__planet-rabbasca__/any-planet-start-final-fixes", 
+        filename = "__planet-rabbasca__/compatibility/any-planet-start", 
+        fixes_filename = "__planet-rabbasca__/compatibility/any-planet-start-final-fixes", 
         technology = "planet-discovery-rabbasca"
     }
 end

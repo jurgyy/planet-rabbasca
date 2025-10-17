@@ -1,5 +1,5 @@
 local RECEIVER_RADIUS = 75
-
+-- TODO: Use items_to_place_this?
 local function try_build_ghost(entity)
     if not entity.valid then return false, false end
     local proto = entity.ghost_prototype

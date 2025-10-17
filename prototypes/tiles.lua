@@ -1,3 +1,6 @@
+-- Some globals black magic or something happening here, required for water borders
+table.insert(water_tile_type_names, "rabbasca-harene")
+
 data:extend{
 {
   type = "collision-layer",
@@ -41,6 +44,8 @@ util.merge {
       -- material_background = { tint  = {60,55,97}, },
       minable = { result = "rabbasca-energetic-concrete" },
       variants = { material_background = { picture = "__planet-rabbasca__/graphics/icons/concrete.png", } },
+      frozen_variant = "rabbasca-energetic-concrete",
+      check_collision_with_entities = true
     }
 },
 util.merge { 
@@ -49,7 +54,8 @@ util.merge {
       name = "harene-infused-foundation",
       collision_mask = { layers = { harene = true } },
       effect_color = {60,55,97},
-      minable = { result = "harene-infused-foundation" }
+      minable = { result = "harene-infused-foundation" },
+      check_collision_with_entities = true
     }
 },
 util.merge { 
@@ -58,7 +64,8 @@ util.merge {
       name = "harene-infused-space-platform",
       collision_mask = { layers = { harene = true } },
       effect_color = {60,55,97},
-      minable = { result = "harene-infused-space-platform" }
+      minable = { result = "harene-infused-space-platform" },
+      check_collision_with_entities = true
     }
 },
 harene_tile

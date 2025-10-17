@@ -98,9 +98,9 @@ data:extend{
     name = "rabbasca_camps",
     expression = "clamp(max(rabbasca_starting_camp, \z
                       min(rabbasca_starting_mask, aquilo_spot_noise{seed = 9312,\z
-                                    count = 1 + 3 * control:harene:frequency,\z
+                                    count = 1 + 3 * control:rabbasca_vaults:frequency,\z
                                     skip_offset = 0,\z
-                                    region_size = 300 + 500 / control:harene:frequency,\z
+                                    region_size = 300 + 500 / control:rabbasca_vaults:size,\z
                                     density = 1,\z
                                     radius = rabbasca_camp_size,\z
                                     favorability = 3})), 0, 1)"
@@ -125,11 +125,11 @@ data:extend{
     name = "rabbasca_scrap",
     expression = "clamp(max(starting_spot_at_angle{angle = aquilo_angle, distance = 17, radius = 7, x_distortion = 0, y_distortion = 0}, \z
                       min(rabbasca_starting_mask, aquilo_spot_noise{seed = 1234,\z
-                                    count = 5,\z
+                                    count = 4 + control:rabbasca_scrap:frequency,\z
                                     skip_offset = 5,\z
-                                    region_size = 50 + 600 / control:harene:frequency,\z
+                                    region_size = 50 + 600 / control:rabbasca_scrap:frequency,\z
                                     density = 1,\z
-                                    radius = 11,\z
+                                    radius = 8 + 3 * control:rabbasca_scrap:size,\z
                                     favorability = 2})), 0, 1)"
   },
   {
@@ -164,12 +164,10 @@ data:extend{
     name = "rabbasca_elevation",
     --intended_property = "elevation",
     expression = "clamp(down_mountain + a * 0.062 + b * 0.08, -1, 1) ",
-    -- expression = "clamp(1 - lerp(blended, maxed, 0.4) * control:rabbasca_noise:size - rabbasca_harene_pools, -1, 1)",
     local_expressions = {
-      -- up_mountain = "-rabbasca_up * 0.5 * (control:rabbasca_noise:richness) * (1 + b) ",
-      down_mountain = "min(rabbasca_down, 0.83 - rabbasca_down) * 2.3 * (control:rabbasca_noise:richness)",
-      a = "multioctave_noise{x = x, y = y, persistence = 0.3, seed0 = map_seed, seed1 = 0, input_scale = 3, octaves = 5 * control:rabbasca_noise:size }",
-      b  = "multioctave_noise{x = x, y = y, persistence = 1.4, seed0 = map_seed, input_scale = 1/2, seed1 = 3, octaves = 7 * control:rabbasca_noise:size }",
+      down_mountain = "min(rabbasca_down, 0.83 - rabbasca_down) * 2.3",
+      a = "multioctave_noise{x = x, y = y, persistence = 0.3, seed0 = map_seed, seed1 = 0, input_scale = 3, octaves = 5 }",
+      b  = "multioctave_noise{x = x, y = y, persistence = 1.4, seed0 = map_seed, input_scale = 1/2, seed1 = 3, octaves = 7 }",
       voronoi_large = "voronoi_facet_noise{   x = x + aquilo_wobble_x * 2,\z
                                         y = y + aquilo_wobble_y * 2,\z
                                         seed0 = map_seed,\z

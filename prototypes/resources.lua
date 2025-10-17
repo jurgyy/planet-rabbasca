@@ -19,7 +19,6 @@ scrap_resource.minable =
     { type = "item", name = "ice",  amount_min = 1, amount_max = 3, probability = 0.1 },
     { type = "item", name = "advanced-circuit",  amount = 1, probability = 0.1 },
     { type = "item", name = "tungsten-plate",   amount = 1, probability = 0.06 },
-    { type = "item", name = "battery",   amount = 1, probability = 0.02 },
     { type = "item", name = "vault-access-key",  amount = 1, probability = 0.015 },
   }
 }
@@ -29,7 +28,8 @@ scrap_resource.autoplace = {
   probability_expression = "rabbasca_scrap",
   richness_expression = "4 + 2.5\z 
     * multioctave_noise{x = x, y = y, persistence = 0.44, seed0 = map_seed, input_scale = 1.3, seed1 = 'scrappening', octaves = 6 }\z
-    * lerp(1, 10, distance / 5000)",
+    * lerp(1, 10, distance / 5000)\z
+    * control:rabbasca_scrap:richness",
 }
 
 local harene_resource = {

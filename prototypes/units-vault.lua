@@ -12,7 +12,7 @@ local defender_1 = util.merge{
     distraction_cooldown = 20,
     min_pursue_time = 15 * second,
     max_pursue_distance = 50,
-    absorptions_to_join_attack = { ["vault-activity"] = 500 },
+    absorptions_to_join_attack = { ["vault-activity"] = 50 },
     -- loot = { { item = "firearm-magazine", count_min = 3, count_max = 3 } },
     -- radar_range = 1,
     ai_settings = {
@@ -73,7 +73,7 @@ local defender_2 = util.merge {
     distraction_cooldown = 20,
     min_pursue_time = 15 * second,
     max_pursue_distance = 50,
-    absorptions_to_join_attack = { ["vault-activity"] = 1000 },
+    absorptions_to_join_attack = { ["vault-activity"] = 75 },
     -- loot = { { item = "firearm-magazine", count_min = 3, count_max = 3 } },
     ai_settings = {
       join_attacks = true,

@@ -456,6 +456,7 @@ data:extend {
 -- r.create_vault_recipe("harene-glob-core",  3, 35,  false)
 r.create_vault_recipe(data.raw["simple-entity"]["harene-ears-core-capsule"], 60,  false)
 r.create_vault_recipe(data.raw["simple-entity"]["harene-copy-core-capsule"], 30,   true)
+r.create_vault_recipe(data.raw["simple-entity"]["harene-utility-capsule"], 30,   true)
 -- r.create_vault_recipe("harenic-stabilizer",    1, 2.5, false)
 -- create_vault_recipe("rabbascan-encrypted-vault-data", 10, 3, true)
 -- create_vault_recipe("harene-cubic-core", 1, 10, false)

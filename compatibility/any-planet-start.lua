@@ -17,6 +17,8 @@ data:extend {
         results = { { type = "item", name = "automation-science-pack", amount = 2 } },
         main_product = "automation-science-pack",
         category = "crafting",
+        subgroup = data.raw["tool"]["automation-science-pack"].subgroup,
+        order = "z[any-planet-start]-r[rabbasca-automation-science-pack]",
     },
     {
         type = "recipe",
@@ -30,17 +32,24 @@ data:extend {
         enabled = false,
         ingredients = { 
             { type = "item", name = "power-solution", amount = 1 },
-            { type = "item", name = "advanced-circuit", amount = 2 }, 
+            { type = "item", name = "vision-circuit", amount = 2 }, 
             { type = "item", name = "engine-unit", amount = 1 }, 
         },
         results = { { type = "item", name = "chemical-science-pack", amount = 1 } },
         category = "crafting",
+        subgroup = data.raw["tool"]["chemical-science-pack"].subgroup,
+        order = "z[any-planet-start]-r[rabbasca-chemical-science-pack]",
     },
 }
 
 -- earlier/easier
-utils.add_recipes("steam-power", { "inserter", "lab" })
-utils.set_prerequisites("automation-science-pack", {"steam-power"})
+-- utils.add_recipes("steam-power", { "inserter", "lab" })
+-- utils.set_prerequisites("automation-science-pack", {"steam-power"})
+utils.set_trigger("electronics", {
+    type = "craft-item",
+    item = "electronic-circuit",
+    count = 20
+})
 utils.set_prerequisites("chemical-science-pack", {"harene-gas-processing", "engine", "item-duplication-2"})
 utils.add_recipes("automation-science-pack", { "rabbasca-automation-science-pack" })
 utils.add_recipes("chemical-science-pack", { "rabbasca-chemical-science-pack" })
@@ -50,6 +59,8 @@ utils.set_prerequisites("oil-gathering", {"steel-processing", "logistic-science-
 utils.ignore_multiplier("oil-gathering")
 utils.ignore_multiplier("steel-processing")
 utils.ignore_multiplier("logistic-science-pack")
+utils.ignore_multiplier("gun-turret")
+utils.ignore_multiplier("military")
 utils.set_trigger("oil-processing", {
     type = "mine-entity",
     entity = "harene-vent"
@@ -58,9 +69,5 @@ utils.remove_packs("planet-discovery-gleba", {"space-science-pack"})
 
 -- delayed/unavailable
 utils.add_prerequisites("oil-processing", {"fluid-handling"})
-utils.add_prerequisites("gun-turret", {"electronics"})
-utils.add_prerequisites("military", {"electronics"})
-utils.add_prerequisites("electric-mining-drill", {"electronics"})
-utils.add_prerequisites("solar-energy", {"electronics"})
-utils.add_prerequisites("electric-energy-distribution-1", {"electronics"})
-utils.add_prerequisites("circuit-network", {"electronics"})
+-- utils.add_prerequisites("solar-energy", {"planet-discovery-gleba"})
+-- utils.add_prerequisites("electric-energy-distribution-1", {"planet-discovery-gleba"})

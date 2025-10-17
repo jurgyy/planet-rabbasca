@@ -19,4 +19,4 @@ end
 require("scripts.machine-assembly")
 require("scripts.create-ears-variants")
 
-require("compat.se-space-trains")
+require("compatibility.se-space-trains")

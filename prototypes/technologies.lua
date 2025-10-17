@@ -172,8 +172,8 @@ data:extend {
 {
     type = "technology",
     name = "machining-assembler",
-    icon = "__space-age__/graphics/technology/foundry.png",
-    icon_size = 256,
+    icon = "__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-icon-big.png",
+    icon_size = 64,
     prerequisites = { "harenic-stabilizer", "leg-day-everyday", "item-duplication-2" },
     effects =
     {

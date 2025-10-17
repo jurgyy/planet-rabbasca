@@ -1,3 +1,4 @@
+local rutil = require("__planet-rabbasca__.util")
 local categories = {
     "assembling-machine",
     "furnace",

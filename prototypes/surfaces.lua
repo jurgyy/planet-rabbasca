@@ -9,23 +9,32 @@ data:extend{
 {
   type = "autoplace-control",
   name = "harene",
-  order = "a-a-a",
+  order = "r[rabbasca]-a[harene]",
   category = "resource",
   richness = true, 
+  can_be_disabled = false,
 },
 {
   type = "autoplace-control",
   name = "rabbasca_rocks",
-  order = "a-a-a",
+  order = "r[rabbasca]-c[rocks]",
   category = "resource",
   richness = true, 
 },
 {
   type = "autoplace-control",
-  name = "rabbasca_noise",
-  order = "a-a-a",
+  name = "rabbasca_scrap",
+  order = "r[rabbasca]-b[scrap]",
   category = "resource",
   richness = true, 
+},
+{
+  type = "autoplace-control",
+  name = "rabbasca_vaults",
+  order = "r[rabbasca]-b[vaults]",
+  category = "resource",
+  richness = false, 
+  can_be_disabled = false,
 }
 }
 
@@ -80,7 +89,8 @@ local map_gen = {
     {
         ["harene"] = {},
         ["rabbasca_rocks"] = {},
-        ["rabbasca_noise"] = {}
+        ["rabbasca_scrap"] = {},
+        ["rabbasca_vaults"] = {},
     },
     autoplace_settings = {
       ["tile"] =
