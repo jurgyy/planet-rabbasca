@@ -159,10 +159,10 @@ PlanetsLib:extend({
     localised_description={"planetslib-templates.moon-description",{"space-location-description.rabbasca"},"[planet="..parent_planet.."]"},
     -- robot energy usage = gravity/pressure*100, gravity > 0.1 (allow chests), robots should be expensive and limited by energy field
     surface_properties = {
-        ["gravity"] = 1,
+        ["gravity"] = 2,
         ["solar-power"] = 0,
-        ["pressure"] = 20,
-        ["day-night-cycle"] = 0,
+        ["pressure"] = 10,
+        ["day-night-cycle"] = 12 * minute,
         ["magnetic-field"] = 0.01,
         ["harenic-energy-signatures"] = 100,
         ["oxygen"] = 1,

@@ -92,11 +92,11 @@ data:extend {
         type = "recipe",
         name = "haronite",
         -- enabled = false,
-        energy_required = 20,
+        energy_required = 15,
         ingredients = { 
             {type = "fluid", name = "harene-gas", amount = 100 },
             {type = "item",  name = "stone", amount = 5 },
-            {type = "item",  name = "power-solution", amount = 1 },
+            {type = "item",  name = "power-solution", amount = 8 },
         },
         results = { 
             { type = "item", name = "haronite", amount = 5  },
