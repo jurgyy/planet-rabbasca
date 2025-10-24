@@ -1,19 +1,28 @@
 local hit_effects = require ("__base__.prototypes.entity.hit-effects")
 local sounds = require("__base__.prototypes.entity.sounds")
 
+local vault_distractor = util.merge {
+  table.deepcopy(data.raw["combat-robot"]["distractor"]),
+  {
+    name = "vault-distractor",
+    max_health = 5,
+    time_to_live = 8 * second,
+  }
+}
+
 local defender_1 = util.merge{ 
   table.deepcopy(data.raw["unit"]["small-spitter"]), 
   {
     name = "vault-defender-1",
-    max_health = 12,
-    healing_per_tick = -0.1 / second,
-    movement_speed = 0.2,
+    max_health = 16,
+    healing_per_tick = 0,
+    movement_speed = 0.13,
     distance_per_frame = 0.125,
     distraction_cooldown = 3 * second,
     has_belt_immunity = true,
-    min_pursue_time = 15 * second,
-    max_pursue_distance = 50,
-    absorptions_to_join_attack = { ["vault-activity"] = 50 },
+    min_pursue_time = 10 * second,
+    max_pursue_distance = 36,
+    absorptions_to_join_attack = { ["vault-activity"] = 10 },
     -- loot = { { item = "firearm-magazine", count_min = 3, count_max = 3 } },
     -- radar_range = 1,
     ai_settings = {
@@ -29,39 +38,30 @@ local defender_1 = util.merge{
 }
 defender_1.run_animation = table.deepcopy(data.raw["combat-robot"]["defender"].in_motion)
 defender_1.collision_mask = { layers = { } }
+defender_1.alternative_attacking_frame_sequence = nil
 defender_1.attack_parameters = {
   type = "projectile",
-  animation = defender_1.attack_parameters.animation,
-  cooldown = 30,
+  animation = table.deepcopy(data.raw["combat-robot"]["defender"].idle),
+  activation_type = "throw",
+  cooldown = 20 * second,
   cooldown_deviation = 0.2,
   projectile_center = {0, 1},
   projectile_creation_distance = 0.6,
-  range = 5,
-  sound = sounds.defender_gunshot,
-  ammo_category = "bullet",
+  range = 4,
+  warmup = 1 * second,
+  ammo_category = "capsule",
   ammo_type =
   {
+    target_type = "position",
     action =
     {
       type = "direct",
       action_delivery =
       {
         type = "instant",
-        source_effects =
-        {
-          type = "create-explosion",
-          entity_name = "explosion-gunshot-small"
-        },
         target_effects =
         {
-          {
-            type = "create-entity",
-            entity_name = "explosion-hit"
-          },
-          {
-            type = "damage",
-            damage = { amount = 1, type = "physical"}
-          }
+          { type = "create-entity", entity_name = "vault-distractor", offset_deviation = {{-1, -1}, {1, 1}}, repeat_count = 2 }
         }
       }
     }
@@ -78,7 +78,7 @@ local defender_2 = util.merge {
     distraction_cooldown = 20,
     min_pursue_time = 15 * second,
     max_pursue_distance = 50,
-    absorptions_to_join_attack = { ["vault-activity"] = 75 },
+    absorptions_to_join_attack = { ["vault-activity"] = 15 },
     -- loot = { { item = "firearm-magazine", count_min = 3, count_max = 3 } },
     ai_settings = {
       join_attacks = true,
@@ -128,6 +128,7 @@ defender_2.attack_parameters = {
   }
 }
 
-data:extend{ 
-    defender_1, defender_2,
+data:extend{
+  vault_distractor, 
+  defender_1, defender_2,
 }

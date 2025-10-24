@@ -13,8 +13,8 @@ local access_console = util.merge{
     return_ingredients_on_change = true,
     ignore_output_full = false,
     alert_when_damaged = false, -- this usually takes damage immediately due to next to spawn, so regular damage is expected
-    collision_box = {{-0.4, -0.4}, {0.4, 0.4}},
-    vector_to_place_result = {0, 1.4},
+    collision_box = {{-0.4, -1}, {0.4, 0.4}},
+    vector_to_place_result = {0, 0.7},
     selection_box = {{-0.6, -1}, {0.6, 0.6}},
     is_military_target = true,
     no_ears_upgrade = true,
@@ -77,7 +77,7 @@ access_console.graphics_set =
         width = 360,
         height = 360,
         frame_count = 1,
-        scale = 0.2
+        scale = 0.2,
       }
     }
   },
@@ -89,7 +89,7 @@ local vault = util.merge{
   name = "rabbasca-vault",
   type = "unit-spawner",
   captured_spawner_entity = nil,
-  spawning_cooldown = {5 * second, 0.25 * second},
+  spawning_cooldown = {8 * second, 0.25 * second},
   max_count_of_owned_units = 20,
   max_count_of_owned_defensive_units = 1,
   max_friends_around_to_spawn = 8,
@@ -97,7 +97,8 @@ local vault = util.merge{
   spawning_radius = 12,
   map_generator_bounding_box = {{-10.5, -10.5}, {10.5, 10.5}},
   -- map_color = {0.9, 0.3, 0.4},
-  collision_box = {{-2.5, -2},{2.5, 3}},
+  collision_box = {{-4.4, -4},{0.4, 0.4}}, -- shift by 2, 2.5
+  selection_box = {{-4.5, -4.5},{0.5, 0.5}},
   selection_priority = 30
 }}
 vault.spawn_decoration = {}
@@ -113,7 +114,7 @@ vault.created_effect = {
       {
         type = "create-entity",
         entity_name = "rabbasca-vault-access-terminal",
-        offsets = {{2, 2.5}},
+        offsets = {{0, 0.1}},
       },
       {
         type = "script",
@@ -124,13 +125,15 @@ vault.created_effect = {
 }
 vault.result_units = {
   { unit = "vault-defender-1", spawn_points = {
-    {evolution_factor = 0, spawn_weight = 0.1}, 
-    {evolution_factor = 0.1, spawn_weight = 1},
-    {evolution_factor = 0.2, spawn_weight = 0},
+    {evolution_factor = 0, spawn_weight = 1}, 
+    {evolution_factor = 0.05, spawn_weight = 1},
+    {evolution_factor = 0.1, spawn_weight = 0.3},
+    {evolution_factor = 0.3, spawn_weight = 0},
   }},
   { unit = "vault-defender-2", spawn_points = {
-    {evolution_factor = 0.14, spawn_weight = 0}, 
-    {evolution_factor = 0.25, spawn_weight = 1},
+    {evolution_factor = 0.05, spawn_weight = 0}, 
+    {evolution_factor = 0.1, spawn_weight = 0.5},
+    {evolution_factor = 0.25, spawn_weight = 0.2},
     {evolution_factor = 0.3, spawn_weight = 0},
   }},
   { unit = "medium-biter", spawn_points = {
@@ -162,7 +165,8 @@ vault.graphics_set =
         height = 170,
         frame_count = 80,
         line_length = 10,
-        scale = 1.5
+        scale = 1.5,
+        shift = {-2, -2.5}
       }
     }
   },
