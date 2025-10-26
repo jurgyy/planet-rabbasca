@@ -38,13 +38,71 @@ data:extend {
       {
         type = "unlock-recipe",
         recipe = "protein-powder"
-      }
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-protein-shake"
+      },
     },
     research_trigger =
     {
       type = "mine-entity",
       entity = "rabbasca-turbofish",
     }
+},
+{
+    type = "technology",
+    name = "healthy-science-pack",
+    icon = "__space-age__/graphics/technology/metallurgic-science-pack.png",
+    icon_size = 256,
+    prerequisites = { "rabbasca-ears-technology-1" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "healthy-science-pack"
+      }
+    },
+    research_trigger =
+    {
+        type = "mine-entity",
+        entity = "harene-vent"
+    }
+},
+{
+  type = "technology",
+  name = "rabbasca-vault-hacking-efficiency",
+  icon = "__Krastorio2Assets__/icons/cards/utility-tech-card.png",
+  icon_size = 256,
+  prerequisites = { "planet-discovery-rabbasca" },
+  effects = {
+    {
+      type = "change-recipe-productivity",
+      recipe = "vault-protocol-iron-ore",
+      change = 0.25
+    },
+    {
+      type = "change-recipe-productivity",
+      recipe = "vault-protocol-copper-ore",
+      change = 0.25
+    },
+    {
+      type = "change-recipe-productivity",
+      recipe = "vault-protocol-catalysts",
+      change = 0.25
+    }
+  },
+  max_level = "infinite",
+  unit = {
+    time = 60,
+    count_formula = "100+200 * (1.5^L)",
+    ingredients = {
+      {"automation-science-pack", 1},
+      {"logistic-science-pack", 1},
+      {"chemical-science-pack", 1},
+      {"healthy-science-pack", 1},
+    }
+  }
 },
 {
     type = "technology",
@@ -56,48 +114,41 @@ data:extend {
     {
       {
         type = "unlock-recipe",
-        recipe = "vault-access-key-b"
+        recipe = "vault-protocol-iron-ore"
       },
       {
         type = "unlock-recipe",
-        recipe = "vault-access-key-b-protocol"
+        recipe = "vault-protocol-iron-ore-key"
       },
       {
         type = "unlock-recipe",
-        recipe = "vault-access-key-u"
+        recipe = "vault-protocol-copper-ore"
       },
       {
         type = "unlock-recipe",
-        recipe = "vault-access-key-u-protocol"
+        recipe = "vault-protocol-copper-ore-key"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "vault-protocol-catalysts"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "vault-protocol-catalysts-key"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "vault-protocol-haronite"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "vault-protocol-haronite-key"
       },
     },
     research_trigger =
     {
       type = "craft-item",
       item = "vault-access-key"
-    }
-},
-{
-    type = "technology",
-    name = "harene-gas-processing",
-    icon = "__space-age__/graphics/technology/gleba.png",
-    icon_size = 256,
-    prerequisites = { "oil-gathering", "rabbasca-healthy-fluids" },
-    effects =
-    {
-      {
-        type = "unlock-recipe",
-        recipe = "power-solution"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "haronite"
-      },
-    },
-    research_trigger =
-    {
-        type = "mine-entity",
-        entity = "harene-vent"
     }
 },
 {
@@ -109,8 +160,12 @@ data:extend {
     effects =
     {
       {
-          type = "unlock-recipe",
-          recipe = "beta-carotene"
+        type = "unlock-recipe",
+        recipe = "beta-carotene"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "carbon-from-carotenoid",
       },
       {
         type = "unlock-recipe",
@@ -120,7 +175,7 @@ data:extend {
     research_trigger =
     {
       type = "mine-entity",
-      entity = "carotenoid",
+      entity = "carotenoid-ore",
     }
 },
 {
@@ -128,16 +183,12 @@ data:extend {
     name = "rabbasca-vault-core-extraction",
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
-    prerequisites = { "machining-assembler", "harene-gas-processing" },
+    prerequisites = { "machining-assembler" },
     effects =
     {
       {
         type = "unlock-recipe",
-        recipe = "vault-access-key-e"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "vault-access-key-e-protocol"
+        recipe = "vault-protocol-harene-ears-subcore"
       },
     },
     research_trigger =
@@ -208,7 +259,7 @@ data:extend {
       },
       {
         type = "unlock-recipe",
-        recipe = "lubricant-from-copyslop"
+        recipe = "lubricant-from-energetic-residue"
       },
     },
     research_trigger =

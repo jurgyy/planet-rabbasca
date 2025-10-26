@@ -1,21 +1,11 @@
-function return_to_monument_trigger()
- return {
-    type = "direct",
-    action_delivery =
-    {
-      type = "instant",
-      target_effects =
-      {
-        {
-          type = "script",
-          effect_id = "rabbasca_rescue_item"
-        }
-      }
-    }
-  }
-end
-
 data:extend {
+{
+  type = "fuel-category",
+  name = "carotene",
+  fuel_value_type = {
+    "description.food-energy-value"
+  },
+},
 {
     type = "item",
     icon = "__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-icon.png",
@@ -82,7 +72,7 @@ data:extend {
 },
 {
     type = "item",
-    icons = { { icon = "__base__/graphics/icons/electronic-circuit.png", tint = { 0.2, 1, 1 } } },
+    icon = "__planet-rabbasca__/graphics/icons/vision-circuit.png",
     name = "vision-circuit",
     stack_size = 100,
     group = "intermediate-products",
@@ -186,13 +176,33 @@ util.merge {
     },
     order = "b[personal-transport]-b[bunnyhop-engine]-r[remote]",
 },
+util.merge {
+    table.deepcopy(data.raw["capsule"]["raw-fish"]),
+    {
+      name = "rabbasca-turbofish",
+      icon = "__planet-rabbasca__/graphics/icons/turbofish.png",
+      spoil_ticks = 3 * minute,
+      spoil_result = "protein-powder",
+    },
+},
+util.merge {
+    table.deepcopy(data.raw["capsule"]["raw-fish"]),
+    {
+      name = "rabbasca-protein-shake",
+      icon = "__planet-rabbasca__/graphics/icons/protein-shake.png",
+      spoil_ticks = 0,
+      spoil_result = nil,
+    },
+},
 {
     type = "item",
-    icons = {{ icon = "__Krastorio2Assets__/icons/items/imersite-powder-2-light.png", tint = {0.8, 0.32, 0.06} }},
-    name = "rabbasca-carotene-powder",
-    stack_size = 200,
+    icon = "__planet-rabbasca__/graphics/icons/carotenoid.png",
+    name = "carotenoid",
+    stack_size = 5,
     subgroup = "rabbasca-processes",
     order = "b[personal-transport]-c[startertron]",
+    fuel_category = "carotene",
+    fuel_value = "720kJ"
 },
 {
     type = "item",
@@ -281,14 +291,13 @@ util.merge {
     auto_barrel = true
 },
 {
-    type = "fluid",
-    name = "rabbasca-copyslop",
-    icon = "__planet-rabbasca__/graphics/icons/copyslop.png",
-    subgroup = "fluid",
-    base_color = {0.37, 0.42, 0.23},
-    flow_color = {0.37, 0.42, 0.23},
-    default_temperature = -32.0,
-    auto_barrel = true
+  type = "tool",
+  name = "healthy-science-pack",
+  icon = "__planet-rabbasca__/graphics/icons/healthy-science-pack.png",
+  subgroup = data.raw["tool"]["agricultural-science-pack"].subgroup,
+  order = data.raw["tool"]["agricultural-science-pack"].order .. "-a",
+  durability = 1,
+  stack_size = 200,
 },
 {
     type = "item",
@@ -329,127 +338,43 @@ util.merge{
     spoil_result = "self-replicating-firearm-magazine"
 },
 {
-    type = "item",
+    type = "capsule",
     name = "vault-access-key",
     subgroup = "rabbasca-security",
     order = "a[vault-access-key]",
     icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png",
     stack_size = 20,
-},
-{
-    type = "item",
-    name = "vault-access-key-r",
-    icon = data.raw["virtual-signal"]["signal-hourglass"].icon,
-    hidden = true,
-    hidden_in_factoriopedia = true,
-    spoil_ticks = 5,
-    subgroup = "rabbasca-security",
-    order = "a[vault-access-key]",
-    icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png",
-    stack_size = 20,
-},
-{
-    type = "item",
-    name = "vault-access-key-e",
-    subgroup = "rabbasca-security",
-    order = "a[vault-access-key-e]",
-    icons = {
-      { icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png" },
-      { icon = "__planet-rabbasca__/graphics/icons/harene-ears-core.png", scale = 0.3, shift = {4, 4} }
-    } ,
-    stack_size = 20,
-},
-{
-    type = "item",
-    name = "vault-access-key-c",
-    subgroup = "rabbasca-security",
-    order = "a[vault-access-key-c]",
-    icons = {
-      { icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png" },
-      { icon = "__planet-rabbasca__/graphics/icons/harene-copy-core.png", scale = 0.3, shift = {4, 4} }
-    } ,
-    stack_size = 20,
-},
-{
-    type = "item",
-    name = "vault-access-key-u",
-    subgroup = "rabbasca-security",
-    order = "a[vault-access-key-u]",
-    icons = {
-      { icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png" },
-      { icon = "__base__/graphics/icons/copper-ore.png", scale = 0.3, shift = {4, 4} }
-    } ,
-    stack_size = 20,
-},
-{
-    type = "item",
-    name = "vault-access-key-b",
-    subgroup = "rabbasca-security",
-    order = "a[vault-access-key-b]",
-    icons = {
-      { icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png" },
-      { icon = "__base__/graphics/icons/blueprint.png", scale = 0.2, shift = {6, 6} }
-    } ,
-    stack_size = 20,
-},
-{
-    type = "item",
-    name = "vault-access-key-protocol",
-    category = "rabbasca-security",
-    icon = "__Krastorio2Assets__/icons/cards/advanced-tech-card.png",
-    flags = { "ignore-spoil-time-modifier" },
-    hidden_in_factoriopedia = true,
-    auto_recycle = false,
-    stack_size = 1,
-    spoil_ticks = 1,
-    -- spoil_result = "rabbasca-vault-access-timer",
-    spoil_to_trigger_result =
-    {
-      items_per_trigger = 1,
-      trigger =
-      {
-        type = "direct",
-        action_delivery =
-        {
-          type = "instant",
-          source_effects =
-          {
-            {
-              type = "script",
-              effect_id = "rabbasca_on_hack_console"
-            }
-          }
-        }
+    capsule_action = {
+      type = "throw",
+      attack_parameters = {
+        type = "projectile",
+        ammo_type = {
+          action = {
+            action_delivery = {
+              target_effects = {
+                entity_name = "rabbasca-capture-robot",
+                show_in_tooltip = true,
+                type = "create-entity"
+              },
+              type = "instant"
+            },
+            type = "direct"
+          },
+          target_filter = { "rabbasca-vault" }
+        },
+        activation_type = "throw",
+        ammo_category = "capsule",
+        cooldown = 5,
+        range = 5,
       }
     }
 },
 }
 
-local starter_pack = util.merge {
-  data.raw["space-platform-starter-pack"]["space-platform-starter-pack"],
-  {
-    name = "harene-powered-space-platform-starter-pack",
-    surface = "harene-powered-space-platform",
-  }}
-starter_pack.trigger =
-{
-  {
-    type = "direct",
-    action_delivery =
-    {
-      type = "instant",
-      source_effects =
-      {
-        {
-          type = "create-entity",
-          entity_name = "harene-space-platform-hub"
-        },
-        {
-          type = "create-entity",
-          entity_name = "harene-platform-energy-source"
-        }
-      }
-    }
-  }
-}
-data:extend{ starter_pack }
+local fish_action = table.deepcopy(require("__space-age__.prototypes.item-effects").jellynut_speed)
+fish_action.attack_parameters.ammo_type.action.action_delivery.target_effects[1].sticker = "turbofish-speed-sticker"
+data.raw["capsule"]["rabbasca-turbofish"].capsule_action = fish_action
+
+local shake_action = table.deepcopy(fish_action)
+shake_action.attack_parameters.ammo_type.action.action_delivery.target_effects[1].sticker = "protein-shake-speed-sticker"
+data.raw["capsule"]["rabbasca-protein-shake"].capsule_action = shake_action

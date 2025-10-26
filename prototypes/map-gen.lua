@@ -31,17 +31,17 @@ data:extend{
   {
     type = "noise-expression",
     name = "rabbasca_camp_size",
-    expression = "6"
+    expression = "6 + 6 * sqrt(control:rabbasca_vaults:size)"
   },
   {
     type = "noise-expression",
     name = "rabbasca_carrot_noise",
-    expression = "rabbasca_fertile * aquilo_spot_noise{seed = 821,\z
-                                    count = 7,\z
+    expression = "(rabbasca_fertile > 0.8) * aquilo_spot_noise{seed = 821,\z
+                                    count = 9,\z
                                     skip_offset = 0,\z
                                     region_size = 44,\z
                                     density = 0.66,\z
-                                    radius = 3.2,\z
+                                    radius = 8.3,\z
                                     favorability = 5}"
   },
   {
@@ -77,13 +77,13 @@ data:extend{
     type = "noise-expression",
     name = "rabbasca_fertile",
     expression = "min(0, - 2 * rabbasca_down) - 0.2 + \z
-            min(rabbasca_starting_mask, 0.8 * multioctave_noise{x = x, y = y, persistence = 0.8, input_scale = 1/3.5, seed0 = map_seed, seed1 = 'yummyrocks', octaves = 8 })\z
+            min(rabbasca_starting_mask, 0.7 * multioctave_noise{x = x, y = y, persistence = 0.8, input_scale = 1/3.5, seed0 = map_seed, seed1 = 'yummyrocks', octaves = 8 })\z
             * aquilo_spot_noise{seed = 71632,\z
                                     count = 4 + 3 * control:harene:frequency,\z
                                     skip_offset = 2,\z
-                                    region_size = 800 + 300 / control:harene:frequency,\z
+                                    region_size = 400 + 300 / control:harene:frequency,\z
                                     density = 1,\z
-                                    radius = 32,\z
+                                    radius = 24,\z
                                     favorability = 1}"
                 -- * multioctave_noise{x = x/4.2, y = y/4.8, persistence = 0.2, seed0 = map_seed, seed1 = 'bewarethehare', octaves = 9 })"
     -- expression = "0.4 + rabbasca_up * rabbasca_crater + rabbasca_up_variance * (0.8 - rabbasca_elevation)"

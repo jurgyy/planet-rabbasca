@@ -75,14 +75,29 @@ data:extend {
     },
     {
         type = "recipe",
+        name = "carbon-from-carotenoid",
+        energy_required = 7.0,
+        enabled = false,
+        ingredients = { 
+            {type = "item", name = "carotenoid", amount = 1 },
+        },
+        results = { { type = "item", name = "carbon", amount = 10 } },
+        main_product = "carbon",
+        hide_from_player_crafting = true,
+        category = "smelting",
+        allow_productivity = true,
+    },
+    {
+        type = "recipe",
         name = "beta-carotene",
         energy_required = 5.0,
         enabled = false,
         ingredients = { 
-            {type = "fluid", name = "energetic-residue", amount = 30 },
-            {type = "item", name = "rabbasca-carotene-powder", amount = 100 },
+            {type = "fluid", name = "energetic-residue", amount = 5 },
+            {type = "item", name = "carotenoid", amount = 20 },
         },
-        results = { { type = "fluid", name = "beta-carotene", amount = 60 } },
+        results = { { type = "fluid", name = "beta-carotene", amount = 60 },
+                    { type = "item", name = "stone", amount = 10 } },
         main_product = "beta-carotene",
         hide_from_player_crafting = true,
         category = "organic-or-chemistry",
@@ -151,7 +166,6 @@ data:extend {
         ingredients = { 
             -- {type = "item", name = "infused-haronite-plate", amount = 10 },
             {type = "item", name = "steel-plate", amount = 200 },
-            {type = "item", name = "vault-access-key-b", amount = 2 },
             {type = "item", name = "iron-gear-wheel", amount = 69 },
             {type = "item", name = "rabbasca-energetic-concrete", amount = 50 },
             {type = "item", name = "advanced-circuit", amount = 50 },
@@ -344,39 +358,54 @@ data:extend {
     },
     {
         type = "recipe",
-        name = "harene-copy-core",
-        enabled = false,
-        energy_required = 8,
-        ingredients = { 
-            { type = "fluid", name = "rabbasca-copyslop", amount = 200 },
-            { type = "fluid", name = "energetic-residue", amount = 5 },
-        },
-        results = { {type = "item", name = "harene-copy-core", amount = 1, ignored_by_productivity = 1} },
-        main_product = "harene-copy-core",
-        category = "chemistry-or-cryogenics",
-        hide_from_player_crafting = true,
-        subgroup = "rabbasca-matter-printer",
-        order = "a[copy-core]"
-    },
-    {
-        type = "recipe",
-        name = "lubricant-from-copyslop",
+        name = "lubricant-from-energetic-residue",
         icons = { 
-            { icon = data.raw["fluid"]["rabbasca-copyslop"].icon, scale = 0.4, shift = { -8, -8 } },
+            { icon = data.raw["fluid"]["energetic-residue"].icon, scale = 0.3, shift = { -8, -8 } },
             { icon = data.raw["fluid"]["lubricant"].icon },
         },
         enabled = false,
-        energy_required = 5.0,
+        energy_required = 3.5,
         hide_from_player_crafting = true,
         ingredients = { 
-            {type = "fluid", name = "rabbasca-copyslop", amount = 10 },
+            {type = "fluid", name = "energetic-residue", amount = 10 },
         },
-        results = { { type = "fluid", name = "lubricant", amount = 100 } },
+        results = { { type = "fluid", name = "lubricant", amount = 10 } },
         main_product = "lubricant",
         category = "crafting-with-fluid",
         subgroup = "rabbasca-matter-printer",
         order = "r[alternate-uses]"
 
+    },
+    {
+        type = "recipe",
+        name = "rabbasca-protein-shake",
+        enabled = false,
+        energy_required = 7,
+        ingredients = {
+            { type = "item", name = "calcite", amount = 1 },
+            { type = "item", name = "rabbasca-turbofish", amount = 1 },
+            { type = "fluid", name = "beta-carotene", amount = 15 },
+        },
+        results = {
+            { type = "item", name = "rabbasca-protein-shake", amount = 2 }
+        },
+        category = "organic-or-chemistry",
+    },
+    {
+        type = "recipe",
+        name = "healthy-science-pack",
+        enabled = false,
+        energy_required = 23,
+        ingredients = {
+            { type = "item", name = "rabbasca-energetic-concrete", amount = 1 },
+            { type = "item", name = "vision-circuit", amount = 2 },
+            { type = "item", name = "rabbasca-protein-shake", amount = 2 },
+            { type = "fluid", name = "harene-gas", amount = 23 },
+        },
+        results = {
+            { type = "item", name = "healthy-science-pack", amount = 5 }
+        },
+        category = "crafting-with-fluid",
     },
     {
         type = "recipe",
@@ -408,19 +437,6 @@ data:extend {
         category = "crafting-with-fluid",
         allow_productivity = true,
     },
-    {
-        type = "recipe",
-        name = "harene-powered-space-platform-starter-pack",
-        enabled = false,
-        energy_required = 30,
-        ingredients = { 
-            {type = "item", name = "harene-ears-core", amount = 1 },
-            {type = "item", name = "space-platform-starter-pack", amount = 1 },
-        },
-        results = { {type = "item", name = "harene-powered-space-platform-starter-pack", amount = 1} },
-        main_product = "harene-powered-space-platform-starter-pack",
-        category = "crafting",
-    }
 }
 
 data:extend {
@@ -434,8 +450,7 @@ data:extend {
         results = {{type = "item", name = "harenic-stabilizer", amount = 1 }},
         ingredients = {
             { type = "item", name = "calcite", amount = 6 },
-            { type = "item", name = "rabbasca-carotene-powder", amount = 15 },
-            { type = "fluid", name = "water", amount = 120 },
+            { type = "fluid", name = "beta-carotene", amount = 120 },
         },
         allow_productivity = true,
     },
@@ -516,22 +531,22 @@ rocket_part.ingredients = {
 }
 data:extend { rocket_part }
 
-data:extend {
-    {
-        type = "recipe",
-        name = "vault-access-key-protocol",
-        enabled = true,
-        hidden_in_factoriopedia = true,
-        energy_required = 3,
-        ingredients = {{ type = "item", name = "vault-access-key", amount = 1 }},
-        results = {{ type = "item", name = "vault-access-key-protocol", amount = 1, ignored_by_stats = 1 }},
-        main_product = "vault-access-key-protocol",
-        category = "rabbasca-vault-hacking",
-        subgroup = "rabbasca-vault-access",
-        auto_recycle = false,
-        overload_multiplier = 1,
-        result_is_always_fresh = true,
-        allow_inserter_overload = false,
-        hide_from_player_crafting = true
-    },
-}
+-- data:extend {
+--     {
+--         type = "recipe",
+--         name = "vault-access-key-protocol",
+--         enabled = true,
+--         hidden_in_factoriopedia = true,
+--         energy_required = 3,
+--         ingredients = {{ type = "item", name = "vault-access-key", amount = 1 }},
+--         results = {{ type = "item", name = "vault-access-key-protocol", amount = 1, ignored_by_stats = 1 }},
+--         main_product = "vault-access-key-protocol",
+--         category = "rabbasca-vault-hacking",
+--         subgroup = "rabbasca-vault-access",
+--         auto_recycle = false,
+--         overload_multiplier = 1,
+--         result_is_always_fresh = true,
+--         allow_inserter_overload = false,
+--         hide_from_player_crafting = true
+--     },
+-- }

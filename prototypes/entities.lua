@@ -1,5 +1,4 @@
 local rutil = require("__planet-rabbasca__.util")
-local fff339 = require("__FFF339BeaconGraphics__.prototypes.sprites")
 local color = {r=0.65, g=0.31, b=0.92}
 
 function harene_energy_source (volume)
@@ -188,21 +187,6 @@ data:extend {
 
 data:extend {
   util.merge {
-  table.deepcopy(data.raw["simple-entity"]["copper-stromatolite"]),
-  { minable = {0} },
-  { 
-    name = "carotenoid",
-    minable = {
-      mining_time = 0.4,
-    },
-    autoplace = {
-      probability_expression = "rabbasca_carrot_noise",
-      tile_restriction = { "rabbasca-fertile" },
-    },
-    map_color = {0.73, 0.55, 0.1},
-    -- map_generator_bounding_box = {{-3.5, -3.5}, {3.5, 3.5}},
-  }},
-  util.merge {
     table.deepcopy(data.raw["simple-entity"]["big-volcanic-rock"]),
     {
       name = "rabbasca-big-rock",
@@ -215,18 +199,11 @@ data:extend {
       },
       map_color = {0.09, 0.12, 0.17},
   }},
-  util.merge {
-    table.deepcopy(data.raw["capsule"]["raw-fish"]),
-    {
-      name = "rabbasca-turbofish",
-      spoil_ticks = 3 * minute,
-      spoil_result = "raw-fish",
-    },
-  },
   util.merge{
     table.deepcopy(data.raw["fish"]["fish"]),
     {
       name = "rabbasca-turbofish",
+      icon = "__planet-rabbasca__/graphics/icons/turbofish.png",
       minable = { result = "rabbasca-turbofish" },
       autoplace = { probability_expression = "rabbasca_harene_pools - 0.5" },
       -- collision_mask = { layers = { ground_tile = true } }
@@ -241,6 +218,16 @@ data:extend {
       target_movement_modifier = 2.5
     }
   },
+  util.merge{
+    table.deepcopy(data.raw["sticker"]["bioflux-speed-regen-sticker"]),
+    {
+      name = "protein-shake-speed-sticker",
+      duration_in_ticks = 60 * second,
+      target_movement_modifier = 1.4,
+      damage_interval = 20,
+      damage_per_tick = { amount = -5 },
+    }
+  },
   util.merge {
     table.deepcopy(data.raw["rocket-silo-rocket"]["rocket-silo-rocket"]),
     {
@@ -253,22 +240,11 @@ data:extend {
   }
 }
 
-local fish_action = table.deepcopy(require("__space-age__.prototypes.item-effects").jellynut_speed)
-fish_action.attack_parameters.ammo_type.action.action_delivery.target_effects[1].sticker = "turbofish-speed-sticker"
-
 data.raw["electric-energy-interface"]["rabbasca-energy-source"].collision_box = nil
-data.raw["capsule"]["rabbasca-turbofish"].capsule_action = fish_action
 data.raw["simple-entity"]["rabbasca-big-rock"].minable.results = {
-  {type = "item", name = "haronite", amount_min = 12, amount_max = 18}, 
-  {type = "item", name = "iron-ore", amount_min = 3, amount_max = 10 }, 
-  {type = "item", name = "calcite", amount_min = 4, amount_max = 7 }
+  {type = "item", name = "stone", amount_min = 12, amount_max = 18}, 
+  {type = "item", name = "iron-ore", amount_min = 9, amount_max = 15 }, 
+  {type = "item", name = "copper-ore", amount_min = 7, amount_max = 12 }, 
+  {type = "item", name = "carbon", amount_min = 2, amount_max = 5 }
 }
-data.raw["simple-entity"]["carotenoid"].minable.results = {{type = "item", name = "rabbasca-carotene-powder", amount_min = 40, amount_max = 55}}
-data.raw["simple-entity"]["carotenoid"].collision_mask = data.raw["simple-entity"]["rabbasca-big-rock"].collision_mask
-
-local beacon_anims = { }
-for _, anim in pairs(fff339.animation_list) do
-  table.insert(beacon_anims, table.deepcopy(anim.animation))
-end
-data.raw["simple-entity-with-owner"]["rabbasca-remote-receiver"].animations = beacon_anims
 

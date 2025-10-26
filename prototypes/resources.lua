@@ -1,38 +1,39 @@
 local color = {r=0.73, g=0.42, b=1}
 
 local scrap_resource = util.merge {
-  table.deepcopy(data.raw["resource"]["scrap"]),
+  table.deepcopy(data.raw["resource"]["copper-ore"]),
   {
-    name = "rabbascan-scrap",
+    name = "carotenoid-ore",
     minimum = 50,
     normal = 100,
-    map_color = { 0.24, 0.31, 0.11 }
+    map_color = { 0.82, 0.52, 0.215 },
+    stages = { sheet = { filename = "__planet-rabbasca__/graphics/icons/carotenoid-ore.png" } },
   }
 }
 scrap_resource.minable =
 {
-  mining_time = 1,
+  mining_time = 2,
+  mining_particle = "copper-ore-particle",
   results =
   {
-    { type = "item", name = "plastic-bar",  amount = 1 },
-    { type = "item", name = "vault-access-key",  amount = 1, probability = 0.03 },
+    { type = "item", name = "carotenoid",  amount = 1 },
   }
 }
 scrap_resource.collision_mask = { layers = { resource = true } }
 scrap_resource.autoplace = {
-  tile_restriction = { "rabbasca-rough", "rabbasca-rough-2" },
-  probability_expression = "rabbasca_scrap",
+  tile_restriction = { "rabbasca-fertile" },
+  probability_expression = "rabbasca_carrot_noise",
   richness_expression = "(480 + 89\z 
-    * multioctave_noise{x = x, y = y, persistence = 0.44, seed0 = map_seed, input_scale = 1.3, seed1 = 'scrappening', octaves = 6 })\z
+    * multioctave_noise{x = x, y = y, persistence = 0.44, seed0 = map_seed, input_scale = 1.3, seed1 = 'noglassesneeded', octaves = 6 })\z
     * lerp(1, 50, distance / 10000)\z
     * control:rabbasca_scrap:richness",
 }
 
 local mixed_oxide = util.merge {
-  table.deepcopy(data.raw["resource"]["calcite"]),
+  table.deepcopy(data.raw["resource"]["scrap"]),
   {
-    name = "rabbasca-mixed-oxide-ore",
-    map_color = { 0.63, 0.73, 0.95 }
+    name = "rabbascan-scrap",
+    map_color = { 0.83, 0.217, 0.13 }
   },
 }
 mixed_oxide.minable =
@@ -40,18 +41,19 @@ mixed_oxide.minable =
   mining_time = 0.75,
   results =
   {
-    { type = "item", name = "calcite", amount = 1, probability = 0.93 },
-    { type = "item", name = "carbon", amount = 1, probability = 0.85 },
-    { type = "item", name = "ice",  amount = 1, probability = 0.1 },
+    { type = "item", name = "advanced-circuit", amount = 1, probability = 0.64 },
+    { type = "item", name = "firearm-magazine", amount = 1, probability = 0.07 },
+    { type = "item", name = "battery", amount = 1, probability = 0.11 },
+    { type = "item", name = "vault-access-key", amount = 1, probability = 0.005 },
   }
 }
 mixed_oxide.collision_mask = { layers = { resource = true } }
 mixed_oxide.autoplace = {
   tile_restriction = { "rabbasca-rough", "rabbasca-rough-2" },
-  probability_expression = "rabbasca_rocks(1.14)",
-  richness_expression = "(132 + 26\z 
-    * multioctave_noise{x = x, y = y, persistence = 0.44, seed0 = map_seed, input_scale = 1.5, seed1 = 'frosty', octaves = 4 })\z
-    * lerp(1, 100, distance / 2000)\z
+  probability_expression = "rabbasca_camps * multioctave_noise{x = x, y = y, persistence = 0.71, seed0 = map_seed, input_scale = 1.16, seed1 = 'scrappening', octaves = 6 }",
+  richness_expression = "(64 + 17\z 
+    * multioctave_noise{x = x, y = y, persistence = 0.44, seed0 = map_seed, input_scale = 1.5, seed1 = 'whoneedscircuits', octaves = 4 })\z
+    * lerp(5, 100, distance / 2000)\z
     * control:rabbasca_rocks:richness",
 }
 

@@ -1,20 +1,65 @@
 local r = require("__planet-rabbasca__.util")
 
-r.create_vault_recipe(data.raw["item"]["vault-access-key-e"], {{type = "item", name = "harene-ears-subcore", amount = 1 }}, 900,  false)
-r.create_access_key_recipe(data.raw["item"]["vault-access-key-e"], {{ type = "item", name = "power-solution", amount = 2 }, { type = "item", name = "vision-circuit", amount = 1 }})
+r.create_access_key_recipe("vault-protocol-haronite", {
+  { type = "item", name = "vision-circuit", amount = 1 }
+})
+r.create_vault_recipe("vault-protocol-haronite", {
+  results = {{type = "item", name = "haronite", amount = 5 }}, 
+  energy_required = 120,
+  main_product = "haronite"
+})
 
+r.create_access_key_recipe("vault-protocol-harene-ears-subcore", {
+  { type = "item", name = "processing-unit", amount = 1 }
+})
+r.create_vault_recipe("vault-protocol-harene-ears-subcore",
+{
+  results = {{type = "item", name = "harene-ears-subcore", amount = 1 }}, 
+  energy_required = 900,
+  main_product = "harene-ears-subcore"
+})
 
-r.create_vault_recipe(data.raw["item"]["vault-access-key-u"], {
-  {type = "item", name = "copper-ore", amount_min = 25, amount_max  = 28 },
-  {type = "item", name = "iron-ore", amount_min = 20, amount_max  = 24 },
-  {type = "item", name = "sulfur", amount_min = 10, amount_max  = 11 },
-  {type = "item", name = "uranium-ore", amount_min = 8, amount_max  = 12 },
-}, 20, false)
-r.create_access_key_recipe(data.raw["item"]["vault-access-key-u"], {{type = "item", name = "rabbasca-carotene-powder", amount = 10}})
+r.create_access_key_recipe("vault-protocol-iron-ore", {
+  { type = "item", name = "electronic-circuit", amount = 1 },
+  { type = "item", name = "iron-plate", amount = 1 },
+})
+r.create_vault_recipe("vault-protocol-iron-ore", {
+  icons = {
+    {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png"},
+    {icon = data.raw["item"]["copper-ore"].icon, shift = {-6, 6}},
+  },
+  results = {
+    {type = "item", name = "iron-ore", amount = 75 },
+  }, 
+  energy_required = 25
+})
+r.create_access_key_recipe("vault-protocol-copper-ore", {
+  { type = "item", name = "electronic-circuit", amount = 1 },
+  { type = "item", name = "copper-plate", amount = 1 },
+})
+r.create_vault_recipe("vault-protocol-copper-ore", {
+  icons = {
+    {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png"},
+    {icon = data.raw["item"]["copper-ore"].icon, shift = {-6, 6}},
+  },
+  results = {
+    {type = "item", name = "copper-ore", amount = 60 },
+  }, 
+  energy_required = 25
+})
 
-r.create_vault_recipe(data.raw["item"]["vault-access-key-b"], {
-    {type = "item", name = "inserter", amount_min = 5, amount_max  = 7, probability = 0.23 },
-    {type = "item", name = "transport-belt", amount_min = 20, amount_max  = 30, probability = 0.5 },
-    {type = "item", name = "recycler", amount = 1, probability = 0.37 },
-}, 300, false)
-r.create_access_key_recipe(data.raw["item"]["vault-access-key-b"], {{type = "item", name = "blueprint", amount = 1}})
+r.create_access_key_recipe("vault-protocol-catalysts", {
+  { type = "item", name = "vision-circuit", amount = 1 },
+})
+r.create_vault_recipe("vault-protocol-catalysts", {
+  icons = {
+    {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png"},
+    {icon = data.raw["item"]["sulfur"].icon, shift = {-6, 6}},
+    {icon = data.raw["item"]["calcite"].icon, shift = {6, 6}},
+  },
+  results = {
+    {type = "item", name = "calcite", amount = 10 },
+    {type = "item", name = "sulfur", amount = 7 },
+  }, 
+  energy_required = 20
+})

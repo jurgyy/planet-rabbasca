@@ -7,6 +7,7 @@ local vault_distractor = util.merge {
     name = "vault-distractor",
     max_health = 5,
     time_to_live = 8 * second,
+    order = "r[rabbasca]-b",
   }
 }
 
@@ -14,6 +15,8 @@ local defender_1 = util.merge{
   table.deepcopy(data.raw["unit"]["small-spitter"]), 
   {
     name = "vault-defender-1",
+    icon = "__base__/graphics/icons/defender.png",
+    order = "r[rabbasca]-a",
     max_health = 16,
     healing_per_tick = 0,
     movement_speed = 0.13,
@@ -22,7 +25,7 @@ local defender_1 = util.merge{
     has_belt_immunity = true,
     min_pursue_time = 10 * second,
     max_pursue_distance = 36,
-    absorptions_to_join_attack = { ["vault-activity"] = 10 },
+    -- absorptions_to_join_attack = { ["vault-activity"] = 10 },
     -- loot = { { item = "firearm-magazine", count_min = 3, count_max = 3 } },
     -- radar_range = 1,
     ai_settings = {
@@ -71,6 +74,8 @@ local defender_2 = util.merge {
     table.deepcopy(data.raw["unit"]["medium-spitter"]), 
 {
     name = "vault-defender-2",
+    icon = "__base__/graphics/icons/defender.png",
+    order = "r[rabbasca]-c",
     max_health = 24,
     healing_per_tick = -0.2 / second,
     movement_speed = 0.3,
@@ -78,14 +83,6 @@ local defender_2 = util.merge {
     distraction_cooldown = 20,
     min_pursue_time = 15 * second,
     max_pursue_distance = 50,
-    absorptions_to_join_attack = { ["vault-activity"] = 15 },
-    -- loot = { { item = "firearm-magazine", count_min = 3, count_max = 3 } },
-    ai_settings = {
-      join_attacks = true,
-      size_in_group = 1,
-      destroy_when_commands_fail = true,
-      do_separation = true,
-    },
   }
 }
 defender_2.collision_mask = { layers = { } }

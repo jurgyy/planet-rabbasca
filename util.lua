@@ -10,54 +10,51 @@ function output.restrict_to_harene_pool(bbox)
     }
 end
 
-function output.harene_burner()
-    return 
-    {  
-        type = "burner",
-        fuel_inventory_size = 1,
-        burnt_inventory_size = 1,
-        fuel_categories = {"rabbasca-infused-core-fuel"},
-        initial_fuel = "rabbasca-infused-haronite-core",
-        initial_fuel_percent = 1,
-    } 
-end
-
 function output.spill_to_inventory_or_ground(input, output, surface, spill_position)
   for i = 1, #input do
     local stack = input[i]
     if stack and stack.valid_for_read then
       local to_spill = stack.count
 
-      -- First, try to insert into output inventory
       if output then
         local inserted = output.insert{name = stack.name, count = stack.count, quality = stack.quality}
         to_spill = to_spill - inserted
       end
 
-      -- Spill remainder
       if to_spill > 0 then
         surface.spill_item_stack{ position = spill_position, stack = {name = stack.name, count = to_spill, quality = stack.quality}, force = game.forces.player}
       end
 
-      -- Clear the original slot
       stack.clear()
     end
   end
 end
 
 function output.create_access_key_recipe(input, ingredients)
+  local key = input.."-key"
 data:extend {
   {
+    type = "item",
+    name = key,
+    subgroup = "rabbasca-security",
+    order = "a["..key.."]",
+    icons = {
+      { icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png" },
+      { icon = data.raw["item"][ingredients[1].name].icon, scale = 0.2, shift = {6, 6} }
+    } ,
+    stack_size = 5,
+  },
+  {
     type = "recipe",
-    name = input.name,
+    name = key,
     enabled = false,
     -- hidden = false,
     -- hidden_in_factoriopedia = true,
     energy_required = 2,
     always_show_products = false,
-    ingredients = {{ type = "item", name = "vault-access-key", amount = 1 }, table.unpack(ingredients or {})},
-    results = {{ type = "item", name = input.name, amount = 1 }},
-    main_product = input.name,
+    ingredients = ingredients or {},
+    results = {{ type = "item", name = key, amount = 1 }},
+    main_product = key,
     category = "electronics",
     auto_recycle = false,
     overload_multiplier = 1,
@@ -65,74 +62,25 @@ data:extend {
   },
 }
 end
-function output.create_vault_recipe(input, rewards, cost, has_no_prequisite)
+
+function output.create_vault_recipe(input, values)
 data:extend{
+  util.merge {
+    values,
   {
+      name = input,
       type = "recipe",
-      name = input.name.."-protocol",
-      icon = input.icon,
-      icons = input.icons,
       hide_from_signal_gui = false,
-      enabled = has_no_prequisite,
       hide_from_player_crafting = true,
       allow_decomposition = false,
       always_show_products = true,
-      energy_required = cost,
-      ingredients = { { type = "item", name = input.name, amount = 1 } },
-      results = rewards,
-      reset_freshness_on_craft = true,
+      ingredients = { {type = "item", name = input.."-key", amount = 1 } },
       result_is_always_fresh = true,
-    --   main_product = reward,
       category = "rabbasca-vault-extraction",
       subgroup = "rabbasca-vault-extraction",
       auto_recycle = false, 
-  },
+  }
 }
-end
-
-function output.create_duplication_recipe(item, input, output)
-    if not data.raw["item"][item] then return end
-    local icons = { { icon = data.raw["item"]["harene-copy-core"].icon } }
-    if data.raw["item"][item].icon then
-        table.insert(icons, { icon = data.raw["item"][item].icon, scale = 0.3 })
-    elseif data.raw["item"][item].icons then
-        for _, icon in pairs(table.deepcopy(data.raw["item"][item].icons)) do
-            icon.scale = (icon.scale or 1) * 0.3
-            table.insert(icons, icon)
-        end
-    end
-    data:extend {
-    {
-        type = "item",
-        name = "rabbasca-"..item.."-duplicate",
-        icons = icons,
-        spoil_ticks = 30 * second,
-        spoil_result = item,
-        stack_size = data.raw["item"][item].stack_size,
-        subgroup = "rabbasca-matter-printer",
-        order = "d[duplicate]"
-    },
-    {
-        type = "recipe",
-        name = "rabbasca-"..item.."-duplicate",
-        enabled = false,
-        energy_required = 20,
-        ingredients = {
-            { type = "item", name = "harene-copy-core", amount = 1 },
-            { type = "item", name = item, amount = input},
-        },
-        results = { 
-            { type = "item",  name = "rabbasca-"..item.."-duplicate", amount = output, ignored_by_productivity = 1 },
-            { type = "fluid", name = "rabbasca-copyslop", amount = 198, ignored_by_productivity = 198 }
-        },
-        main_product = "rabbasca-"..item.."-duplicate",
-        category = "crafting-with-fluid",
-        reset_freshness_on_craft = false,
-        result_is_always_fresh = true,
-        allow_quality = true,
-        auto_recycle = false,
-        hide_from_player_crafting = true
-    },
 }
 end
 
@@ -223,33 +171,6 @@ function output.create_ears_variant(thing, tech, is_small)
     return new_thing
 end
 
-function output.create_duplication_recipe_triggered(item)
-    local item = data.raw["item"][item]
-    if not item then return end
-    data:extend{{
-        type = "technology",
-        name = item.name.."-duplication",
-        icon = item.icon,
-        icons = item.icons,
-        icon_size = 256,
-        prerequisites = { "item-duplication-2" },
-        effects =
-        {
-        {
-            type = "unlock-recipe",
-            recipe = "rabbasca-"..item.name.."-duplicate",
-        },
-        },
-        research_trigger =
-        {
-            type = "craft-item",
-            item = item.name,
-            quality = "legendary",
-            comparator = "=",
-            count = 5,
-        }
-    }}
-end
 
 function output.not_on_harenic_surface(proto)
   proto.surface_conditions = proto.surface_conditions or { }
@@ -277,6 +198,25 @@ function output.make_complex_machinery(proto, require_assembling_machine_craftab
   log("Add complex-machinery to additional_categories of: "..recipe.name)
   recipe.additional_categories = recipe.additional_categories or { }
   table.insert(recipe.additional_categories, "complex-machinery")
+end
+
+function output.rabbasca_init_vault_or_console(e)
+  if e.name == "rabbasca-vault" then
+    e.destructible = false
+    e.active = false
+  else
+    e.force = game.forces.neutral
+  end
+end
+
+function output.hack_vault(surface, position)
+  local new_evo_text = "Rabbasca alertness now at: [color=yellow]%.1f%%[/color]"
+  local active_vaults_count = #surface.find_entities_filtered { name = "rabbasca-vault-access-terminal", force = game.forces.player }
+  local new_evo = math.min(1, active_vaults_count * 0.025)
+  game.forces.enemy.set_evolution_factor(new_evo, surface)
+  for _, player in pairs(game.players) do
+    player.create_local_flying_text { text = string.format(new_evo_text, game.forces.enemy.get_evolution_factor(surface) * 100), surface = surface, position = position }
+  end
 end
 
 return output

@@ -19,6 +19,18 @@ for _, thing in pairs(data.raw["rocket-silo"]) do
   rutil.not_on_harenic_surface(thing)
 end
 
+data.raw["item"]["beta-carotene-barrel"].fuel_category = "carotene"
+data.raw["item"]["beta-carotene-barrel"].fuel_value = "27.35MJ"
+
+for _, lab in pairs(data.raw["lab"]) do
+  for _, input in pairs(lab.inputs) do
+    if input == "automation-science-pack" then
+      table.insert(lab.inputs, "healthy-science-pack")
+      break
+    end
+  end
+end
+
 require("scripts.machine-assembly")
 require("scripts.create-ears-variants")
 

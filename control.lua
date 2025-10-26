@@ -2,52 +2,9 @@ require("__planet-rabbasca__/scripts/remote-builder")
 local rutil = require("__planet-rabbasca__.util")
 local bunnyhop = require("__planet-rabbasca__/bunnyhop")
 
-local function hack_vault(event)
-  local console = event.target_entity or event.source_entity
-  if not console or console.name ~= "rabbasca-vault-access-terminal" then 
-    local position = event.target_position or event.source_position
-    if not position then return end
-    local consoles = game.surfaces[event.surface_index].find_entities_filtered{ position = position, radius = 8, name = "rabbasca-vault-access-terminal" }
-    if #consoles == 0 then return end
-    console = consoles[1]
-  end
-  local surface = console.surface
-  local position = console.position
-  local vault = surface.find_entity("rabbasca-vault", position)
-  if not vault then 
-    console.die()
-    return 
-  end
-  local input = console.get_inventory(defines.inventory.crafter_input)
-  local output = console.get_inventory(defines.inventory.crafter_output)
-  -- if another item was in input, current_recipe will just have started crafting. stop and retrieve input
-  local current_recipe = console.is_crafting() and console.get_recipe() 
-  if current_recipe and #current_recipe.ingredients > 0 then
-    -- resetting recipe/progress via script loses input items, so recreate them
-    input.insert({name = current_recipe.ingredients[1].name })
-  end
-  rutil.spill_to_inventory_or_ground(input, output, surface, { position.x, position.y + 1.4 })
-  console.crafting_progress = 0
-  if vault.active then
-    vault.active = false
-    vault.force = game.forces.neutral
-    console.force = game.forces.neutral
-  else
-    vault.active = true
-    vault.force = game.forces.enemy
-    console.force = game.forces.player
-  end
-end
-
 local function handle_script_events(event)
   local effect_id = event.effect_id
-  if effect_id == "rabbasca_init_terminal" then
-    local console = event.target_entity or event.source_entity
-    if not console then return end
-    if console.name == "rabbasca-vault-access-terminal" then
-      console.force = game.forces.neutral
-    end
-  elseif effect_id == "rabbasca_terminal_died" then
+  if effect_id == "rabbasca_terminal_died" then
     local console = event.target_entity or event.source_entity
     local surface = console.surface
     local position = console.position
@@ -55,13 +12,15 @@ local function handle_script_events(event)
     if not vault then return end
     vault.active = false
     vault.force = game.forces.neutral
-  elseif effect_id == "make_invulnerable" then
+  elseif effect_id == "rabbasca_init_vault" then
     local vault = event.target_entity or event.source_entity
     if not vault then return end
-    vault.destructible = false
-    vault.active = false
+    rutil.rabbasca_init_vault_or_console(vault)
   elseif effect_id == "rabbasca_on_hack_console" then
-    hack_vault(event)
+    local from = event.source_entity or event.target_entity
+    local position = (from and from.position) or event.target_position or event.source_position
+    if not position then return end
+    rutil.hack_vault(game.surfaces[event.surface_index], position)
   elseif effect_id == "rabbasca_teleport" then
     local engine = event.source_entity or event.target_entity
     local player = engine.player or engine.owner_location.player
@@ -108,6 +67,7 @@ local function give_starter_items()
   })
   remote.call("freeplay", "set_created_items", {
       ["pistol"] = 1,
+      ["firearm-magazine"] = 5,
       ["transport-belt"] = 100,
       ["inserter"] = 50,
       ["stone-furnace"] = 1,

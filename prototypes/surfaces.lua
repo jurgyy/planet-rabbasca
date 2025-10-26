@@ -81,6 +81,20 @@ data:extend {
       autoplace = { probability_expression = "rabbasca_rocks(1.3)" }
     }
   },
+  util.merge{
+    data.raw["optimized-decorative"]["brown-asterisk-mini"],
+    {
+      name = "rabbasca-asterisk-mini",
+      autoplace = { probability_expression = "rabbasca_carrot_noise" }
+    }
+  },
+  util.merge{
+    data.raw["optimized-decorative"]["fulgoran-gravewort"],
+    {
+      name = "rabbasca-gravewort",
+      autoplace = { probability_expression = "rabbasca_carrot_noise" }
+    }
+  },
 }
 
 local map_gen = {
@@ -116,17 +130,19 @@ local map_gen = {
           ["rabbasca-tiny-rock"] = {},
           ["rabbasca-small-rock"] = {},
           ["rabbasca-dune-decal"] = {},
+          ["rabbasca-asterisk-mini"] = {},
+          ["rabbasca-gravewort"] = {},
         }
       },
         ["entity"] =
       {
         settings =
         {
+          ["carotenoid-ore"] = {},
           ["rabbascan-scrap"] = {},
-          ["rabbasca-mixed-oxide-ore"] = {},
+          -- ["rabbasca-mixed-oxide-ore"] = {},
           ["rabbasca-energy-source"] = {},
           ["harene-vent"] = {},
-          ["carotenoid"] = {},
           ["rabbasca-turbofish"] = {},
           ["rabbasca-big-rock"] = {},
           -- ["moonstone-turret"] = {},
@@ -206,17 +222,6 @@ PlanetsLib:extend({
 })
 
 data:extend{
-util.merge{ data.raw["surface"]["space-platform"], {
-  type = "surface",
-  name = "harene-powered-space-platform",
-  surface_properties = {
-    gravity = 0,
-    pressure = 0,
-    ["magnetic-field"] = 0,
-    ["day-night-cycle"] = 0 ,
-    ["harenic-energy-signatures"] = 60, 
-  }
-}},
 {
   type = "space-connection",
   name = "gleba-rabbasca",
