@@ -30,39 +30,6 @@ function output.spill_to_inventory_or_ground(input, output, surface, spill_posit
   end
 end
 
-function output.create_access_key_recipe(input, ingredients)
-  local key = input.."-key"
-data:extend {
-  {
-    type = "item",
-    name = key,
-    subgroup = "rabbasca-security",
-    order = "a["..key.."]",
-    icons = {
-      { icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png" },
-      { icon = data.raw["item"][ingredients[1].name].icon, scale = 0.2, shift = {6, 6} }
-    } ,
-    stack_size = 5,
-  },
-  {
-    type = "recipe",
-    name = key,
-    enabled = false,
-    -- hidden = false,
-    -- hidden_in_factoriopedia = true,
-    energy_required = 2,
-    always_show_products = false,
-    ingredients = ingredients or {},
-    results = {{ type = "item", name = key, amount = 1 }},
-    main_product = key,
-    category = "electronics",
-    auto_recycle = false,
-    overload_multiplier = 1,
-    result_is_always_fresh = true,
-  },
-}
-end
-
 function output.create_vault_recipe(input, values)
 data:extend{
   util.merge {
@@ -70,11 +37,12 @@ data:extend{
   {
       name = input,
       type = "recipe",
+      enabled = false,
       hide_from_signal_gui = false,
       hide_from_player_crafting = true,
       allow_decomposition = false,
       always_show_products = true,
-      ingredients = { {type = "item", name = input.."-key", amount = 1 } },
+      ingredients = { },
       result_is_always_fresh = true,
       category = "rabbasca-vault-extraction",
       subgroup = "rabbasca-vault-extraction",
@@ -200,17 +168,18 @@ function output.make_complex_machinery(proto, require_assembling_machine_craftab
   table.insert(recipe.additional_categories, "complex-machinery")
 end
 
-function output.rabbasca_init_vault_or_console(e)
-  if e.name == "rabbasca-vault" then
-    e.destructible = false
-    e.active = false
+function output.rabbasca_set_vault_active(e, active)
+  if e.name ~= "rabbasca-vault-crafter" then return end
+  e.active = active
+  if active then
+    e.force = game.forces.player
   else
-    e.force = game.forces.neutral
+    e.force = game.forces.enemy
   end
 end
 
 function output.hack_vault(surface, position)
-  local active_vaults_count = #surface.find_entities_filtered { name = "rabbasca-vault-hacked", force = game.forces.player }
+  local active_vaults_count = #surface.find_entities_filtered { name = "rabbasca-vault-console", force = game.forces.player }
   local new_evo = math.min(1, active_vaults_count * 0.025)
   game.forces.enemy.set_evolution_factor(new_evo, surface)
   if not position then return end

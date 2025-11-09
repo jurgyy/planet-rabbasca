@@ -514,22 +514,23 @@ rocket_part.ingredients = {
 data:extend { rocket_part }
 PlanetsLib.assign_rocket_part_recipe("rabbasca", "rocket-part-from-turbofuel")
 
--- data:extend {
---     {
---         type = "recipe",
---         name = "vault-access-key-protocol",
---         enabled = true,
---         hidden_in_factoriopedia = true,
---         energy_required = 3,
---         ingredients = {{ type = "item", name = "vault-access-key", amount = 1 }},
---         results = {{ type = "item", name = "vault-access-key-protocol", amount = 1, ignored_by_stats = 1 }},
---         main_product = "vault-access-key-protocol",
---         category = "rabbasca-vault-hacking",
---         subgroup = "rabbasca-vault-access",
---         auto_recycle = false,
---         overload_multiplier = 1,
---         result_is_always_fresh = true,
---         allow_inserter_overload = false,
---         hide_from_player_crafting = true
---     },
--- }
+data:extend {
+    {
+        type = "recipe",
+        name = "rabbasca-hack-console",
+        subgroup = "rabbasca-security",
+        order = "a[vault-access-key]",
+        icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png",
+        enabled = true,
+        hidden = true,
+        hidden_in_factoriopedia = true,
+        category = "rabbasca-vault-hacking",
+        reset_freshness_on_craft = true,
+        result_is_always_fresh = true,
+        hide_from_player_crafting = true,
+        energy_required = 10,
+        -- ingredients = {{ type = "item", name = "vault-access-key", amount = 1 }},
+        -- results = {{ type = "item", name = "vault-access-protocol", amount = 1 }},
+        auto_recycle = false
+    },
+}

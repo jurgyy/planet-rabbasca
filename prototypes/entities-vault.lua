@@ -27,6 +27,7 @@ local spawner = util.merge{
   max_count_of_owned_defensive_units = 1,
   max_friends_around_to_spawn = 8,
   max_defensive_friends_around_to_spawn = 1,
+  captured_spawner_entity = "rabbasca-vault-console",
   spawning_radius = 12,
   collision_box = {{-0.7, -0.7},{0.7, 0.9}},
   selection_box = {{-0.8, -0.8},{0.8, 1.0}},
@@ -117,8 +118,8 @@ local access_console = util.merge{
     type = "assembling-machine",
     max_health = 7200,
     production_health_effect = {
-      producing = -3.6,
-      not_producing = -3.6
+      producing = -36,
+      not_producing = -36
     },
     fixed_recipe = "rabbasca-hack-console",
     crafting_speed = 1,
@@ -217,6 +218,7 @@ local vault_crafter = {
           type = "create-entity",
           entity_name = "rabbasca-vault-spawner",
           offsets = {{2, 2.2}},
+          as_enemy = true
         },
       }
     } 
@@ -234,7 +236,8 @@ local capture_bot = {
 
 data:extend {
   delayed_recalc_trigger,
-  vault, 
+  spawner, 
   access_console,
-  capture_bot 
+  capture_bot,
+  vault_crafter
 }

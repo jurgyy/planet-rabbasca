@@ -29,7 +29,7 @@ data:extend {
 {
     type = "item",
     name = "rabbasca-remote-receiver",
-    icon = "__FFF339BeaconGraphics__/graphics/alt_beacon_icon.png",
+    icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png",
     stack_size = 5,
     place_result = "rabbasca-remote-receiver",
     group = "logistics",
@@ -295,15 +295,12 @@ util.merge { data.raw["item"]["rocket-fuel"],
     auto_barrel = true,
     order = "r[rabbasca]-b[energetic-residue]"
 },
-{
-  type = "tool",
+util.merge { data.raw["tool"]["automation-science-pack"], {
   name = "athletic-science-pack",
   icon = "__planet-rabbasca__/graphics/icons/athletic-science-pack.png",
-  subgroup = "science-pack",
   order = "j-r[rabbasca]",
-  durability = 1,
-  stack_size = 200,
-},
+  weight = 0.1 * kg
+}},
 {
     type = "item",
     name = "haronite-brick",
@@ -347,34 +344,58 @@ util.merge{
     spoil_result = "self-replicating-firearm-magazine"
 },
 {
-    type = "capsule",
+    type = "ammo",
     name = "vault-access-key",
     subgroup = "rabbasca-security",
     order = "a[vault-access-key]",
     icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png",
-    stack_size = 20,
-    capsule_action = {
-      type = "throw",
-      attack_parameters = {
-        type = "projectile",
-        ammo_type = {
-          action = {
-            action_delivery = {
-              target_effects = {
-                entity_name = "rabbasca-capture-robot",
-                show_in_tooltip = true,
-                type = "create-entity"
-              },
-              type = "instant"
-            },
-            type = "direct"
+    stack_size = 20,        
+    ammo_type = {
+      action = {
+        action_delivery = {
+          target_effects = {
+            entity_name = "rabbasca-capture-robot",
+            show_in_tooltip = true,
+            type = "create-entity"
           },
-          target_filter = { "rabbasca-vault" }
+          type = "instant"
         },
-        activation_type = "throw",
-        ammo_category = "capsule",
-        cooldown = 5,
-        range = 5,
+        type = "direct"
+      },
+      target_filter = { "rabbasca-vault-spawner" }
+    },
+    ammo_category = "bullet",
+    shoot_protected = true,
+    reload_time = 2 * second
+},
+{
+    type = "item",
+    name = "vault-access-protocol",
+    category = "rabbasca-security",
+    order = "b[vault-access-key]",
+    icon = "__Krastorio2Assets__/icons/cards/advanced-tech-card.png",
+    flags = { "ignore-spoil-time-modifier" },
+    hidden_in_factoriopedia = true,
+    auto_recycle = false,
+    stack_size = 1,
+    spoil_ticks = 1,
+    spoil_to_trigger_result =
+    {
+      items_per_trigger = 1,
+      trigger =
+      {
+        type = "direct",
+        action_delivery =
+        {
+          type = "instant",
+          source_effects =
+          {
+            {
+              type = "script",
+              effect_id = "rabbasca_on_hack_vault"
+            }
+          }
+        }
       }
     }
 },

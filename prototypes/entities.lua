@@ -43,20 +43,21 @@ assembler.crafting_categories = { "complex-machinery", "install-ears-core" }
 assembler.fluid_boxes = { 
 {
   volume = 1000,
-    production_type = "input",
-    pipe_connections = 
-    {
-        {
-          flow_direction = "input-output",
-          position = {0, -2.2},
-          direction = defines.direction.north,
-        },
-        {
-          flow_direction = "input-output",
-          position = {0, 2.2},
-          direction = defines.direction.south,
-        },
-    },
+  pipe_covers = pipecoverspictures(),
+  production_type = "input",
+  pipe_connections = 
+  {
+      {
+        flow_direction = "input-output",
+        position = {0, -2.2},
+        direction = defines.direction.north,
+      },
+      {
+        flow_direction = "input-output",
+        position = {0, 2.2},
+        direction = defines.direction.south,
+      },
+  },
 },
 }
 assembler.effect_receiver = { base_effect = {
@@ -65,26 +66,29 @@ assembler.effect_receiver = { base_effect = {
 -- assembler.surface_conditions = {
 --   { property = "pressure", max = 0.1 }
 -- }
+local sprite_data = {   
+  line_length = 10,
+  lines_per_file = 10,
+  width = 320,
+  height = 320,
+  scale = 0.5,
+  fame_count = 100
+}
 assembler.graphics_set = {
-  frozen_patch = util.sprite_load("__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-frozen", { scale = 0.5, frame_count = 100 }),
-  animation =
+  frozen_patch = util.sprite_load("__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-frozen", sprite_data),
+  animation = util.sprite_load("__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-animation", sprite_data),
+  working_visualisations = {
     {
-      layers =
-      {
-        util.merge{
-          util.sprite_load("__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-animation", { scale = 0.5, frame_count = 100 }),
-          frame_count = 1
-        }
+      fadeout = true, 
+      layers = {
+        -- TODO: only partially working
+        animation = util.sprite_load("__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-color", sprite_data),
+        animation = util.sprite_load("__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-emission", util.merge { sprite_data, { draw_as_glow = true, blend_mode = "additive" }}),
       }
     },
-    working_visualisations =
-    {
-      util.sprite_load("__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-animation", { scale = 0.5, frame_count = 100 }),
-      util.sprite_load("__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-color", { scale = 0.5, frame_count = 100 }),
-      util.sprite_load("__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-emission", { scale = 0.5, frame_count = 100, draw_as_glow = true, blend_mode = "additive" }),
   },
   idle_animation = util.merge{
-    util.sprite_load("__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-animation", { scale = 0.5, frame_count = 100 }),
+    util.sprite_load("__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-animation", sprite_data),
     frame_count = 1
   }
 }

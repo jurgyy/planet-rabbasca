@@ -147,7 +147,7 @@ local map_gen = {
           ["rabbasca-turbofish"] = {},
           ["rabbasca-big-rock"] = {},
           -- ["moonstone-turret"] = {},
-          ["rabbasca-vault"] = {},
+          ["rabbasca-vault-crafter"] = {},
         }
       }
     }

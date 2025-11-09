@@ -185,9 +185,3 @@ local harene_resource = {
   map_grid = false
 }
 data:extend{ harene_resource, carrot_ore, battle_scrap }
-
-data:extend{ {
-    type = "resource-category",
-    name = "harene"
-},
-}

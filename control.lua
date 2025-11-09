@@ -4,22 +4,31 @@ local bunnyhop = require("__planet-rabbasca__/bunnyhop")
 
 local function handle_script_events(event)
   local effect_id = event.effect_id
-  if effect_id == "rabbasca_terminal_died" then
-    local console = event.target_entity or event.source_entity
-    local surface = console.surface
-    local position = console.position
-    local vault = surface.find_entity("rabbasca-vault", position)
-    if not vault then return end
-    vault.active = false
-    vault.force = game.forces.neutral
-  elseif effect_id == "rabbasca_init_vault" then
-    local vault = event.target_entity or event.source_entity
-    if not vault then return end
-    rutil.rabbasca_init_vault_or_console(vault)
-  elseif effect_id == "rabbasca_on_hack_console" then
+  if effect_id == "rabbasca_on_recalc_evolution" then
     local from = event.source_entity or event.target_entity
     local position = (from and from.position) or event.target_position or event.source_position
     rutil.hack_vault(game.surfaces[event.surface_index], position)
+    if from and from.name == "rabbasca-vault-spawner" then
+      local vault = from.surface.find_entity("rabbasca-vault-crafter", position)
+      rutil.rabbasca_set_vault_active(vault, false)
+    end
+    if from and from.name == "rabbasca-vault-console" then
+      local vault = from.surface.find_entity("rabbasca-vault-crafter", position)
+      rutil.rabbasca_set_vault_active(vault, true)
+    end
+  -- elseif effect_id == "rabbasca_on_hack_vault" then
+  --   local from = event.source_entity or event.target_entity
+  --   game.print("Hack from "..from.name)
+  --   if from and from.name == "rabbasca-vault-console" then
+  --     local spawner = from.surface.create_entity {
+  --       name = "rabbasca-vault-spawner",
+  --       position = from.position,
+  --       force = game.forces.enemy,
+  --     }
+  --     if not spawner then return end
+  --     -- spawner.is_military_target = false
+  --     from.destroy{}
+  --   end
   elseif effect_id == "rabbasca_teleport" then
     local engine = event.source_entity or event.target_entity
     local player = engine.player or engine.owner_location.player
@@ -48,11 +57,6 @@ script.on_event(defines.events.on_player_controller_changed, function(event)
     if player.gui.screen.bunnyhop_ui then
        bunnyhop.clear_bunnyhop_ui(player)
     end
-end)
-
-script.on_nth_tick(1800, function(_)
-  if not game.planets["rabbasca"] or not game.planets["rabbasca"].surface then return end
-  rutil.hack_vault(game.planets["rabbasca"].surface)
 end)
 
 script.on_event(defines.events.on_surface_created, function(event)

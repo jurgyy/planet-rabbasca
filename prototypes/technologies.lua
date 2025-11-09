@@ -130,23 +130,11 @@ data:extend {
       },
       {
         type = "unlock-recipe",
-        recipe = "vault-protocol-iron-ore-key"
-      },
-      {
-        type = "unlock-recipe",
         recipe = "vault-protocol-copper-ore"
       },
       {
         type = "unlock-recipe",
-        recipe = "vault-protocol-copper-ore-key"
-      },
-      {
-        type = "unlock-recipe",
         recipe = "vault-protocol-catalysts"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "vault-protocol-catalysts-key"
       },
     },
     research_trigger =
@@ -217,10 +205,6 @@ data:extend {
         type = "unlock-recipe",
         recipe = "vault-protocol-harene-ears-subcore"
       },
-      {
-        type = "unlock-recipe",
-        recipe = "vault-protocol-harene-ears-subcore-key"
-      },
     },
     research_trigger =
     {
@@ -290,15 +274,7 @@ data:extend {
       },
       {
         type = "unlock-recipe",
-        recipe = "vault-protocol-haronite-key",
-      },
-      {
-        type = "unlock-recipe",
         recipe = "rabbasca-energetic-concrete"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "machining-assembler"
       },
     },
     research_trigger =
