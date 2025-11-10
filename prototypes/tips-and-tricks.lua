@@ -54,7 +54,7 @@ data:extend {{
     type = "tips-and-tricks-item",
     name = "rabbasca-vaults",
     category = "space-age",
-    tag = "[entity=rabbasca-vault]",
+    tag = "[entity=rabbasca-vault-crafter]",
     indent = 1,
     order = "r[rabbasca]-b",
     trigger = {

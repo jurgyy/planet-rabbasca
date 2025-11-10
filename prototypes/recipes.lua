@@ -354,9 +354,10 @@ data:extend {
         enabled = false,
         energy_required = 23,
         ingredients = {
-            { type = "item", name = "rabbasca-energetic-concrete", amount = 1 },
+            { type = "item", name = "rabbasca-energetic-concrete", amount = 2 },
             { type = "item", name = "rabbasca-protein-shake", amount = 2 },
-            { type = "fluid", name = "harene-gas", amount = 23 },
+            { type = "item", name = "fast-transport-belt", amount = 1 },
+            { type = "fluid", name = "harene-gas", amount = 16 },
         },
         results = {
             { type = "item", name = "athletic-science-pack", amount = 5 }
@@ -377,6 +378,21 @@ data:extend {
         },
         results = { {type = "item", name = "vault-access-key", amount = 1} },
         main_product = "vault-access-key",
+        category = "crafting-with-fluid",
+        allow_productivity = true,
+    },
+    {
+        type = "recipe",
+        name = "vault-security-key",
+        enabled = false,
+        energy_required = 15,
+        ingredients = { 
+            {type = "item", name = "vault-access-key", amount = 2 },
+            {type = "item", name = "rabbasca-protein-shake", amount = 3 },
+            {type = "fluid", name = "harene-gas", amount = 5 },
+        },
+        results = { {type = "item", name = "vault-security-key", amount = 1} },
+        main_product = "vault-security-key",
         category = "crafting-with-fluid",
         allow_productivity = true,
     },
@@ -456,24 +472,3 @@ rocket_part.ingredients = {
 }
 data:extend { rocket_part }
 PlanetsLib.assign_rocket_part_recipe("rabbasca", "rocket-part-from-turbofuel")
-
-data:extend {
-    {
-        type = "recipe",
-        name = "rabbasca-hack-console",
-        subgroup = "rabbasca-security",
-        order = "a[vault-access-key]",
-        icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png",
-        enabled = true,
-        hidden = true,
-        hidden_in_factoriopedia = true,
-        category = "rabbasca-vault-hacking",
-        reset_freshness_on_craft = true,
-        result_is_always_fresh = true,
-        hide_from_player_crafting = true,
-        energy_required = 10,
-        -- ingredients = {{ type = "item", name = "vault-access-key", amount = 1 }},
-        -- results = {{ type = "item", name = "vault-access-protocol", amount = 1 }},
-        auto_recycle = false
-    },
-}

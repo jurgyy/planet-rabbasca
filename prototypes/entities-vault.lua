@@ -67,22 +67,17 @@ spawner.result_units = {
     {evolution_factor = 0.05, spawn_weight = 0}, 
     {evolution_factor = 0.1, spawn_weight = 0.5},
     {evolution_factor = 0.25, spawn_weight = 0.2},
-    {evolution_factor = 0.3, spawn_weight = 0},
-  }},
-  { unit = "medium-biter", spawn_points = {
-    {evolution_factor = 0.2, spawn_weight = 0}, 
-    {evolution_factor = 0.3, spawn_weight = 1},
     {evolution_factor = 0.5, spawn_weight = 0},
   }},
-    { unit = "big-biter", spawn_points = {
-    {evolution_factor = 0.3, spawn_weight = 0}, 
-    {evolution_factor = 0.4, spawn_weight = 0.5},
-    {evolution_factor = 0.7, spawn_weight = 1},
-    {evolution_factor = 1, spawn_weight = 0},
+  { unit = "vault-defender-heavy", spawn_points = {
+    {evolution_factor = 0.1, spawn_weight = 0}, 
+    {evolution_factor = 0.25, spawn_weight = 0.75},
+    {evolution_factor = 1, spawn_weight = 0.5},
   }},
-    { unit = "behemoth-biter", spawn_points = {
-    {evolution_factor = 0.9, spawn_weight = 0}, 
-    {evolution_factor = 0.91, spawn_weight = 0.5},
+    { unit = "vault-defender-charged", spawn_points = {
+    {evolution_factor = 0.15, spawn_weight = 0}, 
+    {evolution_factor = 0.4, spawn_weight = 0.5},
+    {evolution_factor = 1, spawn_weight = 0.75},
   }},
 }
 spawner.graphics_set =
@@ -107,13 +102,14 @@ local access_console = util.merge{
   table.deepcopy(spawner),
   {
     name = "rabbasca-vault-console",
-    type = "assembling-machine",
+    type = "furnace",
     max_health = 7200,
     production_health_effect = {
-      producing = -36,
+      producing = -6,
       not_producing = -36
     },
-    fixed_recipe = "rabbasca-hack-console",
+    result_inventory_size = 0,
+    source_inventory_size = 1,
     crafting_speed = 1,
     energy_usage = "1MW",
     allow_copy_paste = true,
@@ -230,10 +226,19 @@ local capture_bot = {
   speed = 0.01
 }
 
+local capture_bot_2 = {
+  type = "capture-robot",
+  icon = "__Krastorio2Assets__/icons/cards/advanced-tech-card.png",
+  name = "rabbasca-capture-robot-2",
+  capture_speed = 1.25,
+  max_health = 480,
+  speed = 0.01
+}
+
 data:extend {
   delayed_recalc_trigger,
   spawner, 
   access_console,
-  capture_bot,
+  capture_bot, capture_bot_2,
   vault_crafter
 }

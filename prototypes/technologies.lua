@@ -80,7 +80,7 @@ data:extend {
 {
   type = "technology",
   name = "rabbasca-vault-hacking-efficiency",
-  icon = "__Krastorio2Assets__/icons/cards/utility-tech-card.png",
+  icon = "__Krastorio2Assets__/technologies/optimization-tech-card.png",
   icon_size = 256,
   prerequisites = { "athletic-science-pack" },
   effects = {
@@ -115,7 +115,7 @@ data:extend {
 {
     type = "technology",
     name = "rabbascan-vault-access",
-    icon = "__Krastorio2Assets__/icons/cards/utility-tech-card.png",
+    icon = "__Krastorio2Assets__/technologies/optimization-tech-card.png",
     icon_size = 256,
     prerequisites = { "planet-discovery-rabbasca" },
     effects =
@@ -497,7 +497,7 @@ data:extend {
 {
   type = "technology",
   name = "rabbasca-document-forging",
-  icon = "__base__/graphics/technology/radar.png",
+  icon = "__Krastorio2Assets__/technologies/advanced-tech-card.png",
   icon_size = 256,
   prerequisites = { "athletic-science-pack", "space-science-pack", "utility-science-pack", "production-science-pack" },
   effects =
@@ -505,6 +505,10 @@ data:extend {
     {
       type = "unlock-recipe",
       recipe = "vault-access-key",
+    },
+    {
+      type = "unlock-recipe",
+      recipe = "vault-security-key",
     },
   },
   unit = {
@@ -516,7 +520,7 @@ data:extend {
       {"chemical-science-pack", 1},
       {"space-science-pack", 1},
       {"production-science-pack", 1},
-      {"utility-science-pack", 1},
+      {"military-science-pack", 1},
       {"athletic-science-pack", 1},
     }
   }

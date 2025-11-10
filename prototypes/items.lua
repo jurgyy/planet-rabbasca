@@ -43,7 +43,7 @@ data:extend {
     stack_size = 50,
     subgroup = "rabbasca-processes",
     order = "h[haronite]-a[haronite]",
-    spoil_ticks = 3 * minute,
+    spoil_ticks = 5 * minute,
     spoil_result = "stone"
 },
 {
@@ -183,6 +183,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
     icon = "__planet-rabbasca__/graphics/icons/carotenoid.png",
     name = "carotenoid-ore",
     stack_size = 5,
+    weight = 100 * kg,
     subgroup = "rabbasca-processes",
     order = "a[raw-resource]-a[carotenoid]",
     fuel_category = "carotene",
@@ -284,7 +285,8 @@ util.merge { data.raw["tool"]["automation-science-pack"], {
   name = "athletic-science-pack",
   icon = "__planet-rabbasca__/graphics/icons/athletic-science-pack.png",
   order = "j-r[rabbasca]",
-  weight = 0.1 * kg
+  weight = 0.1 * kg,
+  stack_size = 500
 }},
 util.merge{
   data.raw["item"]["concrete"],
@@ -312,6 +314,31 @@ util.merge{
         action_delivery = {
           target_effects = {
             entity_name = "rabbasca-capture-robot",
+            show_in_tooltip = true,
+            type = "create-entity"
+          },
+          type = "instant"
+        },
+        type = "direct"
+      },
+      target_filter = { "rabbasca-vault-spawner" }
+    },
+    ammo_category = "bullet",
+    shoot_protected = true,
+    reload_time = 2 * second
+},
+{
+    type = "ammo",
+    icon = "__Krastorio2Assets__/icons/cards/advanced-tech-card.png",
+    name = "vault-security-key",
+    subgroup = "rabbasca-security",
+    order = "a[vault-security-key]",
+    stack_size = 5,
+    ammo_type = {
+      action = {
+        action_delivery = {
+          target_effects = {
+            entity_name = "rabbasca-capture-robot-2",
             show_in_tooltip = true,
             type = "create-entity"
           },

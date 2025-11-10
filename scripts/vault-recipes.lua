@@ -73,3 +73,61 @@ r.create_vault_recipe("vault-protocol-catalysts", {
   maximum_productivity = 9,
   allow_productivity = true,
 })
+
+
+data:extend {
+    {
+        type = "recipe",
+        name = "rabbasca-extend-hack-advanced-circuit",
+        localised_name = {"recipe-name.rabbasca-extend-hack"},
+        localised_description = {"recipe-description.rabbasca-extend-hack"},
+        subgroup = "rabbasca-security",
+        order = "a[vault-access-key]a",
+        icons = { 
+          { icon = data.raw["item"]["advanced-circuit"].icon },
+          { icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png", scale = 0.3, shift = { 8, 8 } },
+        },
+        enabled = true,
+        category = "rabbasca-vault-hacking",
+        hide_from_player_crafting = true,
+        energy_required = 0.1,
+        ingredients = {{ type = "item", name = "advanced-circuit", amount = 1 }},
+        auto_recycle = false
+    },
+    {
+        type = "recipe",
+        name = "rabbasca-extend-hack-vault-access-key",
+        localised_name = {"recipe-name.rabbasca-extend-hack"},
+        localised_description = {"recipe-description.rabbasca-extend-hack"},
+        subgroup = "rabbasca-security",
+        order = "a[vault-access-key]b",
+        icons = { 
+          { icon = data.raw["ammo"]["vault-access-key"].icon },
+          { icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png", scale = 0.3, shift = { 8, 8 } },
+        },
+        enabled = true,
+        category = "rabbasca-vault-hacking",
+        hide_from_player_crafting = true,
+        energy_required = 6,
+        ingredients = {{ type = "item", name = "vault-access-key", amount = 1 }},
+        auto_recycle = false
+    },
+    {
+        type = "recipe",
+        name = "rabbasca-extend-hack-vault-security-key",
+        localised_name = {"recipe-name.rabbasca-extend-hack"},
+        localised_description = {"recipe-description.rabbasca-extend-hack"},
+        subgroup = "rabbasca-security",
+        order = "a[vault-access-key]c",
+        icons = { 
+          { icon = data.raw["ammo"]["vault-security-key"].icon },
+          { icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png", scale = 0.3, shift = { 8, 8 } },
+        },
+        enabled = true,
+        category = "rabbasca-vault-hacking",
+        hide_from_player_crafting = true,
+        energy_required = 30,
+        ingredients = {{ type = "item", name = "vault-security-key", amount = 1 }},
+        auto_recycle = false
+    },
+}

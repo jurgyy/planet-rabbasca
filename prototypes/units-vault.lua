@@ -16,7 +16,7 @@ local defender_1 = util.merge{
     min_pursue_time = 10 * second,
     max_pursue_distance = 36,
     ai_settings = {
-      join_attacks = true,
+      join_attacks = false,
       size_in_group = 1,
       destroy_when_commands_fail = true,
       do_separation = true,
@@ -29,6 +29,15 @@ local defender_1 = util.merge{
 defender_1.run_animation = table.deepcopy(data.raw["combat-robot"]["defender"].in_motion)
 defender_1.collision_mask = { layers = { } }
 defender_1.alternative_attacking_frame_sequence = nil
+defender_1.resistances = {
+  { type = "physical", percent = 0 },
+  { type = "explosion", percent = 0 },
+  { type = "fire", percent = 75 },
+  { type = "poison", percent = 100 },
+  { type = "acid", percent = 100 },
+  { type = "laser", percent = 80 },
+  { type = "electric", percent = 0 },
+}
 defender_1.attack_parameters = {
   type = "projectile",
   animation = table.deepcopy(data.raw["combat-robot"]["defender"].idle),
@@ -58,7 +67,7 @@ defender_1.attack_parameters = {
   }
 }
 local defender_2 = util.merge {
-    table.deepcopy(data.raw["unit"]["medium-spitter"]), 
+    table.deepcopy(defender_1), 
 {
     name = "vault-defender-2",
     icon = "__base__/graphics/icons/defender.png",
@@ -72,7 +81,17 @@ local defender_2 = util.merge {
     max_pursue_distance = 50,
   }
 }
+defender_2.alternative_attacking_frame_sequence = nil
 defender_2.collision_mask = { layers = { } }
+defender_2.resistances = {
+  { type = "physical", percent = 0, decrease = 3 },
+  { type = "explosion", percent = 0 },
+  { type = "fire", percent = 75 },
+  { type = "poison", percent = 100 },
+  { type = "acid", percent = 100 },
+  { type = "laser", percent = 95 },
+  { type = "electric", percent = 0 },
+}
 defender_2.attack_parameters = {
   type = "projectile",
   animation = defender_2.attack_parameters.animation,
@@ -127,7 +146,70 @@ local vault_distractor = util.merge {
   }
 }
 
+local defender_heavy = util.merge {
+    table.deepcopy(defender_2), 
+{
+    name = "vault-defender-heavy",
+    icon = "__base__/graphics/icons/distractor.png",
+    order = "r[rabbasca]-b3",
+    max_health = 344,
+    healing_per_tick = 0.5 / second,
+    movement_speed = 0.12,
+    distance_per_frame = 0.08,
+}
+}
+defender_heavy.run_animation = table.deepcopy(data.raw["combat-robot"]["distractor"].in_motion)
+defender_heavy.resistances = {
+  { type = "physical", percent = 50, decrease = 12 },
+  { type = "explosion", percent = 17 },
+  { type = "fire", percent = 0 },
+  { type = "poison", percent = 100 },
+  { type = "acid", percent = 100 },
+  { type = "laser", percent = 30 },
+  { type = "electric", percent = 50 },
+}
+defender_heavy.attack_parameters = util.merge {
+  vault_distractor.attack_parameters,
+  {
+    range = 7,
+    damage_modifier = 0.15,
+    animation = table.deepcopy(data.raw["combat-robot"]["distractor"].idle),
+  }
+}
+
+local defender_ouchy = util.merge {
+    table.deepcopy(defender_2), 
+{
+    name = "vault-defender-charged",
+    icon = "__base__/graphics/icons/destroyer.png",
+    order = "r[rabbasca]-b4",
+    max_health = 167,
+    healing_per_tick = -1 / second,
+    movement_speed = 0.44,
+    distance_per_frame = 0.213,
+}
+}
+defender_ouchy.run_animation = table.deepcopy(data.raw["combat-robot"]["destroyer"].in_motion)
+defender_ouchy.resistances = {
+  { type = "physical", percent = 0, decrease = 6 },
+  { type = "explosion", percent = 0 },
+  { type = "fire", percent = 0 },
+  { type = "poison", percent = 100 },
+  { type = "acid", percent = 100 },
+  { type = "laser", percent = 70, decrease = 3 },
+  { type = "electric", percent = 95 },
+}
+defender_ouchy.attack_parameters = util.merge {
+  table.deepcopy(data.raw["combat-robot"]["destroyer"].attack_parameters),
+  {
+    range = 4,
+    damage_modifier = 2.3,
+    animation = table.deepcopy(data.raw["combat-robot"]["destroyer"].idle),
+  }
+}
+
 data:extend{
   vault_distractor, 
   defender_1, defender_2,
+  defender_heavy, defender_ouchy
 }

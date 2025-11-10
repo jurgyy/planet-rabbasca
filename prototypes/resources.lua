@@ -43,9 +43,8 @@ battle_scrap.minable =
   mining_time = 0.75,
   results =
   {
-    { type = "item", name = "advanced-circuit", amount = 1, probability = 0.9 },
-    { type = "item", name = "firearm-magazine", amount = 1, probability = 0.07 },
-    { type = "item", name = "battery", amount = 1, probability = 0.03 },
+    { type = "item", name = "advanced-circuit", amount = 1, probability = 0.92 },
+    { type = "item", name = "firearm-magazine", amount = 1, probability = 0.03 },
     { type = "item", name = "vault-access-key", amount = 1, probability = 0.005 },
   }
 }
