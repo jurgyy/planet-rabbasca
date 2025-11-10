@@ -77,6 +77,7 @@ data:extend {
         enabled = false,
         ingredients = { 
             {type = "fluid", name = "energetic-residue", amount = 5 },
+            {type = "fluid", name = "water", amount = 10 },
             {type = "item", name = "carotenoid-ore", amount = 20 },
         },
         results = { { type = "fluid", name = "beta-carotene", amount = 60 },
@@ -146,7 +147,7 @@ data:extend {
         energy_required = 5,
         ingredients = { 
             {type = "item", name = "harene-ears-core", amount = 1 },
-            {type = "item", name = "vision-circuit",  amount = 20 },
+            {type = "item", name = "processing-unit",  amount = 20 },
             {type = "item", name = "iron-gear-wheel",   amount = 30 },
             {type = "item", name = "tungsten-plate",   amount = 2 },
             {type = "item", name = "radar",   amount = 1 },
@@ -164,7 +165,7 @@ data:extend {
         enabled = false,
         energy_required = 5,
         ingredients = { 
-            {type = "item", name = "vision-circuit",  amount = 20 },
+            {type = "item", name = "processing-unit",  amount = 20 },
             {type = "item", name = "iron-gear-wheel",   amount = 30 },
             {type = "item", name = "superconductor",   amount = 5 },
         },
@@ -206,24 +207,6 @@ data:extend {
     },
     {
         type = "recipe",
-        name = "vision-circuit",
-        enabled = false,
-        energy_required = 7,
-        ingredients = {
-            {type = "item", name = "electronic-circuit", amount = 5 }, 
-            {type = "item", name = "advanced-circuit", amount = 1 },
-            {type = "fluid", name = "beta-carotene", amount = 10  },
-
-        },
-        results = { 
-            { type = "item", name = "vision-circuit", amount = 1 },
-        },
-        main_product = "vision-circuit",
-        category = "electronics-with-fluid",
-        allow_productivity = true,
-    },
-    {
-        type = "recipe",
         name = "ears-subcore-reactor-equipment",
         enabled = false,
         energy_required = 10,
@@ -245,10 +228,10 @@ data:extend {
         energy_required = 40,
         ingredients = { 
             {type = "item", name = "ears-subcore-reactor-equipment", amount = 2 },
-            {type = "item", name = "rabbasca-turbofuel", amount = 500 },
+            {type = "item", name = "rabbasca-turbofuel", amount = 400 },
             {type = "item", name = "rabbasca-energetic-concrete", amount = 100 },
             {type = "item", name = "electric-engine-unit", amount = 50 },
-            {type = "item", name = "vision-circuit", amount = 200 }
+            {type = "item", name = "processing-unit", amount = 200 }
         },
         results = { 
             { type = "item", name = "bunnyhop-engine-equipment", amount = 1 },
@@ -271,6 +254,7 @@ data:extend {
             { type = "item", name = "rabbasca-turbofuel", amount = 1 },
         },
         enabled = false,
+        allow_productivity = true,
         category = "chemistry",
         crafting_machine_tint =
         {
@@ -296,6 +280,7 @@ data:extend {
         main_product = "rabbasca-turbofish",
         category = "organic",
         allow_productivity = true,
+        result_is_always_fresh = true,
         subgroup = "nauvis-agriculture",
         order = "b[nauvis-agriculture]-b[turbofish-breeding]"
     },
@@ -313,19 +298,6 @@ data:extend {
         main_product = "protein-powder",
         category = "crafting",
         allow_productivity = true,
-        auto_recycle = false
-    },
-    {
-        type = "recipe",
-        name = "rabbasca-turbofin",
-        enabled = false,
-        energy_required = 1,
-        ingredients = { 
-            {type = "item", name = "rabbasca-turbofish", amount = 1 },
-        },
-        results = { {type = "item", name = "rabbasca-turbofin", amount = 2 } },
-        main_product = "rabbasca-turbofin",
-        category = "crafting",
         auto_recycle = false
     },
     {
@@ -383,7 +355,6 @@ data:extend {
         energy_required = 23,
         ingredients = {
             { type = "item", name = "rabbasca-energetic-concrete", amount = 1 },
-            { type = "item", name = "vision-circuit", amount = 2 },
             { type = "item", name = "rabbasca-protein-shake", amount = 2 },
             { type = "fluid", name = "harene-gas", amount = 23 },
         },
@@ -391,19 +362,7 @@ data:extend {
             { type = "item", name = "athletic-science-pack", amount = 5 }
         },
         category = "crafting-with-fluid",
-    },
-    {
-        type = "recipe",
-        name = "self-replicating-firearm-magazine",
-        enabled = false,
-        energy_required = 12,
-        ingredients = {
-            { type = "item", name = "firearm-magazine", amount = 100 },
-        },
-        results = { { type = "item", name = "self-replicating-firearm-magazine", amount = 1 } },
-        category = "crafting",
-        subgroup = "ammo",
-        order = "a[basic-clips-extended]-a[self-replicating-firearm-magazine]"
+        allow_productivity = true
     },
     {
         type = "recipe",
@@ -411,9 +370,9 @@ data:extend {
         enabled = false,
         energy_required = 3,
         ingredients = { 
-            {type = "item", name = "advanced-circuit", amount = 20 },
-            {type = "item", name = "vision-circuit", amount = 5 },
-            {type = "item", name = "rabbasca-turbofin", amount = 1 },
+            {type = "item", name = "advanced-circuit", amount = 5 },
+            {type = "item", name = "processing-unit", amount = 1 },
+            {type = "item", name = "rabbasca-turbofish", amount = 1 },
             {type = "fluid", name = "beta-carotene", amount = 20 },
         },
         results = { {type = "item", name = "vault-access-key", amount = 1} },
@@ -440,21 +399,6 @@ data:extend {
     },
     {
         type = "recipe",
-        name = "haronite-brick",
-        main_product = "haronite-brick",
-        category = "smelting",
-        reset_freshness_on_craft = true,
-        result_is_always_fresh = true,
-        hide_from_player_crafting = true,
-        energy_required = 10,
-        results = {{type = "item", name = "haronite-brick", amount = 1 }},
-        ingredients = {
-            { type = "item", name = "haronite", amount = 1 },
-        },
-        allow_productivity = true,
-    },
-    {
-        type = "recipe",
         name = "rabbasca-energetic-concrete",
         main_product = "rabbasca-energetic-concrete",
         category = "crafting-with-fluid",
@@ -463,9 +407,8 @@ data:extend {
         results = {{type = "item", name = "rabbasca-energetic-concrete", amount = 10 }},
         ingredients = {
             { type = "item", name = "harenic-stabilizer", amount = 1 },
-            { type = "item", name = "haronite-brick", amount = 5 },
-            { type = "item", name = "rabbasca-turbofin", amount = 5 },
-            { type = "item", name = "iron-stick", amount = 16 },
+            { type = "item", name = "haronite", amount = 5 },
+            { type = "item", name = "concrete", amount = 10 },
             { type = "fluid", name = "energetic-residue", amount = 20 },
         },
     },
@@ -509,7 +452,7 @@ rocket_part.surface_conditions = { { property = "harenic-energy-signatures", min
 rocket_part.ingredients = {
     { type = "item", name = "rabbasca-turbofuel", amount = 1 },
     { type = "item", name = "infused-haronite-plate", amount = 1 },
-    { type = "item", name = "vision-circuit", amount = 1 },
+    { type = "item", name = "processing-unit", amount = 1 },
 }
 data:extend { rocket_part }
 PlanetsLib.assign_rocket_part_recipe("rabbasca", "rocket-part-from-turbofuel")

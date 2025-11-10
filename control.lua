@@ -9,6 +9,7 @@ local function handle_script_events(event)
     local position = (from and from.position) or event.target_position or event.source_position
     rutil.hack_vault(game.surfaces[event.surface_index], position)
     if from and from.name == "rabbasca-vault-spawner" then
+      from.force = game.forces.rabbascans
       local vault = from.surface.find_entity("rabbasca-vault-crafter", position)
       rutil.rabbasca_set_vault_active(vault, false)
     end
@@ -16,19 +17,6 @@ local function handle_script_events(event)
       local vault = from.surface.find_entity("rabbasca-vault-crafter", position)
       rutil.rabbasca_set_vault_active(vault, true)
     end
-  -- elseif effect_id == "rabbasca_on_hack_vault" then
-  --   local from = event.source_entity or event.target_entity
-  --   game.print("Hack from "..from.name)
-  --   if from and from.name == "rabbasca-vault-console" then
-  --     local spawner = from.surface.create_entity {
-  --       name = "rabbasca-vault-spawner",
-  --       position = from.position,
-  --       force = game.forces.enemy,
-  --     }
-  --     if not spawner then return end
-  --     -- spawner.is_military_target = false
-  --     from.destroy{}
-  --   end
   elseif effect_id == "rabbasca_teleport" then
     local engine = event.source_entity or event.target_entity
     local player = engine.player or engine.owner_location.player

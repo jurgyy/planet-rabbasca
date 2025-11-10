@@ -56,28 +56,11 @@ data:extend {
 },
 {
     type = "item",
-    icon = "__Krastorio2Assets__/icons/items/lithium-2.png",
-    name = "rabbasca-turbofin",
-    stack_size = 200,
-    subgroup = "rabbasca-processes",
-    order = "b[organic]-c[turbofin]",
-},
-{
-    type = "item",
     icon = "__planet-rabbasca__/graphics/icons/harenic-stabilizer.png",
     name = "harenic-stabilizer",
     stack_size = 50,
     subgroup = "rabbasca-processes",
     order = "b[processed]-h[harenic-stabilizer]",
-},
-{
-    type = "item",
-    icon = "__planet-rabbasca__/graphics/icons/vision-circuit.png",
-    name = "vision-circuit",
-    stack_size = 100,
-    group = "intermediate-products",
-    subgroup = "intermediate-product",
-    order = "b[circuits]-d[vision-circuit]",
 },
 {
     type = "item",
@@ -98,6 +81,7 @@ data:extend {
     },
     name = "harene-ears-subcore",
     stack_size = 50,
+    weight = 5 * kg,
     subgroup = "rabbasca-processes",
     order = "v[vault]-d[harene-ears-subcore]",
     auto_recycle = false,
@@ -117,6 +101,7 @@ util.merge {
   {
     name = "ears-subcore-reactor-equipment",
     place_as_equipment_result = "ears-subcore-reactor-equipment",
+    weight = 100 * kg,
   }
 },
 {
@@ -301,17 +286,6 @@ util.merge { data.raw["tool"]["automation-science-pack"], {
   order = "j-r[rabbasca]",
   weight = 0.1 * kg
 }},
-{
-    type = "item",
-    name = "haronite-brick",
-    icons = { { icon = "__base__/graphics/icons/stone-brick.png", tint = {r=0.65, g=0.31, b=0.92} } },
-    stack_size = 50,
-    weight = 100 * kg,
-    spoil_ticks = 90 * second,
-    spoil_result = "stone-brick",
-    subgroup = "rabbasca-processes",
-    order = "h[haronite]-x[haronite-brick]",
-},
 util.merge{
   data.raw["item"]["concrete"],
   {
@@ -325,23 +299,6 @@ util.merge{
     },
     order = "b[concrete]-f[energetic-concrete]",
   }
-},
-{
-    type = "ammo",
-    name = "self-replicating-firearm-magazine",
-    category = data.raw["ammo"]["firearm-magazine"].category,
-    icons = {
-      { icon = "__base__/graphics/icons/firearm-magazine.png", tint = { r = 0.95, g = 1, b = 1 }, shift = { -8, -8 } },
-      { icon = "__base__/graphics/icons/firearm-magazine.png", tint = { r = 0.95, g = 1, b = 1 }, shift = { 0,   0 } },
-      { icon = "__base__/graphics/icons/firearm-magazine.png", tint = { r = 0.95, g = 1, b = 1 }, shift = { 8,   8 } } 
-    },
-    stack_size = 10,
-    weight = 25 * kg,
-    ammo_type = table.deepcopy(data.raw["ammo"]["firearm-magazine"].ammo_type),
-    ammo_category = "bullet",
-    magazine_size = 500,
-    spoil_ticks = 20 * second,
-    spoil_result = "self-replicating-firearm-magazine"
 },
 {
     type = "ammo",

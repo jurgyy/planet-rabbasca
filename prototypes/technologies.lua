@@ -22,7 +22,7 @@ data:extend {
     name = "planet-discovery-rabbasca",
     icons = PlanetsLib.technology_icon_moon("__planet-rabbasca__/graphics/icons/vulcanus-bw.png", 64),
     icon_size = 64,
-    prerequisites = { "planet-discovery-gleba", "gun-turret" },
+    prerequisites = { "planet-discovery-gleba", "gun-turret", "modular-armor" },
     effects = {{
         type = "unlock-space-location",
         space_location = "rabbasca",
@@ -47,10 +47,6 @@ data:extend {
     prerequisites = { "planet-discovery-rabbasca" },
     effects =
     {
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-turbofin"
-      },
       {
         type = "unlock-recipe",
         recipe = "protein-powder"
@@ -78,7 +74,7 @@ data:extend {
     research_trigger =
     {
         type = "craft-item",
-        item = "bunnyhop-engine"
+        item = "bunnyhop-engine-equipment"
     }
 },
 {
@@ -136,6 +132,10 @@ data:extend {
         type = "unlock-recipe",
         recipe = "vault-protocol-catalysts"
       },
+      {
+        type = "unlock-recipe",
+        recipe = "vault-protocol-water",
+      },
     },
     research_trigger =
     {
@@ -180,10 +180,6 @@ data:extend {
       },
       {
         type = "unlock-recipe",
-        recipe = "vision-circuit",
-      },
-      {
-        type = "unlock-recipe",
         recipe = "rabbasca-protein-shake",
       },
     },
@@ -195,7 +191,7 @@ data:extend {
 },
 {
     type = "technology",
-    name = "rabbasca-vault-core-extraction",
+    name = "rabbasca-ears-subcore-technology",
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
     prerequisites = { "machining-assembler" },
@@ -276,11 +272,15 @@ data:extend {
         type = "unlock-recipe",
         recipe = "rabbasca-energetic-concrete"
       },
+      {
+        type = "unlock-recipe",
+        recipe = "machining-assembler"
+      },
     },
     research_trigger =
     {
       type = "craft-item",
-      item = "vision-circuit"
+      item = "harenic-stabilizer"
     }
 },
 {
@@ -316,7 +316,7 @@ data:extend {
   name = "bunnyhop-engine-1",
   icon = "__base__/graphics/technology/engine.png",
   icon_size = 256,
-  prerequisites = { "rabbasca-vault-core-extraction", "chemical-science-pack", "modular-armor", "quality-module" },
+  prerequisites = { "rabbasca-ears-subcore-technology", "chemical-science-pack", "modular-armor" },
   effects =
   {
     {
@@ -409,30 +409,6 @@ data:extend {
       {"athletic-science-pack", 1},
     }
   }
-},
-{
-    type = "technology",
-    name = "self-replicating-firearm-magazine",
-    icon = "__base__/graphics/technology/military.png",
-    icon_size = 256,
-    prerequisites = { "rabbasca-ears-technology-1", "military-3" },
-    effects =
-    {
-      {
-        type = "unlock-recipe",
-        recipe = "self-replicating-firearm-magazine",
-      },
-    },
-    unit = {
-      time = 30,
-      count = 200,
-      ingredients = {
-        {"automation-science-pack", 1},
-        {"logistic-science-pack", 1},
-        {"military-science-pack", 1},
-        {"space-science-pack", 1}
-      }
-    }
 },
 {
     type = "technology",
@@ -555,7 +531,7 @@ data:extend {
   {
   },
   level = 2,
-  localised_description = { "technology-description.harene-ears-technology-labs" },
+  localised_description = { "technology-description.rabbasca-ears-technology-labs" },
   unit = {
     count = 600,
     time = 60,
@@ -580,7 +556,7 @@ data:extend {
   {
   },
   level = 3,
-  localised_description = { "technology-description.harene-ears-technology-silos" },
+  localised_description = { "technology-description.rabbasca-ears-technology-silos" },
   unit = {
     count = 1200,
     time = 60,

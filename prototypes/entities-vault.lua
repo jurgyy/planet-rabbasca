@@ -34,6 +34,7 @@ local spawner = util.merge{
   selection_priority = 30,
   order = "r[rabbasca]-a"
 }}
+spawner.autoplace = nil -- override so this wont spawn on nauvis
 spawner.spawn_decoration = {}
 spawner.damaged_trigger_effect = nil
 spawner.absorptions_per_second = { }
@@ -44,15 +45,6 @@ spawner.created_effect = {
     type = "delayed",
     delayed_trigger = "rabbasca-calculate-evolution"
   }
-}
-spawner.dying_trigger_effect = {
-  {
-    type = "create-entity",
-    as_enemy = true,
-    entity_name = "rabbasca-vault-console",
-    ignore_no_enemies_mode = true,
-    protected = true,
-  },
 }
 spawner.resistances = {
   { type = "physical", percent = 95 },
@@ -175,7 +167,8 @@ local vault_crafter = {
   crafting_speed = 1,
   energy_usage = "1MW",
   allow_copy_paste = true,
-  module_slots = 1,
+  module_slots = 2,
+  disabled_when_recipe_not_researched = true,
   autoplace = { probability_expression = "rabbasca_camps > 0.9", force = "neutral" },
   flags = { "placeable-player", "not-deconstructable", "not-repairable", "not-rotatable", "player-creation" },
   allowed_effects = { "speed", "consumption", "pollution" },
@@ -187,6 +180,10 @@ local vault_crafter = {
     fuel_inventory_size = 1
   },
   crafting_categories = { "rabbasca-vault-extraction" },
+  circuit_wire_max_distance = 32,
+  circuit_connector = data.raw["assembling-machine"]["foundry"].circuit_connector,
+  icon_draw_specification = data.raw["assembling-machine"]["foundry"].icon_draw_specification,
+  icons_positioning = data.raw["assembling-machine"]["foundry"].icons_positioning,
   graphics_set = {
     animation = {
         filename = "__Krastorio2Assets__/buildings/stabilizer-charging-station/stabilizer-charging-station.png",
@@ -218,7 +215,6 @@ local vault_crafter = {
           type = "create-entity",
           entity_name = "rabbasca-vault-spawner",
           offsets = {{2, 2.2}},
-          as_enemy = true
         },
       }
     } 

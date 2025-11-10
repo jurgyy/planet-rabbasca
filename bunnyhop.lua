@@ -25,7 +25,7 @@ end
 
 function M.can_jump_to(planet)
   if not game.planets[planet] or not game.forces.player.is_space_location_unlocked(planet) then return false end
-  local requirements = bunnyhop_requirements[planet] or default_requirements()
+  local requirements = bunnyhop_requirements[planet] or default_requirements(planet)
   local techs = game.forces.player.technologies
   for _, req in pairs(requirements) do 
     if req == "bunnyhop-never" then return false end

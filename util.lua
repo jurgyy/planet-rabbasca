@@ -169,23 +169,24 @@ function output.make_complex_machinery(proto, require_assembling_machine_craftab
 end
 
 function output.rabbasca_set_vault_active(e, active)
-  if e.name ~= "rabbasca-vault-crafter" then return end
+  if (not e) or e.name ~= "rabbasca-vault-crafter" then return end
   e.active = active
   if active then
     e.force = game.forces.player
   else
-    e.force = game.forces.enemy
+    e.force = game.forces.rabbascans
   end
 end
 
 function output.hack_vault(surface, position)
   local active_vaults_count = #surface.find_entities_filtered { name = "rabbasca-vault-console", force = game.forces.player }
   local new_evo = math.min(1, active_vaults_count * 0.025)
-  game.forces.enemy.set_evolution_factor(new_evo, surface)
+  game.forces.rabbascans.set_evolution_factor(new_evo, surface)
+  game.forces.enemy.set_evolution_factor(new_evo, surface) -- make sure factoriopedia evolution ui shows correct value
   if not position then return end
   local new_evo_text = "Rabbasca alertness now at: [color=yellow]%.1f%%[/color]"
   for _, player in pairs(game.players) do
-    player.create_local_flying_text { text = string.format(new_evo_text, game.forces.enemy.get_evolution_factor(surface) * 100), surface = surface, position = position }
+    player.create_local_flying_text { text = string.format(new_evo_text, game.forces.rabbascans.get_evolution_factor(surface) * 100), surface = surface, position = position }
   end
 end
 
