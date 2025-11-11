@@ -6,12 +6,12 @@
     "factorio_version": "2.0",
     "author": "PizzaPlanner",    
     "dependencies": [
+        "base >= 2.0.69",
         "space-age", 
         "PlanetsLib", 
         "Krastorio2Assets", 
         "(?) any-planet-start",
         "(?) planet-muluna",
-        "(?) se-space-trains >= 1.0.6",
-        "(?) SpidertronPatrols"
+        "(?) se-space-trains >= 1.0.6"
     ]
 }

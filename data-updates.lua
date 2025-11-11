@@ -17,5 +17,4 @@ require("scripts.not-on-my-lawn")
 require("scripts.machine-assembly")
 require("scripts.create-ears-variants")
 
-require("compatibility.se-space-trains")
 require("scripts.vanilla-changes")

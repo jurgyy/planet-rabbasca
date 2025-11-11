@@ -94,7 +94,16 @@ data:extend {
     group = "combat",
     subgroup = "equipment",
     order = "r[personal-transport]-b[bunnyhop-engine]",
-    place_as_equipment_result = "bunnyhop-engine-equipment"
+    place_as_equipment_result = "bunnyhop-engine-equipment",
+    custom_tooltip_fields = {
+      {
+        name = {"tooltip.bunnyhop-engine-weight-multiplier"},
+        value = {"tooltip-value.bunnyhop-engine-weight-multiplier", "100"},
+        -- show_in_tooltip = false,
+        quality_header = "quality-tooltip.increases",
+        quality_values = { },
+      }
+    }
 },
 util.merge {
   data.raw["item"]["fusion-reactor-equipment"],
@@ -188,36 +197,6 @@ util.merge { data.raw["item"]["rocket-fuel"],
     order = "a[raw-resource]-a[carotenoid]",
     fuel_category = "carotene",
     fuel_value = "720kJ"
-},
-{
-    type = "item",
-    icon = "__space-age__/graphics/icons/foundation.png",
-    name = "harene-infused-foundation",
-    stack_size = 20,
-    subgroup = "rabbasca-processes",
-    order = "z[tbd]",
-    place_as_tile =
-    {
-      result = "harene-infused-foundation",
-      condition_size = 1,
-      condition = {layers={water_tile=true, ground_tile = true}},
-      invert = true,
-    }
-},
-{
-    type = "item",
-    icon = "__space-age__/graphics/icons/space-platform-foundation.png",
-    name = "harene-infused-space-platform",
-    stack_size = 50,
-    subgroup = "rabbasca-processes",
-    order = "z[tbd]",
-    place_as_tile =
-    {
-      result = "harene-infused-space-platform",
-      condition_size = 1,
-      condition = {layers={empty_space=true}},
-      invert = true,
-    }
 },
 {
     type = "item",

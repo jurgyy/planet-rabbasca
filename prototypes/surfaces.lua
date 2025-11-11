@@ -1,6 +1,6 @@
 local planet_lib = require("__PlanetsLib__.lib.planet")
-local parent_planet = "gleba"
-local gleba = data.raw["planet"][parent_planet]
+local parent_name = settings.startup["rabbasca-orbits"].value
+local gleba = data.raw["planet"][parent_name]
 local tau = 2*math.pi
 local planet_catalogue_aquilo = require("__space-age__.prototypes.planet.procession-catalogue-aquilo")
 
@@ -173,7 +173,7 @@ PlanetsLib:extend({
     subgroup = "satellites",
     magnitude = gleba.magnitude*3/5,
     persistent_ambient_sounds=data.raw["space-platform-hub"]["space-platform-hub"].persistent_ambient_sounds,
-    localised_description={"planetslib-templates.moon-description",{"space-location-description.rabbasca"},"[planet="..parent_planet.."]"},
+    localised_description={"planetslib-templates.moon-description",{"space-location-description.rabbasca"},"[planet="..gleba.name.."]"},
     -- robot energy usage = gravity/pressure*100, gravity > 0.1 (allow chests), robots should be expensive and limited by energy field
     surface_properties = {
         ["gravity"] = 0.8,
@@ -198,7 +198,7 @@ PlanetsLib:extend({
       distance = 2.1,
       parent = {
         type = "planet",
-        name = parent_planet,
+        name = gleba.name,
       },
       sprite = {
         type = "sprite",
@@ -224,9 +224,9 @@ PlanetsLib:extend({
 data:extend{
 {
   type = "space-connection",
-  name = "gleba-rabbasca",
+  name = gleba.name.."-rabbasca",
   order = "a-b-c",
-  from = "gleba",
+  from = gleba.name,
   to = "rabbasca",
   subgroup = data.raw["space-connection"]["gleba-fulgora"].subgroup,
   length = 1000,

@@ -4,9 +4,9 @@ data:extend {
   name = "bunnyhop-engine-equipment",
   sprite =
   {
-    filename = "__base__/graphics/equipment/exoskeleton-equipment.png",
+    filename = "__base__/graphics/technology/engine.png",
     flags = { "icon" },
-    size = 128,
+    size = 256,
     priority = "extra-high-no-scale",
     scale = 0.5
   },
@@ -32,8 +32,7 @@ data:extend {
   sprite =
   {
     filename = "__space-age__/graphics/equipment/fusion-reactor-equipment.png",
-    width = 128,
-    height = 128,
+    size = 512,
     priority = "medium",
     scale = 0.5
   },

@@ -8,6 +8,7 @@ return {
 end
 
 local function bunnyhop_weight(value)
+if settings.startup["rabbasca-bunnyhop-force-naked"].value then return nil end
 return {
   type = "nothing",
   icon = "__base__/graphics/technology/engine.png",
@@ -284,34 +285,6 @@ data:extend {
     }
 },
 {
-    type = "technology",
-    name = "harene-infused-foundations",
-    icon = "__space-age__/graphics/technology/foundation.png",
-    icon_size = 256,
-    prerequisites = { "foundation", "harene-synthesis" },
-    unit = {
-        count = 2000,
-        time = 60,
-        ingredients = {
-            {"automation-science-pack", 1},
-            {"logistic-science-pack", 1},
-            {"chemical-science-pack", 1},
-            {"space-science-pack", 1},
-        }
-    },
-    effects =
-    {
-    {
-        type = "unlock-recipe",
-        recipe = "harene-infused-foundation"
-    },
-      {
-        type = "unlock-recipe",
-        recipe = "harene-infused-space-platform"
-      },
-    },
-},
-{
   type = "technology",
   name = "bunnyhop-engine-1",
   icon = "__base__/graphics/technology/engine.png",
@@ -385,32 +358,6 @@ data:extend {
   }
 },
 {
-  type = "technology",
-  name = "bunnyhop-engine-4",
-  icon = "__base__/graphics/technology/engine.png",
-  icon_size = 256,
-  prerequisites = { "bunnyhop-engine-3", "utility-science-pack", "production-science-pack" },
-  level = 4,
-  max_level = "infinite",
-  effects = {
-    bunnyhop_range(5000),
-    bunnyhop_weight(250)
-  },
-  unit = {
-    time = 60,
-    count_formula = "1000+300*2^(L-3)",
-    ingredients = {
-      {"automation-science-pack", 1},
-      {"logistic-science-pack", 1},
-      {"chemical-science-pack", 1},
-      {"space-science-pack", 1},
-      {"production-science-pack", 1},
-      {"utility-science-pack", 1},
-      {"athletic-science-pack", 1},
-    }
-  }
-},
-{
     type = "technology",
     name = "rabbasca-turbofish-breeding",
     icon = "__space-age__/graphics/technology/fish-breeding.png",
@@ -472,14 +419,14 @@ data:extend {
   prerequisites = { "rabbasca-ears-technology-1", "construction-robotics", "utility-science-pack", "space-science-pack" },
   effects =
   {
-    {
-      type = "unlock-recipe",
-      recipe = "rabbasca-remote-builder",
-    },
-    {
-      type = "unlock-recipe",
-      recipe = "rabbasca-remote-receiver",
-    },
+    -- {
+    --   type = "unlock-recipe",
+    --   recipe = "rabbasca-remote-builder",
+    -- },
+    -- {
+    --   type = "unlock-recipe",
+    --   recipe = "rabbasca-remote-receiver",
+    -- },
   },
   unit = {
     count = 1000,
@@ -568,3 +515,34 @@ data:extend {
   }
 },
 }
+
+if settings.startup["rabbasca-cap-bunnyhop-research"].value == false then
+data:extend{
+{
+  type = "technology",
+  name = "bunnyhop-engine-4",
+  icon = "__base__/graphics/technology/engine.png",
+  icon_size = 256,
+  prerequisites = { "bunnyhop-engine-3", "utility-science-pack", "production-science-pack" },
+  level = 4,
+  max_level = "infinite",
+  effects = {
+    bunnyhop_range(5000),
+    bunnyhop_weight(250)
+  },
+  unit = {
+    time = 60,
+    count_formula = "1000+300*2^(L-3)",
+    ingredients = {
+      {"automation-science-pack", 1},
+      {"logistic-science-pack", 1},
+      {"chemical-science-pack", 1},
+      {"space-science-pack", 1},
+      {"production-science-pack", 1},
+      {"utility-science-pack", 1},
+      {"athletic-science-pack", 1},
+    }
+  }
+},
+}
+end

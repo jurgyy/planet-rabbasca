@@ -82,8 +82,8 @@ assembler.graphics_set = {
       fadeout = true, 
       layers = {
         -- TODO: only partially working
-        animation = util.sprite_load("__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-color", sprite_data),
         animation = util.sprite_load("__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-emission", util.merge { sprite_data, { draw_as_glow = true, blend_mode = "additive" }}),
+        animation = util.sprite_load("__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-color", sprite_data),
       }
     },
   },

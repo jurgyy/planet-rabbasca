@@ -31,7 +31,6 @@ local spawner = util.merge{
   spawning_radius = 12,
   collision_box = {{-0.7, -0.7},{0.7, 0.9}},
   selection_box = {{-0.8, -0.8},{0.8, 1.0}},
-  selection_priority = 30,
   order = "r[rabbasca]-a"
 }}
 spawner.autoplace = nil -- override so this wont spawn on nauvis
@@ -118,7 +117,8 @@ local access_console = util.merge{
     ignore_output_full = true,
     is_military_target = true,
     no_ears_upgrade = true,
-    hidden_in_factoriopedia = true
+    hidden_in_factoriopedia = true,
+    cant_insert_at_source_message_key = "inventory-restriction.not-a-vault-key",
   }
 }
 access_console.flags = { "placeable-player", "not-deconstructable", "not-repairable",  "not-rotatable", "player-creation", "placeable-off-grid" }

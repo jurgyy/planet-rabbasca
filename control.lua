@@ -26,7 +26,7 @@ local function handle_script_events(event)
       for _, eq in pairs(armor.grid.equipment) do
         if eq.name == "bunnyhop-engine-equipment" then
           player.create_local_flying_text { text = "Initiating bunnyhop...", create_at_cursor = true }
-          bunnyhop.show_bunnyhop_ui(player, eq, 1000)
+          bunnyhop.show_bunnyhop_ui(player, eq)
           return
         end
       end

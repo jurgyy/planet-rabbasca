@@ -41,7 +41,7 @@ function M.get_connections(from, max_range)
   for _, conn in pairs(prototypes.space_connection) do
     if conn.length <= max_range and (conn.from.name == from or conn.to.name == from) then
       local target = (conn.from.name == from) and conn.to.name or conn.from.name
-      if M.can_jump_to(target) then
+      if M.can_jump_to(target) and (from == "rabbasca" or not settings.startup["rabbasca-bunnyhop-rabbasca-only"].value) then
         display = {"", "[img=space-location/" .. target .. "] ", game.planets[target].prototype.localised_name or target}
         table.insert(surfaces, display)
       end
@@ -76,6 +76,9 @@ local function get_max_range_and_weight(force)
       end
     end
   end 
+  if settings.startup["rabbasca-bunnyhop-force-naked"].value then
+    weight = 0
+  end
   return range, weight
 end
 
@@ -83,6 +86,10 @@ local function get_character_weight_label(character, max_weight)
   local weight = 0
   for _, inventory in pairs({defines.inventory.character_main, defines.inventory.character_ammo, defines.inventory.character_trash}) do
     weight = weight + (character.get_inventory(inventory).weight or 0)
+  end
+  local cursor = character.player.cursor_stack
+  if cursor.valid_for_read then
+    weight = weight + (cursor.prototype.weight or 0) * cursor.count
   end
   weight = weight / 1000
 
@@ -152,6 +159,7 @@ end
 
 function M.show_bunnyhop_ui(player, equipment)
     local max_range, max_weight = get_max_range_and_weight(player.force)
+    max_weight = max_weight * (equipment.quality.default_multiplier or 1)
     local surface = player.surface
     local reachable_surfaces = M.get_connections(surface.name, max_range)
 

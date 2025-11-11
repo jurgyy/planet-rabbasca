@@ -306,7 +306,7 @@ data:extend {
         enabled = false,
         energy_required = 4,
         ingredients = { 
-            {type = "item", name = "harene-ears-subcore", amount = 20 },
+            {type = "item", name = "harene-ears-subcore", amount = 10 },
         },
         results = { {type = "item", name = "harene-ears-core", amount = 1 } },
         main_product = "harene-ears-core",
@@ -427,38 +427,6 @@ data:extend {
             { type = "item", name = "concrete", amount = 10 },
             { type = "fluid", name = "energetic-residue", amount = 20 },
         },
-    },
-    {
-        type = "recipe",
-        name = "harene-infused-foundation",
-        energy_required = 20,
-        enabled = false,
-        ingredients = { 
-            -- {type = "item", name = "harene-glob-core", amount = 1 },
-            {type = "item", name = "infused-haronite-plate", amount = 4 },
-            {type = "item", name = "foundation", amount = 1 },
-        },
-        results = { 
-            { type = "item", name = "harene-infused-foundation", amount = 1 },
-        },
-        main_product = "harene-infused-foundation",
-        category = "crafting",
-    },
-    {
-        type = "recipe",
-        name = "harene-infused-space-platform",
-        enabled = false,
-        energy_required = 20,
-        ingredients = { 
-            -- {type = "item", name = "harene-glob-core", amount = 1 },
-            {type = "item", name = "infused-haronite-plate", amount = 4 },
-            {type = "item", name = "space-platform-foundation", amount = 1 },
-        },
-        results = { 
-            { type = "item", name = "harene-infused-space-platform", amount = 1 },
-        },
-        main_product = "harene-infused-space-platform",
-        category = "crafting-with-fluid",
     },
 }
 
