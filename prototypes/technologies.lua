@@ -414,31 +414,23 @@ data:extend {
 {
   type = "technology",
   name = "interplanetary-construction",
-  icon = "__base__/graphics/technology/radar.png",
-  icon_size = 256,
-  prerequisites = { "rabbasca-ears-technology-1", "construction-robotics", "utility-science-pack", "space-science-pack" },
+  icon = "__planet-rabbasca__/graphics/conduit/conduit-icon-big.png",
+  icon_size = 1024,
+  prerequisites = { "rabbasca-ears-technology-1", "rabbasca-document-forging" },
   effects =
   {
-    -- {
-    --   type = "unlock-recipe",
-    --   recipe = "rabbasca-remote-builder",
-    -- },
-    -- {
-    --   type = "unlock-recipe",
-    --   recipe = "rabbasca-remote-receiver",
-    -- },
+    {
+      type = "unlock-recipe",
+      recipe = "rabbasca-remote-builder",
+    },
+    {
+      type = "unlock-recipe",
+      recipe = "rabbasca-remote-receiver",
+    },
   },
-  unit = {
-    count = 1000,
-    time = 60,
-    ingredients = {
-      {"automation-science-pack", 1},
-      {"logistic-science-pack", 1},
-      {"chemical-science-pack", 1},
-      {"space-science-pack", 1},
-      {"utility-science-pack", 1},
-      {"athletic-science-pack", 1},
-    }
+  research_trigger = {
+    type = "capture-spawner",
+    entity = "rabbasca-vault-warp-spawner"
   }
 },
 {

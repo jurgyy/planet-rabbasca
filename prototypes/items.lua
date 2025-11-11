@@ -210,6 +210,15 @@ util.merge { data.raw["item"]["rocket-fuel"],
     order = "b[organic]-d[protein-powder]",
 },
 {
+    type = "item",
+    icon = "__planet-rabbasca__/graphics/conduit/conduit-icon.png",
+    name = "rabbasca-warp-core",
+    stack_size = 5,
+    weight = 100*kg,
+    subgroup = "rabbasca-security",
+    order = "x[rabbasca-warp-core]",
+},
+{
   type = "fluid",
     name = "harene",
     icons = {
@@ -325,7 +334,7 @@ util.merge{
         },
         type = "direct"
       },
-      target_filter = { "rabbasca-vault-spawner" }
+      target_filter = { "rabbasca-vault-spawner", "rabbasca-vault-warp-spawner" }
     },
     ammo_category = "bullet",
     shoot_protected = true,

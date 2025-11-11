@@ -146,35 +146,36 @@ data:extend {
         enabled = false,
         energy_required = 5,
         ingredients = { 
-            {type = "item", name = "harene-ears-core", amount = 1 },
+            {type = "item", name = "harene-ears-subcore", amount = 1 },
             {type = "item", name = "processing-unit",  amount = 20 },
             {type = "item", name = "iron-gear-wheel",   amount = 30 },
             {type = "item", name = "tungsten-plate",   amount = 2 },
-            {type = "item", name = "radar",   amount = 1 },
+            {type = "item", name = "rabbasca-warp-core",   amount = 1 },
         },
         results = { 
             { type = "item", name = "rabbasca-remote-receiver", amount = 1 },
         },
         surface_conditions = {{property = "harenic-energy-signatures", min = 20}},
         main_product = "rabbasca-remote-receiver",
-        category = "crafting"
+        category = "complex-machinery"
     },
         {
         type = "recipe",
         name = "rabbasca-remote-builder",
         enabled = false,
         energy_required = 5,
-        ingredients = { 
-            {type = "item", name = "processing-unit",  amount = 20 },
-            {type = "item", name = "iron-gear-wheel",   amount = 30 },
-            {type = "item", name = "superconductor",   amount = 5 },
+        ingredients = {
+            {type = "item", name = "harene-ears-core",           amount = 1 }, 
+            {type = "item", name = "bunnyhop-engine-equipment",  amount = 1 },
+            {type = "item", name = "rabbasca-warp-core",         amount = 10 },
+            {type = "item", name = "superconductor",             amount = 30 },
         },
         results = { 
             { type = "item", name = "rabbasca-remote-builder", amount = 1 },
         },
         surface_conditions = {{property = "harenic-energy-signatures", min = 20}},
         main_product = "rabbasca-remote-builder",
-        category = "crafting"
+        category = "complex-machinery"
     },
     {
         type = "recipe",
@@ -311,7 +312,6 @@ data:extend {
         results = { {type = "item", name = "harene-ears-core", amount = 1 } },
         main_product = "harene-ears-core",
         category = "crafting",
-
     },
     {
         type = "recipe",
@@ -328,7 +328,7 @@ data:extend {
         },
         results = { { type = "fluid", name = "lubricant", amount = 10 } },
         main_product = "lubricant",
-        category = "crafting-with-fluid",
+        category = "chemistry",
         subgroup = "rabbasca-matter-printer",
         order = "r[alternate-uses]"
 
@@ -440,3 +440,20 @@ rocket_part.ingredients = {
 }
 data:extend { rocket_part }
 PlanetsLib.assign_rocket_part_recipe("rabbasca", "rocket-part-from-turbofuel")
+
+data:extend {
+{
+    type = "recipe-category",
+    name = "rabbasca-remote",
+},
+{
+    type = "recipe",
+    name = "rabbasca-remote-call",
+    enabled = true,
+    energy_required = 5,
+    ingredients = { },
+    results = { {type = "item", name = "spoilage", amount = 1 } },
+    main_product = "spoilage",    
+    category = "rabbasca-remote",
+},
+}

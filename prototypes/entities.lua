@@ -96,23 +96,9 @@ assembler.graphics_set = {
 data:extend {
   assembler,
   {
-    type = "roboport",
-    name = "rabbasca-orbital-construction-roboport",
-    energy_source = { type = "void" },
-    energy_usage = "0kW",
-    charging_energy = "0kW",
-    recharge_minimum = "0kJ",
-    robot_slots_count = 0,
-    material_slots_count = 0,
-    logistics_radius = 0,
-    construction_radius = 64,
-    request_to_open_door_timeout = 0,
-    charge_approach_distance = 0,
-    spawn_and_station_height = 0,
-  },
-  {
     type = "container",
     name = "rabbasca-remote-builder",
+    flags = { "not-rotatable", "placeable-player", "player-creation" },
     minable = { result = "rabbasca-remote-builder", mining_time = 4 },
     placeable_by = { item = "rabbasca-remote-builder", count = 1 },
     inventory_type = "with_filters_and_bar",
@@ -121,32 +107,74 @@ data:extend {
       { property = "harenic-energy-signatures", min = 20 }
     },
     collision_box = {{-2.4, -2.4}, {2.4, 2.4}},
-    selection_box = {{-2.5, -2.5}, {2.5, 2.5}}
+    selection_box = {{-2.5, -2.5}, {2.5, 2.5}},
+    graphics_set = {
+    }
   },
   {
-    type = "simple-entity-with-owner",
+    type = "assembling-machine",
     name = "rabbasca-remote-receiver",
+    fixed_recipe = "rabbasca-remote-call",
+    flags = { "not-rotatable", "placeable-player", "player-creation" },
+    crafting_categories = { "rabbasca-remote" },
     minable = { result = "rabbasca-remote-receiver", mining_time = 1 },
     placeable_by = { item = "rabbasca-remote-receiver", count = 1 },
     surface_conditions = {
       { property = "gravity", min = 0.01 }
     },
-    collision_box = {{-0.4, -0.4}, {0.4, 0.4}},
-    selection_box = {{-0.5, -0.5}, {0.5, 0.5}},
-    tile_buildability_rules = { rutil.restrict_to_harene_pool({{-0.4, -0.4}, {0.4, 0.4}}) },
+    energy_usage = "1MW",
+    crafting_speed = 1,
+    energy_source = { type = "void" },
+    collision_box = {{-0.8, -0.8}, {0.8, 0.8}},
+    selection_box = {{-1, -1}, {1, 1}},
+    tile_buildability_rules = { rutil.restrict_to_harene_pool({{-0.8, -0.8}, {0.8, 0.8}}) },
     radius_visualisation_specification = {
       sprite = data.raw["utility-sprites"]["default"].construction_radius_visualization,
       distance = 75,
-    } 
+    },
+    graphics_set = {
+      working_visualisations = {{
+        animation = {
+              filename = "__planet-rabbasca__/graphics/conduit/conduit-emission.png",
+              frame_count = 60,
+              line_length = 10,
+              width = 200,
+              height = 290,
+              draw_as_glow = true,
+              blend_mode = "additive-soft",
+              scale = 1.0/3,
+              shift = {0, -0.5},
+              apply_runtime_tint = true
+        },
+        apply_recipe_tint = "primary"
+      }},
+      default_recipe_tint = { primary = {0.5, 0.75, 1} },
+      idle_animation = {
+        layers = {
+          {
+            filename = "__planet-rabbasca__/graphics/conduit/conduit-animation.png",
+            frame_count = 60,
+            line_length = 10,
+            width = 200,
+            height = 290,
+            scale = 1.0/3,
+            flags = {"no-scale"},
+            shift = {0, -0.5},
+          },
+          {
+              filename = "__planet-rabbasca__/graphics/conduit/conduit-hr-shadow.png",
+              repeat_count = 60,
+              width = 600,
+              height = 400,
+              scale = 1.0/3,
+              draw_as_shadow = true,
+              shift = {0, -0.5},
+          },
+        }
+      },
+      always_draw_idle_animation = true
+      },
   },
-  -- {
-  --   type = "proxy-container",
-  --   name = "orbital-construction-deployer",
-  --   minable = { result = "orbital-construction-deployer", mining_time = 1 },
-  --   surface_conditions = { 
-  --     { property = "gravity", max = 0 }
-  --   }
-  -- },
   {
     type = "electric-energy-interface",
     name = "rabbasca-energy-source",
