@@ -16,5 +16,3 @@ end
 require("scripts.not-on-my-lawn")
 require("scripts.machine-assembly")
 require("scripts.create-ears-variants")
-
-require("scripts.vanilla-changes")

@@ -15,3 +15,5 @@ end
 for _, thing in pairs(data.raw["accumulator"]) do 
   rutil.not_on_harenic_surface(thing)
 end
+
+rutil.not_on_harenic_surface(data.raw["recipe"]["rocket-part"])

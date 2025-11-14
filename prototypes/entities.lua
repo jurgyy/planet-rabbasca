@@ -1,5 +1,5 @@
+require ("__base__.prototypes.entity.assemblerpipes")
 local rutil = require("__planet-rabbasca__.util")
-local color = {r=0.65, g=0.31, b=0.92}
 
 function harene_energy_source (volume)
 return { 
@@ -42,7 +42,8 @@ assembler.crafting_categories = { "complex-machinery", "install-ears-core" }
 assembler.fluid_boxes = { 
 {
   volume = 1000,
-  pipe_covers = assembler.fluid_boxes.pipe_covers,
+  pipe_picture = util.merge { assembler2pipepictures(), { north = { shift = util.by_pixel(2.25, 33.5), } } },
+  pipe_covers = pipecoverspictures(),
   production_type = "input",
   pipe_connections = 
   {
@@ -74,25 +75,25 @@ local sprite_data = {
 }
 
 assembler.graphics_set = {
-  frozen_patch = util.merge {{ filename = "__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-frozen.png" }, sprite_data },
+  frozen_patch = util.merge {{ filename = "__planet-rabbasca__/graphics/by-hurricane/gravity-assembler-frozen.png" }, sprite_data },
   working_visualisations = {
     {
       fadeout = true, 
       animation = util.merge { sprite_data, 
-      { filename = "__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-emission1.png", draw_as_glow = true, blend_mode = "additive" }},
+      { filename = "__planet-rabbasca__/graphics/by-hurricane/gravity-assembler-emission1.png", draw_as_glow = true, blend_mode = "additive" }},
     },
     {
       fadeout = true, 
       animation = util.merge { sprite_data, 
-      { filename = "__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-emission2.png", draw_as_glow = true, blend_mode = "additive" }},
+      { filename = "__planet-rabbasca__/graphics/by-hurricane/gravity-assembler-emission2.png", draw_as_glow = true, blend_mode = "additive" }},
     },
     {
       fadeout = true, 
       animation = util.merge { sprite_data, 
-      { filename = "__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-emission3.png", draw_as_glow = true, blend_mode = "additive" }},
+      { filename = "__planet-rabbasca__/graphics/by-hurricane/gravity-assembler-emission3.png", draw_as_glow = true, blend_mode = "additive" }},
     },
   },
-  idle_animation = { layers = { util.merge {{ filename = "__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-animation.png" }, sprite_data } } },
+  idle_animation = { layers = { util.merge {{ filename = "__planet-rabbasca__/graphics/by-hurricane/gravity-assembler-animation.png" }, sprite_data } } },
   always_draw_idle_animation = true
 }
 
@@ -101,7 +102,7 @@ data:extend {
   {
     type = "container",
     name = "rabbasca-remote-builder",
-    icon = "__planet-rabbasca__/graphics/research-center/research-center-icon.png",
+    icon = "__planet-rabbasca__/graphics/by-hurricane/research-center-icon.png",
     flags = { "not-rotatable", "placeable-player", "player-creation" },
     minable = { result = "rabbasca-remote-builder", mining_time = 4 },
     placeable_by = { item = "rabbasca-remote-builder", count = 1 },
@@ -118,7 +119,7 @@ data:extend {
   {
     type = "assembling-machine",
     name = "rabbasca-remote-receiver",
-    icon = "__planet-rabbasca__/graphics/conduit/conduit-icon.png",
+    icon = "__planet-rabbasca__/graphics/by-hurricane/conduit-icon.png",
     fixed_recipe = "rabbasca-remote-call",
     flags = { "not-rotatable", "placeable-player", "player-creation" },
     crafting_categories = { "rabbasca-remote" },
@@ -140,7 +141,7 @@ data:extend {
     graphics_set = {
       working_visualisations = {{
         animation = {
-              filename = "__planet-rabbasca__/graphics/conduit/conduit-emission.png",
+              filename = "__planet-rabbasca__/graphics/by-hurricane/conduit-emission.png",
               frame_count = 60,
               line_length = 10,
               width = 200,
@@ -157,7 +158,7 @@ data:extend {
       idle_animation = {
         layers = {
           {
-            filename = "__planet-rabbasca__/graphics/conduit/conduit-animation.png",
+            filename = "__planet-rabbasca__/graphics/by-hurricane/conduit-animation.png",
             frame_count = 60,
             line_length = 10,
             width = 200,
@@ -167,7 +168,7 @@ data:extend {
             shift = {0, -0.5},
           },
           {
-              filename = "__planet-rabbasca__/graphics/conduit/conduit-hr-shadow.png",
+              filename = "__planet-rabbasca__/graphics/by-hurricane/conduit-hr-shadow.png",
               repeat_count = 60,
               width = 600,
               height = 400,
@@ -183,7 +184,7 @@ data:extend {
   {
     type = "electric-energy-interface",
     name = "rabbasca-energy-source",
-    icon = "__planet-rabbasca__/graphics/icons/vulcanus-bw.png",
+    icon = "__planet-rabbasca__/graphics/recolor/icons/vulcanus-bw.png",
     energy_production = "50MW",
 
     energy_source = { 
@@ -221,7 +222,7 @@ data:extend {
     table.deepcopy(data.raw["fish"]["fish"]),
     {
       name = "rabbasca-turbofish",
-      icon = "__planet-rabbasca__/graphics/icons/turbofish.png",
+      icon = "__planet-rabbasca__/graphics/recolor/icons/turbofish.png",
       minable = { result = "rabbasca-turbofish" },
       autoplace = { probability_expression = "rabbasca_harene_pools - 0.5" },
       -- collision_mask = { layers = { ground_tile = true } }
