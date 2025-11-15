@@ -176,14 +176,12 @@ PlanetsLib:extend({
     asteroid_spawn_influence = 0.7,
     -- robot energy usage = gravity/pressure*100, gravity > 0.1 (allow chests), robots should be expensive and limited by energy field
     surface_properties = {
-        ["gravity"] = 0.8,
+        ["gravity"] = 1,
         ["solar-power"] = 0,
-        ["pressure"] = 10,
+        ["pressure"] = 11,
         ["day-night-cycle"] = 12 * minute,
         ["magnetic-field"] = 0.01,
         ["harenic-energy-signatures"] = 50,
-        ["oxygen"] = 1,
-        ["carbon-dioxide"] = 5,
     },
     surface_render_parameters = {
       shadow_opacity = 0.73,

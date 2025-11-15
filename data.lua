@@ -11,6 +11,7 @@ require("prototypes.technologies")
 require("prototypes.equipment")
 require("prototypes.trains")
 require("prototypes.tips-and-tricks")
+require ("prototypes.remote")
 if mods["any-planet-start"] then
     APS.add_planet{
         name = "rabbasca" , 

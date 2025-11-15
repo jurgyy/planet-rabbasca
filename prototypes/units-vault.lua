@@ -162,6 +162,17 @@ local defender_heavy = util.merge {
     distance_per_frame = 0.08,
 }
 }
+defender_heavy.created_effect = {
+  type = "direct",
+  action_delivery =
+  {
+    type = "instant",
+    source_effects =
+    {
+      { type = "create-entity", entity_name = "vault-defender-2", offset_deviation = {{-5, -5}, {5, 5}}, repeat_count = 5 },
+    }
+  }
+}
 defender_heavy.run_animation = table.deepcopy(data.raw["combat-robot"]["distractor"].in_motion)
 defender_heavy.resistances = {
   { type = "physical", percent = 80, decrease = 12 },
@@ -193,6 +204,17 @@ local defender_ouchy = util.merge {
     movement_speed = 0.44,
     distance_per_frame = 0.213,
 }
+}
+defender_ouchy.created_effect = {
+  type = "direct",
+  action_delivery =
+  {
+    type = "instant",
+    source_effects =
+    {
+      { type = "create-entity", entity_name = "vault-defender-2", offset_deviation = {{-12, -12}, {12, 12}}, repeat_count = 8 },
+    }
+  }
 }
 defender_ouchy.run_animation = table.deepcopy(data.raw["combat-robot"]["destroyer"].in_motion)
 defender_ouchy.resistances = {
@@ -228,6 +250,18 @@ local defender_spawny = util.merge {
     distraction_cooldown = 20,
     min_pursue_time = 15 * second,
     max_pursue_distance = 30,
+  }
+}
+defender_spawny.created_effect = {
+  type = "direct",
+  action_delivery =
+  {
+    type = "instant",
+    source_effects =
+    {
+      { type = "create-entity", entity_name = "vault-defender-1", offset_deviation = {{-12, -12}, {12, 12}}, repeat_count = 12 },
+      { type = "create-entity", entity_name = "vault-defender-heavy", offset_deviation = {{-7, -7}, {7, 7}}, repeat_count = 3 },
+    }
   }
 }
 defender_spawny.resistances = {

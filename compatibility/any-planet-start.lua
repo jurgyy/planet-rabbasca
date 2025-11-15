@@ -6,3 +6,45 @@ utils.set_trigger("oil-processing", {
     type = "mine-entity",
     entity = "harene-vent"
 })
+utils.set_prerequisites("chemical-science-pack", { "engine", "rabbascan-vault-access" })
+utils.add_prerequisites("rabbasca-healthy-fluids", { "oil-processing" })
+utils.add_prerequisites("energetic-residue", { "oil-processing" })
+utils.add_prerequisites("advanced-oil-processing", { "oil-processing" })
+
+data:extend {
+{
+  type = "technology",
+  name = "rabbasca-vault-early-hacking-efficiency",
+  icon = "__Krastorio2Assets__/technologies/optimization-tech-card.png",
+  icon_size = 256,
+  prerequisites = { "chemical-science-pack" },
+  effects = {
+    {
+      type = "change-recipe-productivity",
+      recipe = "vault-protocol-iron-ore",
+      change = 0.25
+    },
+    {
+      type = "change-recipe-productivity",
+      recipe = "vault-protocol-copper-ore",
+      change = 0.25
+    },
+    {
+      type = "change-recipe-productivity",
+      recipe = "vault-protocol-catalysts",
+      change = 0.25
+    }
+  },
+  unit = {
+    time = 30,
+    count_formula = "200",
+    ingredients = {
+      {"automation-science-pack", 1},
+      {"logistic-science-pack", 1},
+      {"chemical-science-pack", 1},
+    }
+  }
+},
+}
+
+utils.add_prerequisites("rabbasca-vault-hacking-efficiency", { "rabbasca-vault-early-hacking-efficiency" })

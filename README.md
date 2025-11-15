@@ -19,6 +19,7 @@ They also won't evolve over time, but the vaults share an alert level. Defensive
 ![](./.web/ouch.png)
 
 ## Rewards
+Rabbasca offers a few tools that are very powerful, especially in the midgame. However, before the lategame, it is very hard to export these tools at scale, which aims to balance out the impact these tools have. 
 
 ![](./.web/rewards.png)
 
@@ -41,13 +42,13 @@ The Bunnyhop Engine allows you to travel between Moons and their planets, or eve
 ![](./.web/bunnyhop-settings.png)
 
 ### Warp your machines into place
-If you provoke the local defense protocols hard enough, they might start warping in help from somewhere else. That could become a problem, but if you could steal this technology you could use it to construct your bases by warping them in from other planets without needing to ship them first...
+If you provoke the local defense protocols hard enough, they might start warping in help from somewhere else. This requires serious effort, but if you could steal this technology you could use it to construct your bases by warping them in from other planets without needing to ship them first...
 
 ## Compatibility
 
-Rabbasca can safely be added to an existing playthrough, it does not modify existing techs, recipes, buildings, etc.
-
-It also works great as a starting planet [Any Planet Start](https://mods.factorio.com/mod/any-planet-start)
+- Rabbasca can safely be added to an existing playthrough, it does not modify existing techs, recipes, buildings, etc.
+- It also works great as a starting planet with [Any Planet Start](https://mods.factorio.com/mod/any-planet-start).
+- Large bot networks are infeasible on Rabbasca. If you need huge bot armies anyways, combine this mod with something like [Vesta](https://mods.factorio.com/mod/skewer_planet_vesta) or [Fusion Robots](https://mods.factorio.com/mod/FusionPoweredRobots).
 
 ## Credits
 This mod relies on the amazing work of other creators. Thanks for making Rabbasca possible.

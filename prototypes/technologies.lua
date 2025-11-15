@@ -23,7 +23,7 @@ data:extend {
     name = "planet-discovery-rabbasca",
     icons = PlanetsLib.technology_icon_moon("__planet-rabbasca__/graphics/recolor/technologies/rabbasca-big.png", 256),
     icon_size = 64,
-    prerequisites = { "planet-discovery-gleba", "gun-turret", "modular-armor" },
+    prerequisites = { "planet-discovery-gleba", "gun-turret", "power-armor" },
     effects = {{
         type = "unlock-space-location",
         space_location = "rabbasca",
@@ -99,12 +99,17 @@ data:extend {
       type = "change-recipe-productivity",
       recipe = "vault-protocol-catalysts",
       change = 0.25
+    },
+    {
+      type = "change-recipe-productivity",
+      recipe = "vault-protocol-haronite",
+      change = 0.1
     }
   },
   max_level = "infinite",
   unit = {
     time = 60,
-    count_formula = "250+300 * (1.5^L)",
+    count_formula = "300 * (1.5^L)",
     ingredients = {
       {"automation-science-pack", 1},
       {"logistic-science-pack", 1},
@@ -289,7 +294,7 @@ data:extend {
   name = "bunnyhop-engine-1",
   icon = "__base__/graphics/technology/engine.png",
   icon_size = 256,
-  prerequisites = { "rabbasca-ears-subcore-technology", "chemical-science-pack", "modular-armor" },
+  prerequisites = { "rabbasca-ears-subcore-technology", "power-armor" },
   effects =
   {
     {
@@ -362,7 +367,8 @@ data:extend {
     name = "rabbasca-turbofish-breeding",
     icon = "__space-age__/graphics/technology/fish-breeding.png",
     icon_size = 256,
-    prerequisites = { "leg-day-everyday", "rabbasca-healthy-fluids" },
+    -- should also depend on biochamber, but that makes tech tree unintuitive in APS
+    prerequisites = { "leg-day-everyday", "rabbasca-healthy-fluids" }, 
     effects =
     {
       {

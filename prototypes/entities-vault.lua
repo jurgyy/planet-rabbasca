@@ -62,13 +62,13 @@ spawner.result_units = {
     {evolution_factor = 0, spawn_weight = 1}, 
     {evolution_factor = 0.05, spawn_weight = 1},
     {evolution_factor = 0.1, spawn_weight = 0.3},
-    {evolution_factor = 0.3, spawn_weight = 0.2},
+    {evolution_factor = 0.3, spawn_weight = 0},
   }},
 { unit = "vault-defender-2", spawn_points = {
     {evolution_factor = 0.05, spawn_weight = 0}, 
     {evolution_factor = 0.1, spawn_weight = 0.5},
     {evolution_factor = 0.25, spawn_weight = 0.2},
-    {evolution_factor = 0.5, spawn_weight = 0},
+    {evolution_factor = 0.5, spawn_weight = 0.1},
   }},
 { unit = "vault-defender-heavy", spawn_points = {
     {evolution_factor = 0.1, spawn_weight = 0}, 

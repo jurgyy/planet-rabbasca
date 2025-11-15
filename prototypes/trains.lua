@@ -1,3 +1,5 @@
+if settings.startup["rabbasca-disable-train-extensions"].value then return end
+
 data:extend {
 util.merge {
   data.raw["item-with-entity-data"]["cargo-wagon"],
@@ -74,7 +76,7 @@ util.merge { data.raw["locomotive"]["locomotive"],
     },
   },
   unit = {
-    count = 150,
+    count = 250,
     time = 30,
     ingredients = {
       {"automation-science-pack", 1},

@@ -29,9 +29,9 @@ r.create_vault_recipe("vault-protocol-iron-ore", {
     {icon = data.raw["item"]["iron-ore"].icon, shift = {8, 8}, scale = 0.4},
   },
   results = {
-    {type = "item", name = "iron-ore", amount = 75 },
+    {type = "item", name = "iron-ore", amount = 100 },
   }, 
-  energy_required = 25,
+  energy_required = 20,
   maximum_productivity = 9,
   allow_productivity = true,
 })
@@ -41,7 +41,7 @@ r.create_vault_recipe("vault-protocol-copper-ore", {
     {icon = data.raw["item"]["copper-ore"].icon, shift = {8, 8}, scale = 0.4},
   },
   results = {
-    {type = "item", name = "copper-ore", amount = 60 },
+    {type = "item", name = "copper-ore", amount = 90 },
   }, 
   energy_required = 25,
   maximum_productivity = 9,
