@@ -21,7 +21,7 @@ util.merge { data.raw["cargo-wagon"]["cargo-wagon"],
 {
   name = "rabbasca-cargo-wagon",
   equipment_grid = "train-equipment-grid",
-  mineable = { result = "rabbasca-cargo-wagon" },
+  minable = { result = "rabbasca-cargo-wagon" },
   placeable_by = { item = "rabbasca-cargo-wagon", count = 1 },
   quality_affects_inventory_size = true,
   allow_robot_dispatch_in_automatic_mode = true,
@@ -30,7 +30,7 @@ util.merge { data.raw["locomotive"]["locomotive"],
 {
   name = "rabbasca-locomotive",
   equipment_grid = "train-equipment-grid",
-  mineable = { result = "rabbasca-locomotive" },
+  minable = { result = "rabbasca-locomotive" },
   placeable_by = { item = "rabbasca-locomotive", count = 1 },
   energy_sourcy = { type = "void" }
 }},
