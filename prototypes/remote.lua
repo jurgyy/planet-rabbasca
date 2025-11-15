@@ -1,7 +1,7 @@
 local RECEIVER_RADIUS = 21 -- Also in scripts/remote-builder.lua. Should be unified sometime.
 local rutil = require("__planet-rabbasca__.util")
 -- local recycling = require("__quality__.prototypes.recycling")
-local hatch = { cargo_unit_entity_to_spawn = "rabbasca-warp-pod", receiving_cargo_units = {}, busy_timeout_ticks = 20, hatch_opening_ticks = 120, offset = {1.2, -2.7}, }
+local hatch = { cargo_unit_entity_to_spawn = "rabbasca-warp-pod", receiving_cargo_units = {}, busy_timeout_ticks = 60, hatch_opening_ticks = 240, offset = {1.2, -2.7}, }
 
 local pad = util.merge {
     data.raw["cargo-landing-pad"]["cargo-landing-pad"],
@@ -19,9 +19,9 @@ pad.cargo_station_parameters = {
     prefer_packed_cargo_units = false,
     is_input_station = true,
     is_output_station = true,
-    hatch_definitions = { hatch, hatch, hatch, hatch, hatch },
+    hatch_definitions = { hatch, hatch, hatch, hatch, hatch, hatch, hatch, hatch, hatch, hatch },
     giga_hatch_definitions = {{
-        covered_hatches = { 0, 1, 2, 3, 4},
+        covered_hatches = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 },
         hatch_graphics_front = {
             layers = {{
                 filename = "__planet-rabbasca__/graphics/by-hurricane/research-center-animation.png",
@@ -173,7 +173,10 @@ data:extend {
     name = "rabbasca-remote-call",
     category = "rabbasca-security",
     order = "b[vault-access-key]",
-    icon = "__planet-rabbasca__/graphics/recolor/icons/item-warp-slot.png",
+    icons = {
+      { icon = "__planet-rabbasca__/graphics/recolor/icons/item-warp-slot.png" },
+      { icon = "__planet-rabbasca__/graphics/icons/warp.png", scale = 0.25, shift = {0, -3} }
+    },
     flags = { "ignore-spoil-time-modifier" },
     hidden = true,
     hidden_in_factoriopedia = true,
@@ -225,6 +228,7 @@ data:extend {
 {
     type = "recipe",
     name = "rabbasca-remote-call",
+    icon = "__planet-rabbasca__/graphics/icons/warp.png",
     enabled = true,
     hidden = true,
     hidden_in_factoriopedia = true,
@@ -235,7 +239,7 @@ data:extend {
     results = { {type = "item", name = "rabbasca-remote-call", amount = 1 } },
     main_product = "rabbasca-remote-call",    
     category = "rabbasca-remote",
-    crafting_machine_tint = {primary = {0.8, 0.9, 1}}
+    crafting_machine_tint = {primary = {2, 2, 2}}
 },
 {
     type = "recipe",
@@ -251,7 +255,7 @@ data:extend {
     results = { {type = "item", name = "rabbasca-remote-call", amount = 1 } },
     main_product = "rabbasca-remote-call",    
     category = "rabbasca-remote",
-    crafting_machine_tint = {primary = {0.4, 0.65, 0.5}}
+    crafting_machine_tint = {primary = {0.3, 0.35, 0.4}}
 },
 }
 
@@ -261,7 +265,7 @@ data:extend {
     name = "rabbasca-remote-receiver-recycling",
     enabled = false,
     icons = generate_recycling_recipe_icons_from_item(data.raw.item["rabbasca-remote-receiver"]),
-    ingredients = { { type = "item", name = "rabbasca-remote-builder", amount = 1 }, },
+    ingredients = { { type = "item", name = "rabbasca-remote-receiver", amount = 1 }, },
     results = { { type = "item", name = "rabbasca-warp-core", amount = 1 }, },
     category = "recycling",
     hidden = true,

@@ -1,5 +1,4 @@
 local RECEIVER_RADIUS = 21
-local WARPING_TAG = "rabbasca-warping"
 -- TODO: Use items_to_place_this?
 
 local function awake(receiver)
@@ -26,22 +25,48 @@ local function awake_receivers(entity)
     end
 end
 
-local function try_build_ghost(entity)
-    if not entity.valid then return false end
-    if entity.tags and entity.tags[WARPING_TAG] then return false end
-    local proto = entity.ghost_prototype
-    if not proto then return false end
-    local builder = storage.rabbasca_remote_builder
-    if not builder then 
-        return false 
-    end
+local status_invalid_target = {
+    diode = defines.entity_status_diode.yellow,
+    label = { "entity-status.rabbasca-warp-no-target" }
+}
+local status_no_builder = {
+    diode = defines.entity_status_diode.red,
+    label = { "entity-status.rabbasca-warp-no-builder" }
+}
+local status_no_items = {
+    diode = defines.entity_status_diode.yellow,
+    label = { "entity-status.rabbasca-warp-no-items" }
+}
+local status_ok = {
+    diode = defines.entity_status_diode.green,
+    label = { "entity-status.rabbasca-warp-ok" }
+}
 
-    local name, quality = entity.ghost_prototype.name, entity.quality.name
+local function try_build_ghost(entity)
+    if not entity.valid then return false, status_invalid_target end
+    if not entity.is_registered_for_construction() then return false, status_invalid_target end
+    if entity.custom_status and entity.custom_status.label[1] == "entity-status.rabbasca-warp" then 
+        return false, status_invalid_target
+    end
+    local proto = entity.ghost_prototype
+    if not (proto.items_to_place_this and #proto.items_to_place_this > 0) then return end
+    if not (storage.rabbasca_remote_builder and storage.rabbasca_remote_builder.valid) then
+        local builders = game.surfaces.rabbasca and game.surfaces.rabbasca.find_entities_filtered{name = "rabbasca-remote-builder"}
+        if #builders > 0 then
+            storage.rabbasca_remote_builder = builders[1]
+        else
+            return false, status_no_builder
+        end
+    end
+    local builder = storage.rabbasca_remote_builder
+
+    local to_place = proto.items_to_place_this[1]
+    local name, count, quality = to_place.name, to_place.count, entity.quality.name
     local item_with_quality = { name = name, quality = quality }
 
     if builder.valid
     and not builder.to_be_deconstructed()
-    and builder.get_inventory(defines.inventory.chest).get_item_count(item_with_quality) > 0 then
+    and builder.get_inventory(defines.inventory.chest).get_item_count(item_with_quality) >= count then
         local pod = nil
         for _, hatch in pairs(builder.cargo_hatches) do
             if hatch.owner == builder then
@@ -51,8 +76,10 @@ local function try_build_ghost(entity)
         end
         if not pod then return true end -- all hatches busy, try again later
         local chest = builder.get_inventory(defines.inventory.chest)
-        if pod.get_inventory(defines.inventory.cargo_unit).insert({name = item_with_quality.name, quality = item_with_quality.quality, count = chest.remove(item_with_quality)}) == 0 then
-            chest.insert(item_with_quality)
+        local removed = chest.remove({name = name, count = count, quality = quality})
+        local inserted = pod.get_inventory(defines.inventory.cargo_unit).insert({name = item_with_quality.name, quality = item_with_quality.quality, count = removed })
+        if inserted ~= removed then
+            chest.insert({name = name, count = removed - inserted, quality = quality})
         end
         pod.cargo_pod_destination = {
             type = defines.cargo_destination.surface,
@@ -60,19 +87,24 @@ local function try_build_ghost(entity)
             position = entity.position,
             land_at_exact_position = true
         }
-        local tags = entity.tags or { }
-        tags[WARPING_TAG] = true
-        entity.tags = tags
+        entity.custom_status = {
+            diode = defines.entity_status_diode.yellow,
+            label = { "entity-status.rabbasca-warp" }
+        }
         rendering.draw_sprite{
             sprite = "item.rabbasca-remote-call",
             target = {entity = entity, offset = { 0, -0.5 } },          -- attach to ghost
             surface = entity.surface,
             x_scale = 0.75,
             y_scale = 0.75,
+            time_to_live = 30 * 60
         }
-        return true
+        return true, status_ok
     end
-    return false
+    for _, player in pairs(entity.force.players) do
+        player.add_alert(entity, defines.alert_type.no_material_for_construction)
+    end
+    return false, status_no_items
 end
 
 local M = {}
@@ -93,18 +125,23 @@ function M.attempt_build_ghost(pylon)
     -- when no ghosts left, go to sleep
     if is_calling then
         for _, ghost in pairs(ghosts) do
-            if try_build_ghost(ghost) then return end
+            local result, status = try_build_ghost(ghost)
+            pylon.custom_status = status
+            if result then return end
         end
         pylon.set_recipe("rabbasca-remote-warmup")
         pylon.recipe_locked = true
     else
-        if #ghosts == 0 or not storage.rabbasca_remote_builder or not surface.planet then 
+        if #ghosts == 0 or not storage.rabbasca_remote_builder or not pylon.surface.planet then 
             pylon.set_recipe(nil) 
-            receiver.recipe_locked = true
+            pylon.recipe_locked = true
+            pylon.custom_status = status_invalid_target
             return 
         end
         for _, ghost in pairs(ghosts) do
-            if try_build_ghost(ghost) then 
+            local result, status = try_build_ghost(ghost)
+            pylon.custom_status = status
+            if result then
                 pylon.set_recipe("rabbasca-remote-call")
                 pylon.recipe_locked = true
                 return 
@@ -115,23 +152,26 @@ end
 
 function M.finalize_build_ghost(pod)
     local item = pod.get_inventory(defines.inventory.cargo_unit)[1]
+    if not item.valid then return end
     local is_tile = item.prototype.place_as_tile_result ~= nil
-    local ghost = pod.surface.find_entity({ name = is_tile and "tile-ghost" or "entity-ghost", quality = item.quality }, pod.position)
-    if ghost and ghost.tags and ghost.tags[WARPING_TAG] then
-        if not item.valid then -- spoiled etc
-            ghost.tags = { } -- TODO: just remove WARPING_TAG
-            return
-        end
-        if ghost.ghost_name == item.name then
-            local _, revived, _ = ghost.revive{ raise_revive = true } 
-            if revived then return end
+    local ghost = pod.surface.find_entity({name = is_tile and "tile-ghost" or "entity-ghost", quality = item.quality }, pod.position)
+    if ghost and ghost.valid and ghost.ghost_prototype and ghost.custom_status then
+        ghost.custom_status = nil
+        local required = ghost.ghost_prototype.items_to_place_this
+        if required and #required > 0 and required[1].name == item.name and required[1].count <= item.count then
+            ghost.revive{ raise_revive = true }
+            if not ghost.valid then -- if revive failed, ghost should still exist
+                item.count = item.count - required[1].count
+            end
         end
     end
-    pod.surface.spill_item_stack{
-        position = pod.position,
-        stack = item,
-        enable_looted = true
-    }
+    if item.count > 0 then
+        pod.surface.spill_item_stack{
+            position = pod.position,
+            stack = item,
+            enable_looted = true
+        }
+    end
 end
 
 local build_events = {
