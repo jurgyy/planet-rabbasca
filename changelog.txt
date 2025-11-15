@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------------------------------
+Version: 0.5.1
+Date: 2025-11-15
+  Bugfixes:
+    - Rabbasca trains and wagons can now be picked up and have names
