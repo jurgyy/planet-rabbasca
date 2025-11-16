@@ -9,3 +9,4 @@ for _, quality in pairs(data.raw["quality"]) do
 end
 
 require("__planet-rabbasca__.compatibility.muluna-final-fixes")
+require("__planet-rabbasca__.compatibility.pelagos-final-fixes")

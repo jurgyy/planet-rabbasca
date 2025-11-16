@@ -46,7 +46,7 @@ function create_infused_thing_with_effect(original, needed_core)
     local new = table.deepcopy(original)
     local icons = {}
     if item.icon then
-        table.insert(icons, { icon = item.icon })
+        table.insert(icons, { icon = item.icon, icon_size = item.icon_size or 64 })
     elseif item.icons then
         for _, icon in pairs(table.deepcopy(item.icons)) do
             table.insert(icons, icon)
