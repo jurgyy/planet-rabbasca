@@ -175,10 +175,11 @@ PlanetsLib:extend({
     asteroid_spawn_definitions = spawn_definitions,
     asteroid_spawn_influence = 0.7,
     -- robot energy usage = gravity/pressure*100, gravity > 0.1 (allow chests), robots should be expensive and limited by energy field
+    -- on x8+(?) energy usage, normal robots are stuck in recharge loop
     surface_properties = {
         ["gravity"] = 1,
         ["solar-power"] = 0,
-        ["pressure"] = 11,
+        ["pressure"] = 14,
         ["day-night-cycle"] = 12 * minute,
         ["magnetic-field"] = 0.01,
         ["harenic-energy-signatures"] = 50,
@@ -193,7 +194,7 @@ PlanetsLib:extend({
     parked_platforms_orientation = 0.27,
     orbit = {
       orientation = 0.9,
-      distance = 2.1,
+      distance = 1.8,
       parent = {
         type = "planet",
         name = gleba.name,
