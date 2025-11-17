@@ -1,11 +1,22 @@
 -- Some globals black magic or something happening here, required for water borders
 table.insert(water_tile_type_names, "rabbasca-harene")
+table.insert(water_tile_type_names, "harenic-lava")
+
+local lava = util.merge{ table.deepcopy(data.raw["tile"]["lava"]), {
+    name = "harenic-lava",
+    effect_color = { 75, 45, 121 },
+    effect_color_secondary = { 140, 52, 111 },
+    map_color = { 0.68, 0.13, 0.7},
+    fluid = "harenic-lava"
+}}
+lava.autoplace = nil
 
 data:extend{
 {
   type = "collision-layer",
   name = "harene",
 },
+lava,
 util.merge{table.deepcopy(data.raw["tile"]["ammoniacal-ocean"]), {
   name = "rabbasca-harene",
   default_cover_tile = "foundation",

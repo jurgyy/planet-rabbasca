@@ -123,7 +123,7 @@ local access_console = util.merge{
     healing_per_tick = 0, -- should be same as production_health_effect for factoriopedia, but the units don't match
     production_health_effect = {
       producing = -6,
-      not_producing = -36
+      not_producing = -36 -- This is ca. -100 / second???
     },
     result_inventory_size = 0,
     source_inventory_size = 1,
@@ -251,6 +251,10 @@ local vault_crafter = {
         },
       }
     } 
+  },
+  dying_trigger_effect = {
+    type = "create-entity",
+    entity_name = "rabbasca-vault-meltdown",
   }
 }
 
@@ -337,6 +341,51 @@ pylon.graphics_set =
     },
 }}
 
+local vault_core = util.merge{ 
+  table.deepcopy(pylon), 
+{
+  name = "rabbasca-vault-meltdown",
+  icons = {
+    { icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64 },
+    { icon = data.raw["virtual-signal"]["signal-explosion"].icon, icon_size = 64, scale = 0.3, shift = { 8, 8 } }
+  },
+  hidden = true,
+  hidden_in_factoriopedia = true,
+  max_health = 100000,
+  healing_per_tick = -1000 / second,
+  spawning_cooldown = {4 * second, 2.5 * second},
+  time_to_capture = 60 * second,
+  max_count_of_owned_units = 16,
+  max_friends_around_to_spawn = 64,
+  spawning_radius = 8,
+  collision_box = {{-0.4, -0.4},{0.4, 0.4}},
+  selection_box = {{-0.5, -1},{1, 1}},
+  order = "r[rabbasca]-x"
+}}
+vault_core.flags = { "placeable-neutral", "placeable-off-grid" }
+vault_core.minable = nil
+vault_core.created_effect = {
+  type = "direct",
+  action_delivery = {
+    {
+      type = "delayed",
+      delayed_trigger = "rabbasca-calculate-evolution"
+    }
+  }
+}
+vault_core.dying_trigger_effect = require("__planet-rabbasca__.prototypes.meltdown")
+vault_core.resistances = {
+  { type = "physical", percent = 100 },
+  { type = "explosion", percent = 100 },
+  { type = "fire", percent = 100 },
+  { type = "poison", percent = 100 },
+  { type = "acid", percent = 100 },
+  { type = "laser", percent = 100 },
+  { type = "electric", percent = 100 },
+  { type = "impact", percent = 100 },
+}
+-- vault_core.result_units = { } -- TODO
+
 local capture_bot = {
   type = "capture-robot",
   icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png",
@@ -366,5 +415,55 @@ data:extend {
   spawner, pylon,
   access_console,
   capture_bot, capture_bot_2,
-  vault_crafter
+  vault_crafter, vault_core
+}
+
+data:extend {
+  {
+    type = "explosion",
+    name = "rabbasca-meltdown-effect",
+    flags = {"not-on-map"},
+    hidden = true,
+    icons =
+    {
+      {icon = "__base__/graphics/icons/explosion.png"},
+      {icon = "__base__/graphics/icons/atomic-bomb.png"}
+    },
+    localised_name = {"entity-name.rabbasca-vault-meltdown"},
+    order = "a-d-a-b",
+    subgroup = "explosions",
+    height = 0,
+    animations = util.empty_sprite(),
+    surface_conditions =
+    {
+      {
+        property = "harenic-energy-signatures",
+        min = 20,
+      }
+    },
+    created_effect =
+    {
+      type = "direct",
+      action_delivery =
+      {
+      {
+        type = "delayed",
+        delayed_trigger = "rabbasca-calculate-evolution"
+      },
+      {
+        type = "instant",
+        target_effects =
+        {
+          {
+            type = "set-tile",
+            tile_name = "harenic-lava",
+            radius = 4,
+            apply_projection = false,
+            tile_collision_mask = { layers={out_of_map=true} }
+          },
+        }
+      }
+      }
+    }
+  }
 }

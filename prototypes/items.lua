@@ -264,6 +264,19 @@ util.merge { data.raw["item"]["rocket-fuel"],
     auto_barrel = true,
     order = "r[rabbasca]-b[energetic-residue]"
 },
+{
+    type = "fluid",
+    name = "harenic-lava",
+    icon = "__rabbasca-assets__/graphics/recolor/icons/energetic-residue.png",
+    icon_size = 64,
+    subgroup = "fluid",
+    base_color = {0.8, 0.53, 0.24},
+    flow_color = {0.8, 0.53, 0.24},
+    default_temperature = 1500,
+    fuel_value = "850kJ",
+    auto_barrel = true,
+    order = "r[rabbasca]-b[energetic-residue]"
+},
 util.merge { data.raw["tool"]["automation-science-pack"], {
   name = "athletic-science-pack",
   icon = "__rabbasca-assets__/graphics/recolor/icons/athletic-science-pack.png",

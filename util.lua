@@ -167,14 +167,16 @@ end
 
 function output.update_alertness(surface, position)
   local active_vaults_count = #surface.find_entities_filtered { name = "rabbasca-vault-console", force = game.forces.player }
+  local is_meltdown = #surface.find_entities_filtered { name = "rabbasca-vault-meltdown" } > 0
   local new_evo = math.min(1, active_vaults_count * settings.global["rabbasca-evolution-per-vault"].value / 100)
+  if is_meltdown then new_evo = 1 end 
   game.forces.rabbascans.set_evolution_factor(new_evo, surface)
   game.forces.enemy.set_evolution_factor(new_evo, surface) -- make sure factoriopedia evolution ui shows correct value
   storage.hacked_vaults = active_vaults_count
   if not position then return end
-  local new_evo_text = "Rabbasca alertness now at: [color=yellow]%.1f%%[/color]"
+  local new_evo_text = string.format("%.1f", game.forces.rabbascans.get_evolution_factor(surface) * 100)
   for _, player in pairs(game.players) do
-    player.create_local_flying_text { text = string.format(new_evo_text, game.forces.rabbascans.get_evolution_factor(surface) * 100), surface = surface, position = position }
+    player.create_local_flying_text { text = {"rabbasca-extra.alertness-floating", new_evo_text}, surface = surface, position = position }
   end
 end
 
