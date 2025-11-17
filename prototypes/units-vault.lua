@@ -26,6 +26,7 @@ local defender_1 = util.merge{
     render_layer = "air-object",
   }
 }
+defender_1.factoriopedia_simulation = table.deepcopy(data.raw["combat-robot"]["defender"].factoriopedia_simulation)
 defender_1.corpse = nil
 defender_1.absorptions_to_join_attack = { }
 defender_1.run_animation = table.deepcopy(data.raw["combat-robot"]["defender"].in_motion)
@@ -160,6 +161,7 @@ local defender_heavy = util.merge {
     move_while_shooting = true,
     movement_speed = 0.12,
     distance_per_frame = 0.08,
+    factoriopedia_simulation = table.deepcopy(data.raw["combat-robot"]["distractor"].factoriopedia_simulation)
 }
 }
 defender_heavy.created_effect = {
@@ -203,8 +205,9 @@ local defender_ouchy = util.merge {
     healing_per_tick = -7 / second,
     movement_speed = 0.44,
     distance_per_frame = 0.213,
+  }
 }
-}
+defender_ouchy.factoriopedia_simulation = table.deepcopy(data.raw["combat-robot"]["destroyer"].factoriopedia_simulation)
 defender_ouchy.created_effect = {
   type = "direct",
   action_delivery =
@@ -259,7 +262,8 @@ defender_spawny.created_effect = {
     type = "instant",
     source_effects =
     {
-      { type = "create-entity", entity_name = "vault-defender-1", offset_deviation = {{-12, -12}, {12, 12}}, repeat_count = 12 },
+      -- { type = "create-entity", entity_name = "rabbasca-vault-warp-spawner", offset_deviation = {{-20, -20}, {20, 20}}, repeat_count = 1, check_buildability = true, find_non_colliding_position = true },
+      { type = "create-entity", entity_name = "vault-defender-1", offset_deviation = {{-12, -12}, {12, 12}}, repeat_count = 7 },
       { type = "create-entity", entity_name = "vault-defender-heavy", offset_deviation = {{-7, -7}, {7, 7}}, repeat_count = 3 },
     }
   }
@@ -295,7 +299,14 @@ defender_spawny.attack_parameters = {
         type = "instant",
         source_effects =
         {
-          { type = "create-entity", entity_name = "rabbasca-vault-warp-spawner", offset_deviation = {{-12, -12}, {12, 12}}, repeat_count = 1 },
+          { 
+            type = "create-entity", 
+            entity_name = "rabbasca-vault-warp-spawner", 
+            offset_deviation = {{-12, -12}, {12, 12}}, 
+            repeat_count = 1, 
+            check_buildability = true, 
+            find_non_colliding_position = true
+           },
         }
       }
     }

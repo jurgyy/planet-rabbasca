@@ -152,7 +152,7 @@ end
 
 function M.finalize_build_ghost(pod)
     local item = pod.get_inventory(defines.inventory.cargo_unit)[1]
-    if not item.valid then return end
+    if not (item.valid and item.valid_for_read) then return end
     local is_tile = item.prototype.place_as_tile_result ~= nil
     local ghost = pod.surface.find_entity({name = is_tile and "tile-ghost" or "entity-ghost", quality = item.quality }, pod.position)
     if ghost and ghost.valid and ghost.ghost_prototype and ghost.custom_status then

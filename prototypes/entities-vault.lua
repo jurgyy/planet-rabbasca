@@ -120,6 +120,7 @@ local access_console = util.merge{
     name = "rabbasca-vault-console",
     type = "furnace",
     max_health = 7200,
+    healing_per_tick = 0, -- should be same as production_health_effect for factoriopedia, but the units don't match
     production_health_effect = {
       producing = -6,
       not_producing = -36
