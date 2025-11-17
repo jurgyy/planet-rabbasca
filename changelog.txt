@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.6.2
+Date: 2025-11-18
+  Changes:
+    - Improved various factoriopedia entries
+    - Vault protection pylons now spawn more often and with energetic concrete below
+---------------------------------------------------------------------------------------------------
 Version: 0.6.1
 Date: 2025-11-17
   Bugfixes:

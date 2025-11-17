@@ -38,6 +38,26 @@ local function handle_script_events(event)
       from.set_recipe("rabbasca-remote-warmup")
       from.recipe_locked = true
     end
+  elseif effect_id == "rabbasca_summon_pylon_grid_aligned" then
+    local pos = event.target_position or event.source_position
+    if not pos then return end
+    pos = {pos.x + math.random(-8, 8), pos.y + math.random(-8, 8)}
+    local surface = game.surfaces[event.surface_index]
+    pos = surface.find_non_colliding_position("rabbasca-vault-warp-spawner", pos, 12, 1, true)
+    if not pos then return end
+    local tiles = {
+      { position = {pos.x, pos.y}, name = "rabbasca-energetic-concrete" },
+      { position = {pos.x+ 1, pos.y}, name = "rabbasca-energetic-concrete" },
+      { position = {pos.x, pos.y+ 1}, name = "rabbasca-energetic-concrete" },
+      { position = {pos.x+ 1, pos.y+ 1}, name = "rabbasca-energetic-concrete" },
+    }
+    
+    if surface.create_entity {
+      name = "rabbasca-vault-warp-spawner",
+      position = pos,
+      force = game.forces.rabbascans or game.forces.enemy,
+      snap_to_grid = true,
+    } then surface.set_tiles(tiles) end
   elseif effect_id == "rabbasca_teleport" then
     local engine = event.source_entity or event.target_entity
     local player = engine.player or engine.owner_location.player

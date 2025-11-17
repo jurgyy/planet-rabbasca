@@ -281,7 +281,7 @@ defender_spawny.attack_parameters = {
   type = "projectile",
   animation = table.deepcopy(data.raw["combat-robot"]["destroyer"].idle),
   activation_type = "throw",
-  cooldown = 25 * second,
+  cooldown = 3 * second,
   cooldown_deviation = 0.3,
   projectile_center = {0, 1},
   projectile_creation_distance = 0.6,
@@ -297,16 +297,14 @@ defender_spawny.attack_parameters = {
       action_delivery =
       {
         type = "instant",
-        source_effects =
+        target_effects =
         {
-          { 
-            type = "create-entity", 
-            entity_name = "rabbasca-vault-warp-spawner", 
-            offset_deviation = {{-12, -12}, {12, 12}}, 
-            repeat_count = 1, 
-            check_buildability = true, 
-            find_non_colliding_position = true
-           },
+          {
+              type = "script",
+              effect_id = "rabbasca_summon_pylon_grid_aligned",
+              repeat_count = 2, 
+              repeat_count_deviation = 1
+          }
         }
       }
     }
