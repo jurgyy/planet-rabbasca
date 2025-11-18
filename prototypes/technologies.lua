@@ -268,7 +268,7 @@ data:extend {
     type = "technology",
     name = "machining-assembler",
     icon = "__rabbasca-assets__/graphics/by-hurricane/gravity-assembler-icon-big.png",
-    icon_size = 1024,
+    icon_size = 640,
     prerequisites = { "rabbasca-healthy-fluids", "energetic-residue", "rabbascan-vault-access" },
     effects =
     {
