@@ -1,6 +1,6 @@
-[![](https://img.shields.io/factorio-mod-portal/v/planet-rabbasca)](https://mods.factorio.com/mod/planet-rabbasca)
-[![](https://img.shields.io/badge/github-repo-blue?logo=github)](https://github.com/PizzaPlanner/planet-rabbasca)
-
+[![Mod portal](https://img.shields.io/factorio-mod-portal/v/planet-rabbasca)](https://mods.factorio.com/mod/planet-rabbasca)
+[![github](https://img.shields.io/badge/github-repo-blue?logo=github)](https://github.com/PizzaPlanner/planet-rabbasca)
+[![Discord](https://img.shields.io/discord/1309620686347702372?style=for-the-badge&logoColor=bf6434&label=The%20Foundry&labelColor=222222&color=bf6434)](https://discord.gg/UPqBBumd)
 
 ## Rabbasca, the forgotten Moon
 Welcome to Rabbasca, a long forgotten place of powerful but well protected technology. It presents unique challenges and alternative ways to solve problems. 

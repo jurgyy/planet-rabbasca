@@ -19,6 +19,13 @@ Date: 2025-11-19
     - [APS only] Adjusted starting inventory. now contains a power pole to allow immediate electricity graph access
     - [APS only] Electric mining drill is now an essential technology
 ---------------------------------------------------------------------------------------------------
+Version: 0.6.5
+Date: 2025-11-20
+  Changes:
+    - Added RU locale (thanks Efremiros)
+  Bugfixes:
+    - Fixed collision issue introduced with last bugfix
+---------------------------------------------------------------------------------------------------
 Version: 0.6.4
 Date: 2025-11-20
   Bugfixes:
