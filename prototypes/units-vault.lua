@@ -30,7 +30,8 @@ defender_1.factoriopedia_simulation = table.deepcopy(data.raw["combat-robot"]["d
 defender_1.corpse = nil
 defender_1.absorptions_to_join_attack = { }
 defender_1.run_animation = table.deepcopy(data.raw["combat-robot"]["defender"].in_motion)
-defender_1.collision_mask = data.raw["combat-robot"]["defender"].collision_mask
+defender_1.collision_mask = { layers = { trigger_target = true }, not_colliding_with_itself = true }
+defender_1.collision_box = {{-0.1, -0.1}, {0.1, 0.1}}
 defender_1.alternative_attacking_frame_sequence = nil
 defender_1.resistances = {
   { type = "physical", percent = 0 },

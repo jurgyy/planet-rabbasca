@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.6.5
+Date: 2025-11-20
+  Changes:
+    - Added RU locale (thanks Efremiros)
+  Bugfixes:
+    - Fixed collision issue introduced with last bugfix
+---------------------------------------------------------------------------------------------------
 Version: 0.6.4
 Date: 2025-11-20
   Bugfixes:
