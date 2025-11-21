@@ -255,6 +255,9 @@ local vault_crafter = {
   dying_trigger_effect = {
     type = "create-entity",
     entity_name = "rabbasca-vault-meltdown",
+    as_enemy = true,
+    ignore_no_enemies_mode = true,
+    protected = true,
   }
 }
 
@@ -351,19 +354,19 @@ local vault_core = util.merge{
   },
   hidden = true,
   hidden_in_factoriopedia = true,
-  max_health = 100000,
+  max_health = 3000, -- Will always be *10 due to forced max evolution
   healing_per_tick = -1000 / second,
-  spawning_cooldown = {4 * second, 2.5 * second},
-  time_to_capture = 60 * second,
-  max_count_of_owned_units = 16,
-  max_friends_around_to_spawn = 64,
+  spawning_cooldown = {0.3 * second, 0.3 * second},
+  max_count_of_owned_units = 64,
+  max_friends_around_to_spawn = 128,
   spawning_radius = 8,
   collision_box = {{-0.4, -0.4},{0.4, 0.4}},
   selection_box = {{-0.5, -1},{1, 1}},
-  order = "r[rabbasca]-x"
+  order = "r[rabbasca]-x",
 }}
 vault_core.flags = { "placeable-neutral", "placeable-off-grid" }
 vault_core.minable = nil
+vault_core.captured_spawner_entity = nil
 vault_core.created_effect = {
   type = "direct",
   action_delivery = {
@@ -374,17 +377,21 @@ vault_core.created_effect = {
   }
 }
 vault_core.dying_trigger_effect = require("__planet-rabbasca__.prototypes.meltdown")
-vault_core.resistances = {
-  { type = "physical", percent = 100 },
-  { type = "explosion", percent = 100 },
-  { type = "fire", percent = 100 },
-  { type = "poison", percent = 100 },
-  { type = "acid", percent = 100 },
-  { type = "laser", percent = 100 },
-  { type = "electric", percent = 100 },
-  { type = "impact", percent = 100 },
+vault_core.resistances = { } -- filled later
+vault_core.result_units = {
+{ unit = "big-strafer-pentapod", spawn_points = {
+  {evolution_factor = 0, spawn_weight = 0.3},
+  }},
+{ unit = "big-stomper-pentapod", spawn_points = {
+  {evolution_factor = 0, spawn_weight = 0.3},
+  }},
+{ unit = "behemoth-biter", spawn_points = {
+  {evolution_factor = 0, spawn_weight = 0.3},
+  }},
+{ unit = "behemoth-spitter", spawn_points = {
+    {evolution_factor = 0, spawn_weight = 0.3},
+  }},
 }
--- vault_core.result_units = { } -- TODO
 
 local capture_bot = {
   type = "capture-robot",
