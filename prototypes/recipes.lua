@@ -236,7 +236,7 @@ data:extend {
             { type = "item", name = "rabbasca-turbofish", amount = 3, ignored_by_productivity = 2 },
         },
         main_product = "rabbasca-turbofish",
-        category = "organic",
+        category = "organic-or-chemistry",
         allow_productivity = true,
         result_is_always_fresh = true,
         subgroup = "nauvis-agriculture",

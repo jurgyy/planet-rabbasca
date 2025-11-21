@@ -44,10 +44,10 @@ battle_scrap.minable =
   results =
   {
     { type = "item", name = "firearm-magazine", amount = 1, probability = 0.15 },
-    { type = "item", name = "grenade", amount = 1, probability = 0.07 },
-    { type = "item", name = "flamethrower-ammo", amount = 1, probability = 0.12 },
+    { type = "item", name = "grenade", amount = 1, probability = 0.13 },
     { type = "item", name = "rocket", amount = 1, probability = 0.09 },
-    { type = "item", name = "vault-access-key", amount = 1, probability = 0.05 },
+    { type = "item", name = "flamethrower-ammo", amount = 1, probability = 0.07 },
+    { type = "item", name = "vault-access-key", amount = 1, probability = 0.06 },
   }
 }
 battle_scrap.collision_mask = { layers = { resource = true } }
