@@ -135,7 +135,7 @@ data:extend {
     table.deepcopy(data.raw["sticker"]["bioflux-speed-regen-sticker"]),
     {
       name = "protein-shake-speed-sticker",
-      duration_in_ticks = 60 * second,
+      duration_in_ticks = 90 * second,
       target_movement_modifier = 1.9,
       damage_interval = 20,
       damage_per_tick = { amount = -5 },
@@ -157,7 +157,6 @@ data.raw["electric-energy-interface"]["rabbasca-energy-source"].collision_box = 
 data.raw["simple-entity"]["rabbasca-big-rock"].minable.results = {
   {type = "item", name = "stone", amount_min = 12, amount_max = 18}, 
   {type = "item", name = "iron-ore", amount_min = 9, amount_max = 15 }, 
-  {type = "item", name = "copper-ore", amount_min = 7, amount_max = 12 }, 
   {type = "item", name = "carbon", amount_min = 2, amount_max = 5 }
 }
 

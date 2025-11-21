@@ -112,18 +112,16 @@ local map_gen = {
       {
         settings =
         {
-          ["rabbasca-harene"] = {},
+          ["rabbasca-harenic-sludge"] = {},
           ["rabbasca-fertile"] = {},
           ["rabbasca-rough"] = {},
           ["rabbasca-rough-2"] = {},
-          -- ["harene-infused-foundation"] = {}
         }
       },
       ["decorative"] =
       {
         settings =
         {
-          -- ["crater-small"] = {},
           ["rabbasca-crater-large"] = {},
           ["rabbasca-yellow-lettuce-lichen-3x3"] = {},
           ["rabbasca-yellow-lettuce-lichen-6x6"] = {},
@@ -139,15 +137,13 @@ local map_gen = {
       {
         settings =
         {
+          ["rabbasca-energy-source"] = {},
+          ["rabbasca-vault-crafter"] = {},
           ["carotenoid-ore"] = {},
           ["rabbascan-scrap"] = {},
-          -- ["rabbasca-mixed-oxide-ore"] = {},
-          ["rabbasca-energy-source"] = {},
           ["harene-vent"] = {},
           ["rabbasca-turbofish"] = {},
           ["rabbasca-big-rock"] = {},
-          -- ["moonstone-turret"] = {},
-          ["rabbasca-vault-crafter"] = {},
         }
       }
     }

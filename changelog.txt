@@ -1,4 +1,27 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.7.0
+Date: 2025-11-21
+  Changes:
+    - This update reworked a few recipes to add a bit more depth and better balance rabbasca-specific resources
+    - Reworked intruder remains to contain a variety of ammo, but no longer advanced circuits
+    - Added residue skimming recipe that provides an infinite source of advanced circuits, and a bunch of trash
+    - Intruder remains now contain grenades, enabling some military science to be researched when starting on Rabbasca
+    - Document forging 1 is now a trigger technology and unlocks after mining 200 vault access keys
+    - Added recipe to turn Haronite into calcite and stone
+    - Calcite is no longer extracted from vaults
+    - Protein shake now requires a plastic bottle to craft, and that bottle will remain as trash when used as fuel source
+    - Turbofish now spoils into spoilage instead of protein powder
+  Balancing:
+    - Adjusted vault access key recipe to make it craftable early
+    - Beta carotene recipe no longer produces stone as byproduct
+    - Beta carotene now requires Harene gas instead of Energetic residue
+    - Turbofish can now be bred in chemical plant
+    - Reduced yummy value of protein shake
+    - Rabbascan rock no longer contains copper ore
+    - low-alert defender bots are now easier to kill
+    - [APS only] Adjusted starting inventory. now contains a power pole to allow immediate electricity graph access
+    - [APS only] Electric mining drill is now an essential technology
+---------------------------------------------------------------------------------------------------
 Version: 0.6.6
 Date: 2025-11-21
   Bugfixes:
