@@ -1,11 +1,34 @@
 -- Some globals black magic or something happening here, required for water borders
 table.insert(water_tile_type_names, "rabbasca-harenic-sludge")
+table.insert(water_tile_type_names, "harenic-lava")
+
+local lava_effect = util.merge { data.raw["tile-effect"]["lava"],
+{
+  name = "harenic-lava",
+  foam_color = { 44, 10, 76 },
+  
+}}
+lava_effect.water.textures[2].filename = "__rabbasca-assets__/graphics/recolor/textures/lava.png"
+local lava = util.merge{ table.deepcopy(data.raw["tile"]["lava"]), {
+    name = "harenic-lava",
+    effect_color = { 44, 30, 180 },
+    effect_color_secondary = { 140, 52, 111 },
+    map_color = { 0.76, 0.33, 0.85 },
+    effect = "harenic-lava",
+    fluid = "harenic-lava",
+    particle_tints = { primary = { 44, 30, 180 }, secondary = { 44, 30, 180 },},
+}}
+lava.autoplace = nil
+lava.variants.main[1].picture = "__rabbasca-assets__/graphics/recolor/textures/lava-transitions.png"
+lava.variants.main[2].picture = "__rabbasca-assets__/graphics/recolor/textures/lava-transitions.png"
+lava.variants.main[3].picture = "__rabbasca-assets__/graphics/recolor/textures/lava-transitions.png"
 
 data:extend{
 {
   type = "collision-layer",
   name = "harene",
 },
+lava, lava_effect,
 util.merge{table.deepcopy(data.raw["tile"]["ammoniacal-ocean"]), {
   name = "rabbasca-harenic-sludge",
   default_cover_tile = "foundation",
@@ -44,4 +67,29 @@ util.merge {
       check_collision_with_entities = true
     }
 },
+util.merge { 
+    table.deepcopy(data.raw["tile"]["foundation"]),
+    {
+      name = "haronite-plate",
+      collision_mask = { layers = { harene = true } },
+      minable = { result = "haronite-plate" },
+      -- variants = { material_background = { picture = "__rabbasca-assets__/graphics/recolor/textures/haronite-plate.png", } },
+      frozen_variant = "haronite-plate",
+      check_collision_with_entities = true
+    }
 }
+}
+
+local lava_transition = { spritesheet = "__rabbasca-assets__/graphics/recolor/textures/lava-stone-lightmap.png" }
+local lava_patch =
+{
+  filename = "__rabbasca-assets__/graphics/recolor/textures/lava-patch.png",
+  scale = 0.5,
+  width = 64,
+  height = 64
+}
+
+for _, tile in pairs({ "rabbasca-rough", "rabbasca-rough-2"}) do
+  data.raw["tile"][tile].transitions[2].lightmap_layout = lava_transition
+  data.raw["tile"][tile].transitions_between_transitions[1].water_patch = lava_patch 
+end
