@@ -83,9 +83,7 @@ script.on_event(defines.events.on_player_controller_changed, function(event)
     local player = game.get_player(event.player_index)
     if not player then return end
 
-    if player.gui.screen.bunnyhop_ui then
-       bunnyhop.clear_bunnyhop_ui(player)
-    end
+    bunnyhop.clear_bunnyhop_ui(player)
     alert_ui.update_bar(player)
 end)
 
@@ -121,6 +119,11 @@ end
 
 -- Workaround for robots expanding into biter nests. Also compatibility for castra research
 local function create_rabbasca_force()
+  if game.forces.rabbascans then 
+    log("Force 'rabbascans' already exists")
+    return
+  end
+  log("Creating force 'rabbascans'")
   local force = game.create_force("rabbascans")
   force.ai_controllable = false
   force.share_chart = true
