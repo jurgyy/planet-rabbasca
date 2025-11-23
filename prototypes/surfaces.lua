@@ -178,7 +178,7 @@ PlanetsLib:extend({
         ["pressure"] = 14,
         ["day-night-cycle"] = 12 * minute,
         ["magnetic-field"] = 0.01,
-        ["harenic-energy-signatures"] = 50,
+        ["harenic-energy-signatures"] = Rabbasca.surface_megawatts(),
     },
     surface_render_parameters = {
       shadow_opacity = 0.73,

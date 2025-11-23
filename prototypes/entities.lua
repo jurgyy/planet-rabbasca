@@ -1,5 +1,4 @@
 require ("__base__.prototypes.entity.assemblerpipes")
-local rutil = require("__planet-rabbasca__.util")
 
 local assembler = util.merge { data.raw["assembling-machine"]["assembling-machine-3"],
 {
@@ -79,13 +78,13 @@ data:extend{
     type = "electric-energy-interface",
     name = "rabbasca-energy-source",
     icon = "__rabbasca-assets__/graphics/recolor/icons/vulcanus-bw.png",
-    energy_production = "50MW",
+    energy_production = Rabbasca.surface_megawatts() .. "MW",
 
     energy_source = { 
       type = "electric", 
       usage_priority = "primary-output", 
-      buffer_capacity = "8.333MJ", 
-      output_flow_limit = "50MW",
+      buffer_capacity = (Rabbasca.surface_megawatts() / 6) .. "MJ", 
+      output_flow_limit = Rabbasca.surface_megawatts() .. "MW",
       render_no_power_icon = false
     },
     gui_mode = "none",

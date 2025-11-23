@@ -1,32 +1,19 @@
-local gleba = settings.startup["rabbasca-orbits"].value
+local M = { }
 
-function default_requirements(planet)
-  -- If there is a cargo drop restriction, also forbid to bunnyhop cargo in
-  return { "planetslib-"..planet.. "-cargo-drops" }
+function M.default_requirements(planet)
+    -- If there is a cargo drop restriction, also forbid to bunnyhop cargo in
+    return { "planetslib-"..planet.. "-cargo-drops" }
 end
 
-bunnyhop_requirements = bunnyhop_requirements or { 
-  [gleba] = { }, -- force no restriction on gleba, so we do not softlock on rabbasca
-}
-
-local M = {}
-
--- default requirements: { "planetslib-<name>-cargo-drops" }
--- use this to restrict to one or more other technologies
--- note that planet-discovery-<name> is always required through is_space_location_unlocked
--- modifying parent requirements is not allowed to prevent softlocks.
-function M.set_requirements(name, requirements)
-  if name == gleba then return end
-  bunnyhop_requirements[name] = requirements
+function M.get_requirements(name)
+    if name == Rabbasca.parent() then return { } end
+    return prototypes.mod_data["rabbasca-bunnyhop-requirements"].data[name] or M.default_requirements(name)
 end
 
-function M.dont_allow(name)
-  M.set_requirements(name, { "bunnyhop-never" })
-end
 
 function M.can_jump_to(planet)
   if not game.planets[planet] or not game.forces.player.is_space_location_unlocked(planet) then return false end
-  local requirements = bunnyhop_requirements[planet] or default_requirements(planet)
+  local requirements = M.get_requirements(planet)
   local techs = game.forces.player.technologies
   for _, req in pairs(requirements) do 
     if req == "bunnyhop-never" then return false end

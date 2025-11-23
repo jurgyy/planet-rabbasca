@@ -1,40 +1,30 @@
+local output = { }
 
--- Interpolate weight for current evo
-local function interpolate_weight(points, evo)
-    local last_point = points[1]
-    for _, point in ipairs(points) do
-        if evo < point.evolution_factor then
-            local t = (evo - last_point.evolution_factor) /
-                      (point.evolution_factor - last_point.evolution_factor)
-            return last_point.weight + t * (point.weight - last_point.weight)
-        end
-        last_point = point
-    end
-    return last_point.weight
+function output.rabbasca_set_vault_active(e, active)
+  if (not e) or e.name ~= "rabbasca-vault-crafter" then return end
+  e.active = true -- disabling prevents hp regeneration
+  if active then
+    e.force = game.forces.player
+  else
+    e.force = game.forces.rabbascans
+  end
 end
 
--- Compute probabilities
-local function get_spawn_probabilities()
-    local evo = game.forces["rabbascans"].get_evolution_factor("rabbasca")
-    local proto = game.entity_prototypes["rabbasca-vault-spawner"]
-
-    local units = {}
-    local total = 0
-    for _, def in ipairs(proto.result_units) do
-        local w = interpolate_weight(def.spawn_points, evo)
-        if w > 0 then
-            table.insert(units, {name = def.unit, weight = w})
-            total = total + w
-        end
-    end
-
-    for _, u in ipairs(units) do
-        u.prob = u.weight / total
-    end
-    return units
+function output.update_alertness(surface, position)
+  local active_vaults_count = #surface.find_entities_filtered { name = "rabbasca-vault-console", force = game.forces.player }
+  local is_meltdown = #surface.find_entities_filtered { name = "rabbasca-vault-meltdown" } > 0
+  local new_evo = math.min(1, active_vaults_count * settings.global["rabbasca-evolution-per-vault"].value / 100)
+  if is_meltdown then new_evo = 1 end 
+  game.forces.rabbascans.set_evolution_factor(new_evo, surface)
+  game.forces.enemy.set_evolution_factor(new_evo, surface) -- make sure factoriopedia evolution ui shows correct value
+  storage.hacked_vaults = active_vaults_count
+  if not position then return end
+  local new_evo_text = string.format("%.1f", game.forces.rabbascans.get_evolution_factor(surface) * 100)
+  for _, player in pairs(game.players) do
+    player.create_local_flying_text { text = {"rabbasca-extra.alertness-floating", new_evo_text}, surface = surface, position = position }
+  end
 end
 
--- Helper to build UI
 local function create_evolution_bar(player)
     if player.gui.top.rabbasca_alertness then
         player.gui.top.rabbasca_alertness.destroy() 
@@ -68,7 +58,6 @@ local function create_evolution_bar(player)
         type = "flow",
         direction = "vertical",
         name = "right",
-        -- style = "shortcut_bar_inner_panel"
     }
     right.style.top_padding = 2
     right.add{
@@ -85,8 +74,7 @@ local function create_evolution_bar(player)
     bar.style.color = color
 end
 
-local M = { }
-function M.update_bar(player)
+function output.update_evolution_bar(player)
     local is_on_rabbasca = player.surface and player.surface.name == "rabbasca"
     local ui = player.gui.top.rabbasca_alertness
     if ui and not is_on_rabbasca then
@@ -96,4 +84,4 @@ function M.update_bar(player)
     end
 end
 
-return M
+return output

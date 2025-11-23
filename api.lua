@@ -1,11 +1,50 @@
-local output = {
-  rabbasca = {
-    is_aps_planet = settings.startup["aps-planet"] and settings.startup["aps-planet"].value == "rabbasca",
-    parent = settings.startup["rabbasca-orbits"].value
-  }
+if Rabbasca then return end
+
+Rabbasca = { 
+    bunnyhop = { }
 }
 
-function output.restrict_to_harene_pool(bbox)
+-- shorthands for settings
+function Rabbasca.is_aps_planet() return settings.startup["aps-planet"] and settings.startup["aps-planet"].value == "rabbasca" end
+function Rabbasca.parent() return settings.startup["rabbasca-orbits"].value end
+function Rabbasca.surface_megawatts() return settings.startup["rabbasca-surface-megawatts"].value end
+
+if not data then return end
+
+data:extend{{
+    type = "mod-data",
+    name = "rabbasca-bunnyhop-requirements",
+    data = { }
+}}
+
+function Rabbasca.bunnyhop.set_requirements(name, requirements)
+  if not data.raw.planet[name] then return end
+  data.raw["mod-data"]["rabbasca-bunnyhop-requirements"].data[name] = requirements
+end
+
+function Rabbasca.bunnyhop.dont_allow(name)
+  Rabbasca.set_requirements(name, { "bunnyhop-never" })
+end
+
+function Rabbasca.below_harenic_threshold()
+    return { property = "harenic-energy-signatures", max = Rabbasca.surface_megawatts() / 2.5 }
+end
+
+function Rabbasca.above_harenic_threshold()
+    return { property = "harenic-energy-signatures", min = Rabbasca.surface_megawatts() / 2.5 }
+end
+
+function Rabbasca.not_on_harenic_surface(proto)
+proto.surface_conditions = proto.surface_conditions or { }
+table.insert(proto.surface_conditions, Rabbasca.below_harenic_threshold())
+end
+
+function Rabbasca.only_on_harenic_surface(proto)
+proto.surface_conditions = proto.surface_conditions or { }
+table.insert(proto.surface_conditions, Rabbasca.above_harenic_threshold())
+end
+
+function Rabbasca.ears_flooring_rule(bbox)
     return 
     { 
         area = bbox, 
@@ -15,7 +54,15 @@ function output.restrict_to_harene_pool(bbox)
     }
 end
 
-function output.create_vault_recipe(input, values)
+function Rabbasca.require_ears_flooring(proto)
+    if not proto.collision_box then return false end
+    proto.tile_buildability_rules = proto.tile_buildability_rules or { }
+    table.insert(proto.tile_buildability_rules, Rabbasca.ears_flooring_rule(proto.collision_box))
+    -- TODO: Should check whether rules conflict?
+    return true
+end
+
+function Rabbasca.create_vault_recipe(input, values)
 data:extend{
   util.merge {
     values,
@@ -44,6 +91,7 @@ function create_infused_thing_with_effect(original, needed_core)
     if (not item) or item.hidden or not item.subgroup then return nil end
     local new_name = "harene-infused-"..original.name
     local new = table.deepcopy(original)
+    if not Rabbasca.require_ears_flooring(new) then return nil end
     local icons = {}
     if item.icon then
         table.insert(icons, { icon = item.icon, icon_size = item.icon_size or 64 })
@@ -73,11 +121,11 @@ function create_infused_thing_with_effect(original, needed_core)
     new.placeable_by = { item = new_name, count = 1 }
     new.minable.result = new_name
     new.factoriopedia_alternative = original.name
-    new.tile_buildability_rules = { output.restrict_to_harene_pool(new.collision_box) }
     new.energy_source = util.merge{
         original.energy_source,
         { type = "void" }
     }
+
 
     if not data.raw["item-subgroup"][new_item.subgroup] then
         data:extend { util.merge {
@@ -111,9 +159,9 @@ function create_infused_thing_with_effect(original, needed_core)
     return new_name
 end
 
+-- set prototype.no_ears_upgrade = true to skip ears variant creation
 -- should be called in data-updates or later to ensure crafter item exists
--- add no_ears_upgrade = true to prototypes to prevent them being added
-function output.create_ears_variant(thing, tech, is_small)
+function Rabbasca.create_ears_variant(thing, tech, is_small)
     local new_thing = create_infused_thing_with_effect(thing, (is_small and "harene-ears-subcore") or "harene-ears-core")
     if new_thing and data.raw["technology"][tech] then
         local unlocks = data.raw["technology"][tech].effects
@@ -124,12 +172,6 @@ function output.create_ears_variant(thing, tech, is_small)
         })
     end
     return new_thing
-end
-
-
-function output.not_on_harenic_surface(proto)
-  proto.surface_conditions = proto.surface_conditions or { }
-  table.insert(proto.surface_conditions, {property = "harenic-energy-signatures", max = 20})
 end
 
 local function is_assembled(recipe)
@@ -145,7 +187,7 @@ local function is_assembled(recipe)
     return false
 end
 
-function output.make_complex_machinery(proto, require_assembling_machine_craftable)
+function Rabbasca.make_complex_machinery(proto, require_assembling_machine_craftable)
   if not proto then return end
   local recipe = data.raw["recipe"][proto.name]
   if not recipe then return end
@@ -154,30 +196,3 @@ function output.make_complex_machinery(proto, require_assembling_machine_craftab
   recipe.additional_categories = recipe.additional_categories or { }
   table.insert(recipe.additional_categories, "complex-machinery")
 end
-
-function output.rabbasca_set_vault_active(e, active)
-  if (not e) or e.name ~= "rabbasca-vault-crafter" then return end
-  e.active = true -- disabling prevents hp regeneration
-  if active then
-    e.force = game.forces.player
-  else
-    e.force = game.forces.rabbascans
-  end
-end
-
-function output.update_alertness(surface, position)
-  local active_vaults_count = #surface.find_entities_filtered { name = "rabbasca-vault-console", force = game.forces.player }
-  local is_meltdown = #surface.find_entities_filtered { name = "rabbasca-vault-meltdown" } > 0
-  local new_evo = math.min(1, active_vaults_count * settings.global["rabbasca-evolution-per-vault"].value / 100)
-  if is_meltdown then new_evo = 1 end 
-  game.forces.rabbascans.set_evolution_factor(new_evo, surface)
-  game.forces.enemy.set_evolution_factor(new_evo, surface) -- make sure factoriopedia evolution ui shows correct value
-  storage.hacked_vaults = active_vaults_count
-  if not position then return end
-  local new_evo_text = string.format("%.1f", game.forces.rabbascans.get_evolution_factor(surface) * 100)
-  for _, player in pairs(game.players) do
-    player.create_local_flying_text { text = {"rabbasca-extra.alertness-floating", new_evo_text}, surface = surface, position = position }
-  end
-end
-
-return output

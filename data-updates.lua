@@ -1,5 +1,3 @@
-local r = require("__planet-rabbasca__.util")
-
 data.raw["item"]["beta-carotene-barrel"].fuel_category = "carotene"
 data.raw["item"]["beta-carotene-barrel"].fuel_value = "27.35MJ"
 
@@ -12,8 +10,8 @@ for _, lab in pairs(data.raw["lab"]) do
   end
 end
 
-if not r.rabbasca.is_aps_planet then
-  local gleba = r.rabbasca.parent
+if not Rabbasca.is_aps_planet() then
+  local gleba = Rabbasca.parent()
   if data.raw["technology"]["planet-discovery-"..gleba] and data.raw["technology"]["planet-discovery-rabbasca"] then
     table.insert(data.raw["technology"]["planet-discovery-rabbasca"].prerequisites, "planet-discovery-"..gleba)
   end

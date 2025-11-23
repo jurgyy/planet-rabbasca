@@ -1,5 +1,4 @@
 local RECEIVER_RADIUS = 21 -- Also in scripts/remote-builder.lua. Should be unified sometime.
-local rutil = require("__planet-rabbasca__.util")
 -- local recycling = require("__quality__.prototypes.recycling")
 local hatch = { 
   cargo_unit_entity_to_spawn = "rabbasca-warp-sequence", 
@@ -48,9 +47,7 @@ pad.cargo_station_parameters = {
         }
     }}
 }
-pad.surface_conditions = {
-    { property = "harenic-energy-signatures", min = 20 }
-}
+pad.surface_conditions = { Rabbasca.above_harenic_threshold() }
 
 data:extend {
   pad,
@@ -72,7 +69,7 @@ data:extend {
     energy_source = { type = "void" },
     collision_box = {{-0.8, -0.8}, {0.8, 0.8}},
     selection_box = {{-1, -1}, {1, 1}},
-    tile_buildability_rules = { rutil.restrict_to_harene_pool({{-0.8, -0.8}, {0.8, 0.8}}) },
+    tile_buildability_rules = { Rabbasca.ears_flooring_rule({{-0.8, -0.8}, {0.8, 0.8}}) },
     radius_visualisation_specification = {
       sprite = data.raw["utility-sprites"]["default"].construction_radius_visualization,
       distance = RECEIVER_RADIUS,

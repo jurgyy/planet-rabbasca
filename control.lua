@@ -1,7 +1,7 @@
-local remote_builder = require("__planet-rabbasca__/scripts/remote-builder")
-local rutil = require("__planet-rabbasca__.util")
-local bunnyhop = require("__planet-rabbasca__/bunnyhop")
-local alert_ui = require("__planet-rabbasca__.scripts.alertness-ui")
+require("api")
+local remote_builder = require("__planet-rabbasca__.scripts.remote-builder")
+local rutil = require("__planet-rabbasca__.scripts.surface-control")
+local bunnyhop = require("__planet-rabbasca__.scripts.bunnyhop-control")
 
 local function handle_script_events(event)
   local effect_id = event.effect_id
@@ -18,7 +18,7 @@ local function handle_script_events(event)
     local position = (from and from.position) or event.target_position or event.source_position
     rutil.update_alertness(game.surfaces[event.surface_index], position)
     for _, player in pairs(game.players) do 
-      alert_ui.update_bar(player) 
+      rutil.update_evolution_bar(player) 
     end
     if from and from.name == "rabbasca-vault-spawner" then
       local vault = from.surface.find_entity("rabbasca-vault-crafter", position)
@@ -97,12 +97,12 @@ script.on_event({
     if not player then return end
 
     bunnyhop.clear_bunnyhop_ui(player)
-    alert_ui.update_bar(player)
+    rutil.update_evolution_bar(player)
 end)
 
 script.on_event(defines.events.on_player_changed_surface, function(event)
     local player = game.players[event.player_index]
-    alert_ui.update_bar(player)
+    rutil.update_evolution_bar(player)
 end)
 
 script.on_event(defines.events.on_surface_created, function(event)
@@ -112,7 +112,7 @@ script.on_event(defines.events.on_surface_created, function(event)
 end)
 
 local function give_starter_items()
-  if not rutil.rabbasca.is_aps_planet then return end
+  if not Rabbasca.is_aps_planet() then return end
   if not remote.interfaces["freeplay"] then return end
   remote.call("freeplay", "set_ship_items", 
   {

@@ -26,6 +26,16 @@ data:extend{
   },
   {
     type = "double-setting",
+    name = "rabbasca-surface-megawatts",
+    setting_type = "startup",
+    hidden = true,
+    default_value = 50,
+    minimum_value = 0.01,
+    maximum_value = 50000,
+    allow_blank = false
+  },
+  {
+    type = "double-setting",
     name = "rabbasca-evolution-per-vault",
     setting_type = "runtime-global",
     default_value = 4,
@@ -57,7 +67,7 @@ data:extend{
     type = "bool-setting",
     name = "rabbasca-disable-train-extensions",
     setting_type = "startup",
-    default_value = false,
+    default_value = true,
     allow_blank = false
   },
 }

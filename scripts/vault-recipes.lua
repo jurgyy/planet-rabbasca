@@ -1,6 +1,4 @@
-local r = require("__planet-rabbasca__.util")
-
-r.create_vault_recipe("vault-protocol-haronite", {
+Rabbasca.create_vault_recipe("vault-protocol-haronite", {
   icons = {
     {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
     {icon = data.raw["item"]["haronite"].icon, icon_size = 64, shift = {8, 8}, scale = 0.4},
@@ -11,7 +9,7 @@ r.create_vault_recipe("vault-protocol-haronite", {
   maximum_productivity = 9,
   allow_productivity = true,
 })
-r.create_vault_recipe("vault-protocol-harene-ears-subcore",
+Rabbasca.create_vault_recipe("vault-protocol-harene-ears-subcore",
 {
   icons = {
     {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
@@ -23,7 +21,7 @@ r.create_vault_recipe("vault-protocol-harene-ears-subcore",
   maximum_productivity = 9,
   allow_productivity = true,
 })
-r.create_vault_recipe("vault-protocol-iron-ore", {
+Rabbasca.create_vault_recipe("vault-protocol-iron-ore", {
   icons = {
     {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
     {icon = data.raw["item"]["iron-ore"].icon, icon_size = 64, shift = {8, 8}, scale = 0.4},
@@ -35,7 +33,7 @@ r.create_vault_recipe("vault-protocol-iron-ore", {
   maximum_productivity = 9,
   allow_productivity = true,
 })
-r.create_vault_recipe("vault-protocol-copper-ore", {
+Rabbasca.create_vault_recipe("vault-protocol-copper-ore", {
   icons = {
     {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
     {icon = data.raw["item"]["copper-ore"].icon, icon_size = 64, shift = {8, 8}, scale = 0.4},
@@ -47,7 +45,7 @@ r.create_vault_recipe("vault-protocol-copper-ore", {
   maximum_productivity = 9,
   allow_productivity = true,
 })
-r.create_vault_recipe("vault-protocol-water", {
+Rabbasca.create_vault_recipe("vault-protocol-water", {
   icons = {
     {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
     {icon = data.raw["fluid"]["water"].icon, icon_size = 64, shift = {8, 8}, scale = 0.4},
@@ -59,7 +57,7 @@ r.create_vault_recipe("vault-protocol-water", {
   maximum_productivity = 9,
   allow_productivity = true,
 })
-r.create_vault_recipe("vault-protocol-sulfur", {
+Rabbasca.create_vault_recipe("vault-protocol-sulfur", {
   icons = {
     {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
     {icon = data.raw["item"]["sulfur"].icon, icon_size = 64, shift = {8, 8}, scale = 0.4},

@@ -441,13 +441,7 @@ data:extend {
     subgroup = "explosions",
     height = 0,
     animations = util.empty_sprite(),
-    surface_conditions =
-    {
-      {
-        property = "harenic-energy-signatures",
-        min = 20,
-      }
-    },
+    surface_conditions = { Rabbasca.above_harenic_threshold() },
     created_effect =
     {
       type = "direct",
