@@ -70,6 +70,7 @@ util.merge {
 util.merge { 
     table.deepcopy(data.raw["tile"]["foundation"]),
     {
+      -- TODO: This can be placed on space platforms for some reason, bug or feature?
       name = "haronite-plate",
       collision_mask = { layers = { harene = true } },
       minable = { result = "haronite-plate" },

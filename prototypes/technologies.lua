@@ -454,7 +454,7 @@ data:extend {
 },
 {
   type = "technology",
-  name = "interplanetary-construction",
+  name = "interplanetary-construction-1",
   icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon-big.png",
   icon_size = 640,
   prerequisites = { "rabbasca-ears-technology-1", "rabbasca-document-forging-2" },
@@ -473,6 +473,7 @@ data:extend {
       recipe = "rabbasca-warp-pylon-recycling",
     },
   },
+  level = 1,
   research_trigger = {
     type = "capture-spawner",
     entity = "rabbasca-vault-warp-spawner"
@@ -590,6 +591,66 @@ data:extend {
       type = "craft-fluid",
       fluid = "harenic-lava",
     }
+},
+{
+    type = "technology",
+    name = "interplanetary-construction-2",
+    icon = "__rabbasca-assets__/graphics/recolor/icons/harenic-lava.png",
+    icon_size = 64,
+    prerequisites = { "interplanetary-construction-1", "harene-synthesis" },
+    effects =
+    {
+      
+    },
+    level = 2,
+    unit = {
+      time = 60,
+      count = 1000,
+      ingredients = {
+        {"automation-science-pack", 1},
+        {"logistic-science-pack", 1},
+        {"chemical-science-pack", 1},
+        {"space-science-pack", 1},
+        {"military-science-pack", 1},
+        {"production-science-pack", 1},
+        {"utility-science-pack", 1},
+        {"metallurgic-science-pack", 1},
+        {"electromagnetic-science-pack", 1},
+        {"agricultural-science-pack", 1},
+        {"athletic-science-pack", 1},
+        {"cryogenic-science-pack", 1},
+      }
+  }
+},
+{
+    type = "technology",
+    name = "rabbasca-hyperjuice",
+    icon = "__rabbasca-assets__/graphics/recolor/icons/harenic-lava.png",
+    icon_size = 64,
+    prerequisites = { "promethium-science-pack", "harene-synthesis" },
+    effects =
+    {
+      
+    },
+    unit = {
+      time = 60,
+      count = 2000,
+      ingredients = {
+        {"automation-science-pack", 1},
+        {"logistic-science-pack", 1},
+        {"chemical-science-pack", 1},
+        {"space-science-pack", 1},
+        {"military-science-pack", 1},
+        {"production-science-pack", 1},
+        {"utility-science-pack", 1},
+        {"metallurgic-science-pack", 1},
+        {"electromagnetic-science-pack", 1},
+        {"agricultural-science-pack", 1},
+        {"athletic-science-pack", 1},
+        {"cryogenic-science-pack", 1},
+        {"promethium-science-pack", 1},
+      }
+  }
 },
 }
 

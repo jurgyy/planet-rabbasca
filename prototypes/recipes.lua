@@ -101,6 +101,7 @@ data:extend {
         main_product = "harene",
         hide_from_player_crafting = true,
         category = "cryogenics",
+        surface_conditions = { { property = "magnetic-field", min = 99 } },
     },
     {
         type = "recipe",
@@ -109,7 +110,7 @@ data:extend {
         energy_required = 10,
         ingredients = { 
             {type = "item",  name = "tungsten-plate", amount = 15 },
-            {type = "item",  name = "rabbasca-energetic-concrete", amount = 20 },
+            {type = "item",  name = "haronite-plate", amount = 2 },
             {type = "item",  name = "low-density-structure", amount = 4 },
             {type = "item",  name = "carbon-fiber", amount = 5 },
         },
@@ -117,6 +118,7 @@ data:extend {
             {type = "item",  name = "harene-cryo-container-empty", amount = 1 },
         },
         main_product = "harene-cryo-container-empty",
+        surface_conditions = table.deepcopy(data.raw["recipe"]["cryogenic-plant"].surface_conditions),
         allow_productivity = true,
         hide_from_player_crafting = true,
         category = "crafting",
@@ -139,7 +141,8 @@ data:extend {
         hide_from_player_crafting = true,
         category = "metallurgy",
         spoil_ticks = 30 * second,
-        spoil_result = "harene-cryo-container-empty"
+        spoil_result = "harene-cryo-container-empty",
+        surface_conditions = { Rabbasca.above_harenic_threshold() },
     },
     {
         type = "recipe",
@@ -159,6 +162,7 @@ data:extend {
         },
         main_product = "haronite-plate",
         category = "metallurgy",
+        surface_conditions = { Rabbasca.above_harenic_threshold() },
     },
     {
         type = "recipe",
@@ -174,7 +178,7 @@ data:extend {
             {type = "fluid", name = "lubricant", amount = 200 },
         },
         results = { { type = "item", name = "machining-assembler", amount = 1 } },
-        surface_conditions = {{property = "harenic-energy-signatures", min = 20 }},
+        surface_conditions = { Rabbasca.above_harenic_threshold() },
         main_product = "machining-assembler",
         category = "crafting-with-fluid",
     },
@@ -499,7 +503,7 @@ data:extend {
 
 local rocket_part = table.deepcopy(data.raw["recipe"]["rocket-part"])
 rocket_part.name = "rocket-part-from-turbofuel"
-rocket_part.surface_conditions = { { property = "harenic-energy-signatures", min = 20 } }
+rocket_part.surface_conditions = { Rabbasca.above_harenic_threshold() }
 rocket_part.ingredients = {
     { type = "item", name = "rabbasca-turbofuel", amount = 1 },
     { type = "item", name = "haronite-plate", amount = 1 },

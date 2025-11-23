@@ -230,7 +230,7 @@ data:extend {
     results = { 
         { type = "item", name = "rabbasca-warp-cargo-pad", amount = 1 },
     },
-    surface_conditions = {{ property = "harenic-energy-signatures", min = 20 }},
+    surface_conditions = { Rabbasca.above_harenic_threshold() },
     main_product = "rabbasca-warp-cargo-pad",
     category = "complex-machinery"
 },
