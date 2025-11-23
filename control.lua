@@ -126,6 +126,11 @@ end
 
 -- Workaround for robots expanding into biter nests. Also compatibility for castra research
 local function create_rabbasca_force()
+  if game.forces.rabbascans then 
+    log("Force 'rabbascans' already exists")
+    return
+  end
+  log("Creating force 'rabbascans'")
   local force = game.create_force("rabbascans")
   force.ai_controllable = false
   force.share_chart = true
