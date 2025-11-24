@@ -236,6 +236,18 @@ data:extend {
         type = "unlock-recipe",
         recipe = "vault-protocol-harene-ears-subcore"
       },
+      {
+        type = "unlock-recipe",
+        recipe = "harene-ears-core"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "harene-infused-assembling-machine-1"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "harene-infused-assembling-machine-2"
+      },
     },
     research_trigger =
     {
@@ -251,14 +263,10 @@ data:extend {
     prerequisites = { "athletic-science-pack" },
     effects =
     {
-      {
-        type = "unlock-recipe",
-        recipe = "harene-ears-core"
-      }
       -- more in data-updates
     },
     unit = {
-        count = 100,
+        count = 500,
         time = 30,
         ingredients = {
             {"automation-science-pack", 1},
@@ -595,12 +603,17 @@ data:extend {
 {
     type = "technology",
     name = "interplanetary-construction-2",
-    icon = "__rabbasca-assets__/graphics/recolor/icons/harenic-lava.png",
-    icon_size = 64,
+    icons = {
+      { icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon-big.png", icon_size = 640, scale = 0.8 },
+      { icon = data.raw["assembling-machine"]["rabbasca-vault-crafter"].icon, icon_size = 64, shift = {12, 12}, scale = 0.5 },
+    },
     prerequisites = { "interplanetary-construction-1", "harene-synthesis" },
     effects =
     {
-      
+      {
+        type = "unlock-recipe",
+        recipe = "vault-protocol-warp-pylon",
+      },
     },
     level = 2,
     unit = {
@@ -624,13 +637,27 @@ data:extend {
 },
 {
     type = "technology",
-    name = "rabbasca-hyperjuice",
-    icon = "__rabbasca-assets__/graphics/recolor/icons/harenic-lava.png",
-    icon_size = 64,
+    name = "harene-infusions",
+    icons = {
+      { icon = "__rabbasca-assets__/graphics/recolor/icons/harene.png", icon_size = 64, scale = 0.8 },
+      { icon = data.raw["item"]["rabbasca-hyperfuel"].icon,  icon_size = 64, shift = {12, 12}, scale = 0.5 },
+      { icon = data.raw["capsule"]["rabbasca-hyperjuice"].icon, icon_size = 64, shift = {-8, 12}, scale = 0.5 },
+    },
     prerequisites = { "promethium-science-pack", "harene-synthesis" },
     effects =
     {
-      
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-hyperjuice",
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-hyperfuel",
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "omega-carotene",
+      },
     },
     unit = {
       time = 60,

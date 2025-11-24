@@ -140,6 +140,16 @@ data:extend {
       damage_per_tick = { amount = -5 },
     }
   },
+  util.merge{
+    table.deepcopy(data.raw["sticker"]["bioflux-speed-regen-sticker"]),
+    {
+      name = "hyperjuice-speed-sticker",
+      duration_in_ticks = 600 * second,
+      target_movement_modifier = 3.3,
+      damage_interval = 20,
+      damage_per_tick = { amount = -25 },
+    }
+  },
   util.merge {
     table.deepcopy(data.raw["rocket-silo-rocket"]["rocket-silo-rocket"]),
     {

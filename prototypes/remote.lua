@@ -1,5 +1,7 @@
+require("__quality__.prototypes.recycling")
+
 local RECEIVER_RADIUS = 21 -- Also in scripts/remote-builder.lua. Should be unified sometime.
--- local recycling = require("__quality__.prototypes.recycling")
+
 local hatch = { 
   cargo_unit_entity_to_spawn = "rabbasca-warp-sequence", 
   receiving_cargo_units = {},

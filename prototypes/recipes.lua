@@ -1,4 +1,3 @@
-local recycling = require("__quality__.prototypes.recycling")
 require("__planet-rabbasca__.scripts.vault-recipes")
 
 data:extend {
@@ -170,7 +169,6 @@ data:extend {
         enabled = false,
         energy_required = 20.0,
         ingredients = { 
-            -- {type = "item", name = "haronite-plate", amount = 10 },
             {type = "item", name = "steel-plate", amount = 200 },
             {type = "item", name = "iron-gear-wheel", amount = 69 },
             {type = "item", name = "rabbasca-energetic-concrete", amount = 50 },
@@ -499,6 +497,81 @@ data:extend {
         subgroup = "rabbasca-processes",
         order = "r[alternate-uses]-a[haronite]"
     }
+}
+
+data:extend {
+    {
+        type = "recipe",
+        name = "rabbasca-hyperfuel",
+        enabled = false,
+        energy_required = 15,
+        ingredients = {
+            { type = "item", name = "rabbasca-turbofuel", amount = 5 },
+            { type = "item", name = "promethium-asteroid-chunk", amount = 5 },
+            { type = "fluid", name = "harene", amount = 10 },
+        },
+        results = { 
+            { type = "item", name = "rabbasca-hyperfuel", amount = 1 },
+        },
+        enabled = false,
+        allow_productivity = false,
+        category = "chemistry-or-cryogenics",
+        crafting_machine_tint =
+        {
+            primary = {r = 0.710, g = 0.633, b = 0.482, a = 1.000},
+            secondary = {r = 0.745, g = 0.672, b = 0.527, a = 1.000},
+            tertiary = {r = 0.894, g = 0.773, b = 0.596, a = 1.000},
+            quaternary = {r = 0.812, g = 0.583, b = 0.202, a = 1.000},
+        }
+    },
+    {
+        type = "recipe",
+        name = "rabbasca-hyperjuice",
+        enabled = false,
+        energy_required = 15,
+        ingredients = {
+            { type = "item", name = "rabbasca-protein-shake", amount = 5 },
+            { type = "item", name = "promethium-asteroid-chunk", amount = 5 },
+            { type = "fluid", name = "harene", amount = 10 },
+        },
+        results = { 
+            { type = "item", name = "rabbasca-hyperjuice", amount = 1 },
+        },
+        enabled = false,
+        allow_productivity = false,
+        category = "chemistry-or-cryogenics",
+        crafting_machine_tint =
+        {
+            primary = {r = 0.710, g = 0.633, b = 0.482, a = 1.000},
+            secondary = {r = 0.745, g = 0.672, b = 0.527, a = 1.000},
+            tertiary = {r = 0.894, g = 0.773, b = 0.596, a = 1.000},
+            quaternary = {r = 0.812, g = 0.583, b = 0.202, a = 1.000},
+        }
+    },
+    {
+        type = "recipe",
+        name = "omega-carotene",
+        enabled = false,
+        energy_required = 15,
+        ingredients = {
+            { type = "fluid", name = "beta-carotene", amount = 95 },
+            { type = "fluid", name = "harene", amount = 5 },
+            { type = "item",  name = "promethium-asteroid-chunk", amount = 5 },
+        },
+        results = { 
+            { type = "fluid", name = "omega-carotene", amount = 100 },
+        },
+        enabled = false,
+        allow_productivity = false,
+        category = "chemistry-or-cryogenics",
+        crafting_machine_tint =
+        {
+            primary = {r = 0.710, g = 0.633, b = 0.482, a = 1.000},
+            secondary = {r = 0.745, g = 0.672, b = 0.527, a = 1.000},
+            tertiary = {r = 0.894, g = 0.773, b = 0.596, a = 1.000},
+            quaternary = {r = 0.812, g = 0.583, b = 0.202, a = 1.000},
+        }
+    },
 }
 
 local rocket_part = table.deepcopy(data.raw["recipe"]["rocket-part"])

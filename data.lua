@@ -8,12 +8,12 @@ require("prototypes.resources")
 require("prototypes.surfaces")
 require("prototypes.map-gen")
 require("prototypes.tiles")
+require("prototypes.remote")
 require("prototypes.recipes")
 require("prototypes.technologies")
 require("prototypes.equipment")
 require("prototypes.trains")
 require("prototypes.tips-and-tricks")
-require("prototypes.remote")
 
 if mods["any-planet-start"] then
     APS.add_planet{

@@ -1,5 +1,4 @@
 local RECEIVER_RADIUS = 21
--- TODO: Use items_to_place_this?
 
 local function awake(receiver)
     if receiver.valid and receiver.get_recipe() == nil and receiver.surface.planet then
