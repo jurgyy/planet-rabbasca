@@ -1,5 +1,8 @@
 {
     "technology":[
         ["interplanetary-construction", "interplanetary-construction-1"]
+    ],
+    "recipe":[
+        ["rabbasca-warp-sequence", "rabbasca-warp-sequence-building"]
     ]
 }

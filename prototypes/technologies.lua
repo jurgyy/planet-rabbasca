@@ -480,6 +480,10 @@ data:extend {
       type = "unlock-recipe",
       recipe = "rabbasca-warp-pylon-recycling",
     },
+    {
+      type = "unlock-recipe",
+      recipe = "rabbasca-warp-sequence-building",
+    }
   },
   level = 1,
   research_trigger = {
@@ -614,6 +618,14 @@ data:extend {
         type = "unlock-recipe",
         recipe = "vault-protocol-warp-pylon",
       },
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-warp-sequence-tile",
+      },
+      -- {
+      --   type = "unlock-recipe",
+      --   recipe = "rabbasca-warp-sequence-module",
+      -- },
     },
     level = 2,
     unit = {

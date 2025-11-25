@@ -28,8 +28,11 @@ data:extend {
     {
         type = "item-group",
         name = "rabbasca-extensions",
-        icon = data.raw["item"]["harene-ears-core"].icon,
-        icon_size = 64,
+        icons = {{
+            icon = data.raw["item"]["harene-ears-core"].icon,
+            icon_size = 64,
+            scale = 0.7
+        }},
         order = "fr"
     },
     {

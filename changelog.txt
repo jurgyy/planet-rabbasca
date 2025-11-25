@@ -8,8 +8,8 @@ Date: 2025-??-??
     - Haronite plate is now also a placeable foundation, providing energy to E.A.R.S. cores
     - Haronite plate now has a rocket capacity of 200
     - Added upgrades to Protein shake, Turbofuel and Beta carotene made from purified harene, requiring promethium science to unlock
-    - Added recipe to craft warp pylons yourself, requiring haronite plates
-    - [TODO] Warp pylons now require a new late-game technology to warp in tiles.
+    - Added new late-game technology to extract warp pylons from vaults
+    - Warp pylons now require this technology to warp in tiles
     - [TODO] Warp pylons can now also warp modules into module slots. Also requires the new technology.
     - Total available power on Rabbasca can now be changed via setting
     - Railway expansion is now deprecated and the default for its setting changed. Other mods solve vehicle grids much better. It will be removed in a future update.
@@ -20,6 +20,7 @@ Date: 2025-??-??
     - Quality modules can now be used in vaults
     - Increased vault access console resistances
     - Increased protection pylon max health. It will now stay around a bit longer
+    - Warp pylon construction range now scales with quality at +60% per level (range indicator does not adjust though)
 ---------------------------------------------------------------------------------------------------
 Version: 0.7.3
 Date: 2025-11-24

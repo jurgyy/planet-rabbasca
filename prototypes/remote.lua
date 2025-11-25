@@ -181,6 +181,15 @@ data:extend {
       place_result = "rabbasca-warp-pylon",
       subgroup = "space-interactors",
       order = "c[cargo-landing-pad]-r[rabbasca-warp-pylon]",
+      custom_tooltip_fields = {
+        {
+          name = {"tooltip.rabbasca-warp-pylon-range"},
+          value = {"tooltip-value.rabbasca-warp-pylon-range", "21"},
+          -- show_in_tooltip = false,
+          quality_header = "quality-tooltip.increases",
+          quality_values = { },
+        }
+      }
   },
   {
     type = "item",
@@ -238,10 +247,42 @@ data:extend {
 },
 {
     type = "recipe",
-    name = "rabbasca-warp-sequence",
+    name = "rabbasca-warp-sequence-building",
     icon = "__rabbasca-assets__/graphics/icons/warp.png",
-    enabled = true,
-    hidden = true,
+    enabled = false,
+    -- hidden = true,
+    hidden_in_factoriopedia = true,
+    hide_from_player_crafting = true,
+    result_is_always_fresh = true,
+    energy_required = 1,
+    ingredients = { },
+    results = { {type = "item", name = "rabbasca-warp-sequence", amount = 1 } },
+    main_product = "rabbasca-warp-sequence",    
+    category = "rabbasca-remote",
+    crafting_machine_tint = {primary = {2, 2, 2}}
+},
+{
+    type = "recipe",
+    name = "rabbasca-warp-sequence-tile",
+    icon = "__rabbasca-assets__/graphics/icons/warp.png",
+    enabled = false,
+    -- hidden = true,
+    hidden_in_factoriopedia = true,
+    hide_from_player_crafting = true,
+    result_is_always_fresh = true,
+    energy_required = 1,
+    ingredients = { },
+    results = { {type = "item", name = "rabbasca-warp-sequence", amount = 1 } },
+    main_product = "rabbasca-warp-sequence",    
+    category = "rabbasca-remote",
+    crafting_machine_tint = {primary = {2, 2, 2}}
+},
+{
+    type = "recipe",
+    name = "rabbasca-warp-sequence-module",
+    icon = "__rabbasca-assets__/graphics/icons/warp.png",
+    enabled = false,
+    -- hidden = true,
     hidden_in_factoriopedia = true,
     hide_from_player_crafting = true,
     result_is_always_fresh = true,
