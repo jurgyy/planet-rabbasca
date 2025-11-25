@@ -17,6 +17,14 @@ Date: 2025-??-??
   Balancing:
     - Reduced default total available power on Rabbasca to 30MW
     - E.A.R.S. core technology 1 cost increased to 500. to compensate, Assembling machines with E.A.R.S. are available earlier
+    - Quality modules can now be used in vaults
+    - Increased vault access console resistances
+    - Increased protection pylon max health. It will now stay around a bit longer
+---------------------------------------------------------------------------------------------------
+Version: 0.7.3
+Date: 2025-11-24
+  Bugfixes:
+    - Fixed crash when using bunnyhop engine
 ---------------------------------------------------------------------------------------------------
 Version: 0.7.2
 Date: 2025-11-23
