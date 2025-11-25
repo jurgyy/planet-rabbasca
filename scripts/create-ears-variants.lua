@@ -41,7 +41,9 @@ for _, thing in pairs(data.raw["rocket-silo"]) do
   if thing.rocket_entity == "rocket-silo-rocket" then
     local silo = Rabbasca.create_ears_variant(thing, "rabbasca-ears-technology-3")
     if silo then
-      data.raw["rocket-silo"][silo].rocket_entity = "rabbasca-rocket-silo-rocket"
+      local entity = data.raw["rocket-silo"][silo]
+      entity.rocket_entity = "rabbasca-rocket-silo-rocket"
+      entity.to_be_inserted_to_rocket_inventory_size = entity.to_be_inserted_to_rocket_inventory_size * 2
     end
   end
 end

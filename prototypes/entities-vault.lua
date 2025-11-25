@@ -457,6 +457,20 @@ data:extend {
         {
           {
             type = "set-tile",
+            tile_name = "volcanic-ash-cracks",
+            radius = 43,
+            apply_projection = false,
+            tile_collision_mask = { layers={out_of_map=true, water_tile = true} }
+          },
+          {
+            type = "set-tile",
+            tile_name = "harenic-lava",
+            radius = 32,
+            apply_projection = false,
+            tile_collision_mask = { layers={out_of_map=true, ground_tile = true} }
+          },
+          {
+            type = "set-tile",
             tile_name = "harenic-lava",
             radius = 6,
             apply_projection = false,

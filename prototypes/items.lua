@@ -54,6 +54,16 @@ data:extend {
 },
 {
     type = "item",
+    icon = "__Krastorio2Assets__/icons/items/imersium-plate.png",
+    icon_size = 64,
+    name = "haronite-rocket-frame",
+    stack_size = 50,
+    weight = 20*kg,
+    subgroup = "rabbasca-processes",
+    order = "h[haronite]-d[haronite-rocket-frame]",
+},
+{
+    type = "item",
     icon = "__rabbasca-assets__/graphics/recolor/icons/harenic-stabilizer.png",
     icon_size = 64,
     name = "harenic-stabilizer",

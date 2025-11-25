@@ -74,7 +74,7 @@ util.merge {
       name = "haronite-plate",
       collision_mask = { layers = { harene = true } },
       minable = { result = "haronite-plate" },
-      -- variants = { material_background = { picture = "__rabbasca-assets__/graphics/recolor/textures/haronite-plate.png", } },
+      variants = { material_background = { picture = "__rabbasca-assets__/graphics/foundation/haronite-plate.png", } },
       frozen_variant = "haronite-plate",
       check_collision_with_entities = true
     }

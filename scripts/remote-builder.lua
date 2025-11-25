@@ -112,10 +112,6 @@ end
 
 local M = {}
 
-function M.get_warpable_types()
-    return { "entity-ghost", "tile-ghost" }
-end
-
 function M.attempt_warmup(pylon, radius)
     local position = pylon.position
     if pylon.force.recipes["rabbasca-warp-sequence-tile"].enabled then
@@ -126,7 +122,7 @@ function M.attempt_warmup(pylon, radius)
             },
             name = { "tile-ghost" }
         }
-        if #ghosts > 0 then
+        if ghosts > 0 then
             pylon.set_recipe("rabbasca-warp-sequence-tile")
             pylon.recipe_locked = true
             return true
@@ -140,7 +136,7 @@ function M.attempt_warmup(pylon, radius)
             },
             name = { "entity-ghost" }
         }
-        if #ghosts > 0 then
+        if ghosts > 0 then
             pylon.set_recipe("rabbasca-warp-sequence-building")
             pylon.recipe_locked = true
             return true
@@ -154,7 +150,7 @@ function M.attempt_warmup(pylon, radius)
     --         },
     --         name = { }
     --     }
-    --     if #ghosts > 0 then
+    --     if ghosts > 0 then
     --         pylon.set_recipe("rabbasca-warp-sequence-module")
     --         pylon.recipe_locked = true
     --         return true

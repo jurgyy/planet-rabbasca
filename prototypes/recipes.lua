@@ -168,6 +168,22 @@ data:extend {
     },
     {
         type = "recipe",
+        name = "haronite-rocket-frame",
+        enabled = false,
+        energy_required = 10,
+        ingredients = { 
+            {type = "item",  name = "haronite-plate",    amount = 1 },
+            {type = "item",  name = "low-density-structure", amount = 10  },
+        },
+        results = { 
+            { type = "item", name = "haronite-rocket-frame", amount = 15  },
+        },
+        main_product = "haronite-rocket-frame",
+        category = "metallurgy",
+        surface_conditions = { Rabbasca.above_harenic_threshold() },
+    },
+    {
+        type = "recipe",
         name = "machining-assembler",
         enabled = false,
         energy_required = 20.0,
@@ -582,8 +598,9 @@ rocket_part.name = "rocket-part-from-turbofuel"
 rocket_part.surface_conditions = { Rabbasca.above_harenic_threshold() }
 rocket_part.ingredients = {
     { type = "item", name = "rabbasca-turbofuel", amount = 1 },
-    { type = "item", name = "haronite-plate", amount = 1 },
+    { type = "item", name = "haronite-rocket-frame", amount = 1 },
     { type = "item", name = "processing-unit", amount = 1 },
 }
+
 data:extend { rocket_part }
 PlanetsLib.assign_rocket_part_recipe("rabbasca", "rocket-part-from-turbofuel")

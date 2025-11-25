@@ -154,9 +154,9 @@ data:extend {
     table.deepcopy(data.raw["rocket-silo-rocket"]["rocket-silo-rocket"]),
     {
       name = "rabbasca-rocket-silo-rocket",
-      engine_starting_speed = 0.01,
-      flying_acceleration = 0.05,
-      flying_speed = 8.3333e-5,
+      engine_starting_speed = 0.007,
+      flying_acceleration = 0.03,
+      flying_speed = 4.3333e-5,
       inventory_size = 40
     }
   }
