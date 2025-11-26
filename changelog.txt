@@ -5,6 +5,8 @@ Date: 2025-11-25
     - Quality modules can now be used in vaults
     - Increased vault access console resistances
     - Increased protection pylon max health. It will now stay around a bit longer
+  Bugfixes:
+    - Fixed inserters would not insert items into Interplanetary cargo landing pad
 ---------------------------------------------------------------------------------------------------
 Version: 0.7.3
 Date: 2025-11-24

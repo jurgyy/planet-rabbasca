@@ -48,6 +48,7 @@ pad.cargo_station_parameters = {
         }
     }}
 }
+pad.flags = { "placeable-player", "player-creation" }
 pad.surface_conditions = {
     { property = "harenic-energy-signatures", min = 20 }
 }
