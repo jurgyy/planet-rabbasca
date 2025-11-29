@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.8.1
+Date: 2025-11-29
+  Balancing:
+    - Increased yield and spawn rate of Rabbascan rocks
+  Bugfixes:
+    - Fixed potential crash when deconstructing a warp pylon
+---------------------------------------------------------------------------------------------------
 Version: 0.8.0
 Date: 2025-11-29
   Changes:

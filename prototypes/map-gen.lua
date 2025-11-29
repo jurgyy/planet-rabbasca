@@ -59,12 +59,12 @@ data:extend{
     name = "rabbasca_rocks",
     parameters = {"scale"},
     expression = "aquilo_spot_noise{seed = 442,\z
-                                    count = 3,\z
+                                    count = 2 + 2 / control:rabbasca_rocks:frequency,\z
                                     skip_offset = 1,\z
-                                    region_size = 70 + 90 / control:rabbasca_rocks:frequency,\z
-                                    density = 0.32,\z
-                                    radius = scale * (1.1 + 0.7 * sqrt(control:rabbasca_rocks:size)),\z
-                                    favorability = 1} * control:rabbasca_rocks:size - clamp(rabbasca_fertile, 0, 1)"
+                                    region_size = 20 + 120 / (0.1 + control:rabbasca_rocks:size),\z
+                                    density = 0.6,\z
+                                    radius = scale * 1.8,\z
+                                    favorability = 1} - clamp(rabbasca_fertile, 0, 1)"
   },
   {
     type = "noise-expression",

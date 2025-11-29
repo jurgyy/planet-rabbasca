@@ -10,7 +10,7 @@ data:extend{
   type = "autoplace-control",
   name = "rabbasca_rocks",
   order = "r[rabbasca]-c[rocks]",
-  category = "resource",
+  category = "terrain",
   richness = false, 
 },
 {

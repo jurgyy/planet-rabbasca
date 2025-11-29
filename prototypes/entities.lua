@@ -165,8 +165,8 @@ data:extend {
 
 data.raw["electric-energy-interface"]["rabbasca-energy-source"].collision_box = nil
 data.raw["simple-entity"]["rabbasca-big-rock"].minable.results = {
-  {type = "item", name = "stone", amount_min = 12, amount_max = 18}, 
-  {type = "item", name = "iron-ore", amount_min = 9, amount_max = 15 }, 
-  {type = "item", name = "carbon", amount_min = 2, amount_max = 5 }
+  {type = "item", name = "stone", amount_min = 23, amount_max = 28}, 
+  {type = "item", name = "iron-ore", amount_min = 17, amount_max = 22 }, 
+  {type = "item", name = "carbon", amount_min = 3, amount_max = 5 }
 }
 

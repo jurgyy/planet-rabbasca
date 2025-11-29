@@ -7,11 +7,11 @@ local function handle_script_events(event)
   local effect_id = event.effect_id
   if effect_id == "rabbasca_on_warp_attempt" then
     local from = event.source_entity or event.target_entity
-    if not from then return end
+    if not (from and from.name == "rabbasca-warp-pylon") then return end
     remote_builder.attempt_build_ghost(from)
   elseif effect_id == "rabbasca_on_warp_complete" then
     local from = event.source_entity or event.target_entity
-    if not from then return end
+    if not (from and from.name == "rabbasca-warp-pylon") then return end
     remote_builder.finalize_build_ghost(from)
   elseif effect_id == "rabbasca_on_recalc_evolution" then
     local from = event.source_entity or event.target_entity
