@@ -73,7 +73,7 @@ data:extend {
     tile_buildability_rules = { Rabbasca.ears_flooring_rule({{-0.8, -0.8}, {0.8, 0.8}}) },
     radius_visualisation_specification = {
       sprite = data.raw["utility-sprites"]["default"].construction_radius_visualization,
-      distance = Rabbasca.warp_radius,
+      distance = Rabbasca.get_warp_radius(),
     },
     custom_tooltip_fields = {
       {

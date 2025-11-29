@@ -1,7 +1,3 @@
-local function get_radius(quality_level)
-    return Rabbasca.warp_radius * (1 + quality_level * 0.5)
-end
-
 local function awake(receiver)
     if receiver.valid and receiver.get_recipe() == nil and receiver.surface.planet then
         receiver.set_recipe("rabbasca-remote-warmup")
@@ -274,7 +270,7 @@ end
 
 function M.attempt_build_ghost(pylon)
     local recipe = pylon.get_recipe() and pylon.get_recipe().name
-    local radius = get_radius(pylon.quality.level)
+    local radius = Rabbasca.get_warp_radius(pylon.quality)
     if not recipe or (recipe and not M.attempt_warmup(pylon, radius)) then 
         pylon.set_recipe(nil) 
         pylon.recipe_locked = true
@@ -321,10 +317,17 @@ local build_events = {
     defines.events.script_raised_built,
 }
 
+local hightest_quality = nil
+for _, q in pairs(prototypes["quality"]) do
+    if (not hightest_quality) or q.level > hightest_quality.level then
+        hightest_quality = q
+    end
+end
+
 local function remote_wake_handler(event)
     script.on_nth_tick(1, nil)
     if not (storage.remote_wake_surface and storage.remote_wake_surface.valid) then return end
-    local radius = get_radius(4) -- TODO: Does not account for custom qualities
+    local radius = Rabbasca.get_warp_radius(hightest_quality) -- TODO: Does not account for custom qualities
     local area = storage.remote_wake_area
     area = {
         {area.left_top.x - radius, area.left_top.y - radius},
