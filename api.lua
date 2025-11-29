@@ -112,7 +112,8 @@ function create_infused_thing_with_effect(original, needed_core)
     new_item.factoriopedia_alternative = original.name
 
     new.name = new_name
-    new.localised_name = {"", {"entity-name." .. original.name}, {"rabbasca-extra.with-ears"}}
+    new.localised_name = {"rabbasca-extra.with-ears", original.localised_name or {"entity-name." .. original.name}}
+    new.localised_description = {"rabbasca-extra.with-ears-description", original.localised_description}
     new.factoriopedia_alternative = original.name
     new.hidden_in_factoriopedia = true
     new.hidden = true

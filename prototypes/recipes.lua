@@ -551,30 +551,6 @@ data:extend {
     },
     {
         type = "recipe",
-        name = "rabbasca-hyperjuice",
-        enabled = false,
-        energy_required = 15,
-        ingredients = {
-            { type = "item", name = "rabbasca-protein-shake", amount = 5 },
-            { type = "item", name = "promethium-asteroid-chunk", amount = 5 },
-            { type = "fluid", name = "harene", amount = 10 },
-        },
-        results = { 
-            { type = "item", name = "rabbasca-hyperjuice", amount = 1 },
-        },
-        enabled = false,
-        allow_productivity = false,
-        category = "chemistry-or-cryogenics",
-        crafting_machine_tint =
-        {
-            primary = {r = 0.710, g = 0.633, b = 0.482, a = 1.000},
-            secondary = {r = 0.745, g = 0.672, b = 0.527, a = 1.000},
-            tertiary = {r = 0.894, g = 0.773, b = 0.596, a = 1.000},
-            quaternary = {r = 0.812, g = 0.583, b = 0.202, a = 1.000},
-        }
-    },
-    {
-        type = "recipe",
         name = "omega-carotene",
         enabled = false,
         energy_required = 15,

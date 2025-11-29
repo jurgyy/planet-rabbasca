@@ -11,12 +11,12 @@ local lava_effect = util.merge { data.raw["tile-effect"]["lava"],
 lava_effect.water.textures[2].filename = "__rabbasca-assets__/graphics/recolor/textures/lava.png"
 local lava = util.merge{ table.deepcopy(data.raw["tile"]["lava"]), {
     name = "harenic-lava",
-    effect_color = { 44, 30, 180 },
+    effect_color = { 111, 30, 180 },
     effect_color_secondary = { 140, 52, 111 },
-    map_color = { 0.76, 0.33, 0.85 },
+    map_color = { 0.5, 0.15, 0.85 },
     effect = "harenic-lava",
     fluid = "harenic-lava",
-    particle_tints = { primary = { 44, 30, 180 }, secondary = { 44, 30, 180 },},
+    particle_tints = { primary = { 111, 30, 180 }, secondary = { 145, 30, 180 },},
 }}
 lava.autoplace = nil
 lava.variants.main[1].picture = "__rabbasca-assets__/graphics/recolor/textures/lava-transitions.png"
@@ -45,6 +45,11 @@ util.merge{ table.deepcopy(data.raw["tile"]["volcanic-ash-flats"]), {
     autoplace = { probability_expression = "rabbasca_rocky + rabbasca_rocky_variance" },
     map_color = {0.07, 0.06, 0.1},
 }},
+util.merge{ table.deepcopy(data.raw["tile"]["volcanic-ash-cracks"]), {
+    name = "rabbasca-wasted",
+    autoplace = nil,
+    map_color = {0.05, 0.01, 0.04},
+}},
 util.merge{ table.deepcopy(data.raw["tile"]["volcanic-pumice-stones"]), {
     name = "rabbasca-rough-2",
     autoplace = { probability_expression = "rabbasca_rocky" },
@@ -68,13 +73,20 @@ util.merge {
     }
 },
 util.merge { 
-    table.deepcopy(data.raw["tile"]["foundation"]),
+    table.deepcopy(data.raw["tile"]["space-platform-foundation"]),
     {
-      -- TODO: This can be placed on space platforms for some reason, bug or feature?
       name = "haronite-plate",
       collision_mask = { layers = { harene = true } },
       minable = { result = "haronite-plate" },
-      variants = { material_background = { picture = "__rabbasca-assets__/graphics/foundation/haronite-plate.png", } },
+      max_health = 800,
+      layer = data.raw["tile"]["foundation"].layer,
+      transition_overlay_layer_offset = 2,
+      layer_group = "ground-artificial",
+      variants = { 
+        material_background = { picture = "__rabbasca-assets__/graphics/foundation/haronite-plate.png", count = 1 }, 
+        transition = table.deepcopy(data.raw["tile"]["foundation"].variants.transition)
+      },
+      allowed_neighbors = { "space-platform-foundation" },
       frozen_variant = "haronite-plate",
       check_collision_with_entities = true
     }
@@ -90,7 +102,9 @@ local lava_patch =
   height = 64
 }
 
-for _, tile in pairs({ "rabbasca-rough", "rabbasca-rough-2"}) do
+for _, tile in pairs({ "rabbasca-rough", "rabbasca-rough-2", "rabbasca-wasted"}) do
   data.raw["tile"][tile].transitions[2].lightmap_layout = lava_transition
   data.raw["tile"][tile].transitions_between_transitions[1].water_patch = lava_patch 
 end
+
+data.raw["tile"]["haronite-plate"].bound_decoratives = nil

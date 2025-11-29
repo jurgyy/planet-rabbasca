@@ -1,28 +1,11 @@
 local function get_radius(quality_level)
-    return Rabbasca.warp_radius * (1 + (quality_level - 1) * 0.6)
+    return Rabbasca.warp_radius * (1 + quality_level * 0.5)
 end
 
 local function awake(receiver)
     if receiver.valid and receiver.get_recipe() == nil and receiver.surface.planet then
         receiver.set_recipe("rabbasca-remote-warmup")
         receiver.recipe_locked = true
-    end
-end
-
-local function awake_receivers(entity)
-    if not entity.valid then return end
-    local proto = entity.ghost_prototype
-    if not proto then return end
-    local radius = get_radius(5) -- TODO: Does not account for custom qualities
-    local receivers = entity.surface.find_entities_filtered{
-        area = {
-            {entity.position.x - radius, entity.position.y - radius},
-            {entity.position.x + radius, entity.position.y + radius}
-        },
-        name = "rabbasca-warp-pylon",
-    }
-    for _, receiver in pairs(receivers) do
-        awake(receiver)
     end
 end
 
@@ -83,6 +66,11 @@ local function try_deconstruct(entity)
         return true
     end
     builder.get_inventory(defines.inventory.chest).remove({name = name, quality = quality, count = inserted})
+    return false
+end
+
+local function try_warp_request(ghost)
+    -- game.print(ghost.name .. " -> " .. ghost.proxy_target.name)
     return false
 end
 
@@ -235,7 +223,18 @@ end
 
 function M.attempt_module(pylon, radius)
     local position = pylon.position
-    -- TODO: Not yet implemented
+    local ghosts = pylon.surface.find_entities_filtered{
+        area = {
+            {position.x - radius, position.y - radius},
+            {position.x + radius, position.y + radius}
+        },
+        name = { "item-request-proxy" }
+    }
+    for _, ghost in pairs(ghosts) do
+        local result, status = try_warp_request(ghost)
+        pylon.custom_status = status
+        if result then return end
+    end
     M.attempt_warmup(pylon, radius, 3)
 end
 
@@ -319,8 +318,49 @@ local build_events = {
     defines.events.on_built_entity,
     defines.events.on_robot_built_entity,
     defines.events.on_space_platform_built_entity,
-    defines.events.script_raised_built
+    defines.events.script_raised_built,
 }
+
+local function remote_wake_handler(event)
+    script.on_nth_tick(1, nil)
+    if not (storage.remote_wake_surface and storage.remote_wake_surface.valid) then return end
+    local radius = get_radius(4) -- TODO: Does not account for custom qualities
+    local area = storage.remote_wake_area
+    area = {
+        {area.left_top.x - radius, area.left_top.y - radius},
+        {area.right_bottom.x + radius, area.right_bottom.y + radius}
+    }
+    -- game.print(string.format("[gps=%i,%i,%s]::[gps=%i,%i,%s]", area[1][1], area[1][2], storage.remote_wake_surface.name, area[2][1], area[2][2], storage.remote_wake_surface.name))
+    local receivers = storage.remote_wake_surface.find_entities_filtered{
+        area = area,
+        name = "rabbasca-warp-pylon",
+    }
+    
+    for _, receiver in pairs(receivers) do
+        awake(receiver)
+    end
+    storage.remote_wake_tick = nil
+    storage.remote_wake_surface = nil
+end
+
+local function update_wake_area(entity, tick)
+    if storage.remote_wake_tick ~= tick then
+        storage.remote_wake_tick = tick
+        storage.remote_wake_area = {left_top = entity.position, right_bottom = entity.position}
+        storage.remote_wake_surface = entity.surface
+        script.on_nth_tick(1, remote_wake_handler)
+    end
+    storage.remote_wake_area = {
+        left_top = {
+            x = math.min(entity.bounding_box.left_top.x, storage.remote_wake_area.left_top.x),
+            y = math.min(entity.bounding_box.left_top.y, storage.remote_wake_area.left_top.y),
+        },
+        right_bottom = {
+            x = math.max(entity.bounding_box.right_bottom.x, storage.remote_wake_area.right_bottom.x),
+            y = math.max(entity.bounding_box.right_bottom.y, storage.remote_wake_area.right_bottom.y),
+        }
+    }
+end 
 
 script.on_event(build_events, function(event)
   if not event.entity.valid then return end
@@ -331,13 +371,16 @@ script.on_event(build_events, function(event)
             awake(receiver)
         end
     end
-  elseif event.entity.name == "entity-ghost" and event.entity.ghost_prototype then
-    awake_receivers(event.entity)
+  elseif event.entity.name == "entity-ghost" 
+      or event.entity.name == "tile-ghost" then
+    update_wake_area(event.entity, event.tick)
+  elseif event.entity.name == "item-request-proxy" and event.entity.proxy_target then
+    update_wake_area(event.entity.proxy_target, event.tick)
   end
 end)
 
 script.on_event(defines.events.on_marked_for_deconstruction, function(event)
-
+    update_wake_area(event.entity, event.tick)
 end)
 
 local removal_events = {

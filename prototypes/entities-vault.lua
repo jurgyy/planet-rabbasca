@@ -457,28 +457,87 @@ data:extend {
         {
           {
             type = "set-tile",
-            tile_name = "volcanic-ash-cracks",
+            tile_name = "rabbasca-wasted",
             radius = 43,
             apply_projection = false,
             tile_collision_mask = { layers={out_of_map=true, water_tile = true} }
           },
           {
             type = "set-tile",
-            tile_name = "harenic-lava",
-            radius = 32,
-            apply_projection = false,
-            tile_collision_mask = { layers={out_of_map=true, ground_tile = true} }
-          },
-          {
-            type = "set-tile",
-            tile_name = "harenic-lava",
+            tile_name = "rabbasca-harenic-sludge",
             radius = 6,
             apply_projection = false,
-            tile_collision_mask = { layers={out_of_map=true} }
+            tile_collision_mask = { layers={out_of_map=true} },
+          },
+          {
+            type = "create-entity",
+            entity_name = "harenic-lava-spreader",
+          },
+          {
+            type = "nested-result",
+            action =
+            {
+              type = "cluster",
+              cluster_count = 32,
+              distance = 15,
+              distance_deviation = 40,
+              action_delivery =
+              {
+                type = "instant",
+                target_effects = {
+                  {
+                    type = "set-tile",
+                    tile_name = "rabbasca-harenic-sludge",
+                    radius = 3,
+                    apply_projection = false,
+                    tile_collision_mask = { layers={out_of_map=true} },
+                  },
+                  {
+                    type = "create-entity",
+                    entity_name = "harenic-lava-spreader",
+                  },
+                }
+              }
+            }
           },
         }
       }
       }
     }
-  }
+  },
+  {
+    type = "temporary-container",
+    name = "harenic-lava-spreader",
+    icon = "__rabbasca-assets__/graphics/recolor/icons/harenic-lava.png",
+    icon_size = 64,
+    flags = { "not-on-map", "not-in-kill-statistics", "placeable-neutral" },
+    collision_mask = { 
+      layers = { lava_tile = true, out_of_map = true, ground_tile = true }, 
+      consider_tile_transitions = true,
+      colliding_with_tiles_only = true,
+    },
+    inventory_size = 0,
+    hidden = true,
+    hidden_in_factoriopedia = true,
+    max_health = 99999,
+    time_to_live = 4,
+    -- alert_after_time = 1,
+    destroy_on_empty = false,
+    collision_box = {{0, 0}, {0, 0}},
+    selection_box = {{-0.2, -0.2}, {0.2, 0.2}},
+    dying_trigger_effect = {
+      type = "script",
+      effect_id = "rabbasca_replace_tiles",
+    },
+    resistances = {
+      { type = "physical", percent = 100  },
+      { type = "explosion", percent = 100, },
+      { type = "fire", percent = 100 },
+      { type = "poison", percent = 100 },
+      { type = "acid", percent = 100 },
+      { type = "laser", percent = 100 },
+      { type = "electric", percent = 100 },
+      { type = "impact", percent = 100 },
+    }
+  },
 }

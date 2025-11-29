@@ -38,7 +38,14 @@ data:extend {
     weight = 50 * kg,
     subgroup = "rabbasca-processes",
     order = "h[haronite]-d[haronite-plate]",
-    place_as_tile = { result = "haronite-plate", condition = { layers = { out_of_map = true } }, condition_size = 1 },
+    place_as_tile = { 
+      result = "haronite-plate", 
+      condition = { 
+        layers = { empty_space = true } 
+      }, 
+      invert = true,
+      condition_size = 1,
+    },
 },
 {
     type = "item",
@@ -302,7 +309,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
 {
     type = "item",
     name = "harene-cryo-container-empty",
-    icon = "__rabbasca-assets__/graphics/recolor/icons/harenic-lava.png",
+    icon = "__rabbasca-assets__/graphics/by-malcolmriley/part-fuel-rod.png",
     icon_size = 64,
     stack_size = 10,
     weight = 25 * kg,
@@ -312,7 +319,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
 {
     type = "item",
     name = "harene-cryo-container-filled",
-    icon = "__rabbasca-assets__/graphics/recolor/icons/harenic-lava.png",
+    icon = "__rabbasca-assets__/graphics/by-malcolmriley/part-fuel-rod-2.png",
     icon_size = 64,
     stack_size = 10,
     weight = 50 * kg,
@@ -409,23 +416,12 @@ util.merge{
 }
 
 data:extend {
-  util.merge{
-  data.raw["capsule"]["rabbasca-protein-shake"],
-  {
-    name = "rabbasca-hyperjuice",
-    weight = 2 * kg,
-    fuel_value = "1.4GJ",
-    order = "b[organic]-f[rabbasca-hyperjuice]",
-    stack_size = 5,
-    -- place_as_equipment_result = "todo",
-  },
-},
 util.merge {
   data.raw["item"]["rabbasca-turbofuel"],
   {
       name = "rabbasca-hyperfuel",
       weight = 10 * kg,
-      icon = "__rabbasca-assets__/graphics/recolor/icons/turbofuel.png",
+      icon = "__rabbasca-assets__/graphics/recolor/icons/hyperfuel.png",
       icon_size = 64,
       fuel_value = "8.765GJ",
       fuel_acceleration_multiplier = 5.5,
@@ -440,6 +436,7 @@ util.merge {
   data.raw["fluid"]["beta-carotene"],
   {
     name = "omega-carotene",
+    icon = "__rabbasca-assets__/graphics/recolor/icons/omega-carotene.png",
     base_color = { 0.9, 0.42, 0.1 },
     flow_color = { 0.9, 0.5, 0.33 },
     default_temperature = 4.0,
@@ -454,8 +451,3 @@ data.raw["capsule"]["rabbasca-turbofish"].capsule_action = fish_action
 local shake_action = table.deepcopy(fish_action)
 shake_action.attack_parameters.ammo_type.action.action_delivery.target_effects[1].sticker = "protein-shake-speed-sticker"
 data.raw["capsule"]["rabbasca-protein-shake"].capsule_action = shake_action
-
-local hyper_action = table.deepcopy(fish_action)
-hyper_action.attack_parameters.ammo_type.action.action_delivery.target_effects[1].sticker = "hyperjuice-speed-sticker"
-data.raw["capsule"]["rabbasca-hyperjuice"].capsule_action = hyper_action
-data.raw["capsule"]["rabbasca-hyperjuice"].burnt_result = nil

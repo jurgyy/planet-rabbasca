@@ -38,6 +38,33 @@ local function handle_script_events(event)
       from.set_recipe("rabbasca-remote-warmup")
       from.recipe_locked = true
     end
+  elseif effect_id == "rabbasca_replace_tiles" then
+    local pos = event.source_entity and event.source_entity.position or event.target_position
+    if not pos then return end
+    pos = { x = math.floor(pos.x) - 0.5, y = math.floor(pos.y) - 0.5 }
+    local surface = game.surfaces[event.surface_index]
+    if not surface then return end
+    local tiles = {
+      { position = {pos.x,    pos.y - 1}, name = "harenic-lava" },
+      { position = {pos.x,    pos.y + 1}, name = "harenic-lava" },
+      { position = {pos.x + 1,    pos.y}, name = "harenic-lava" },
+      { position = {pos.x - 1,    pos.y}, name = "harenic-lava" },
+    }
+    local center = { position = {pos.x,    pos.y}, name = "harenic-lava" }
+    if math.random() < 0.22 then 
+      surface.set_tiles({center})
+    else
+      table.insert(tiles, center)
+    end
+    for _, t in pairs(tiles) do
+      if surface.can_place_entity{name = "harenic-lava-spreader", position = t.position} or math.random() < 0.21 then
+        surface.create_entity {
+          name = "harenic-lava-spreader",
+          position = t.position,
+          create_build_effect_smoke = false,
+        } -- this seems to ignore buildability
+      end
+    end
   elseif effect_id == "rabbasca_summon_pylon_grid_aligned" then
     local pos = event.target_position or event.source_position
     if not pos then return end

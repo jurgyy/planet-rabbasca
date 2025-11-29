@@ -628,14 +628,14 @@ data:extend {
         type = "unlock-recipe",
         recipe = "vault-protocol-warp-pylon",
       },
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-warp-sequence-module",
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-warp-sequence-reverse",
-      },
+      -- {
+      --   type = "unlock-recipe",
+      --   recipe = "rabbasca-warp-sequence-module",
+      -- },
+      -- {
+      --   type = "unlock-recipe",
+      --   recipe = "rabbasca-warp-sequence-reverse",
+      -- },
     },
     level = 2,
     unit = {
@@ -663,15 +663,10 @@ data:extend {
     icons = {
       { icon = "__rabbasca-assets__/graphics/recolor/icons/harene.png", icon_size = 64, scale = 0.8 },
       { icon = data.raw["item"]["rabbasca-hyperfuel"].icon,  icon_size = 64, shift = {12, 12}, scale = 0.5 },
-      { icon = data.raw["capsule"]["rabbasca-hyperjuice"].icon, icon_size = 64, shift = {-8, 12}, scale = 0.5 },
     },
     prerequisites = { "promethium-science-pack", "harene-synthesis" },
     effects =
     {
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-hyperjuice",
-      },
       {
         type = "unlock-recipe",
         recipe = "rabbasca-hyperfuel",

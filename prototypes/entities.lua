@@ -120,6 +120,7 @@ data:extend {
       autoplace = { probability_expression = "rabbasca_harene_pools - 0.5" },
       -- collision_mask = { layers = { ground_tile = true } }
       map_generator_bounding_box = {{-1.5, -1.5}, {1.5, 1.5}},
+      collision_mask = { layers = { lava_tile = true, ground_tile = true }, colliding_with_tiles_only = true }
     },
   },
   util.merge{
