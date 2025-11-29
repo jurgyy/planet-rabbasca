@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
 Version: 0.8.0
-Date: 2025-??-??
+Date: 2025-11-29
   Changes:
     - This update adds challenging content to the late game and reorganizes some rabbascan technologies
     - Purified Harene is now the powerful but hard to create resource it was meant to be
