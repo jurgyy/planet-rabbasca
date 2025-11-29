@@ -78,7 +78,7 @@ util.merge {
       name = "haronite-plate",
       collision_mask = { layers = { harene = true } },
       minable = { result = "haronite-plate" },
-      max_health = 800,
+      max_health = 500,
       layer = data.raw["tile"]["foundation"].layer,
       transition_overlay_layer_offset = 2,
       layer_group = "ground-artificial",

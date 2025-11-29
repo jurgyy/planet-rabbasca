@@ -5,7 +5,7 @@ Date: 2025-11-29
     - This update adds challenging content to the late game and reorganizes some rabbascan technologies
     - Purified Harene is now the powerful but hard to create resource it was meant to be
     - Haronite plate and purified harene recipes changed, making them much harder to acquire
-    - Haronite plate is now also placeable on space platforms, providing energy to E.A.R.S. cores
+    - Haronite plate is now also a tile placeable on space platforms, providing energy to E.A.R.S. cores
     - Added upgrades to Protein shake, Turbofuel and Beta carotene made from purified harene, requiring promethium science to unlock
     - Added new late-game technology to extract warp pylons from vaults
     - Total available power on Rabbasca can now be changed via setting
