@@ -122,8 +122,8 @@ local access_console = util.merge{
     max_health = 7200,
     healing_per_tick = 0, -- should be same as production_health_effect for factoriopedia, but the units don't match
     production_health_effect = {
-      producing = -6,
-      not_producing = -36 -- This is ca. -100 / second???
+      producing = -12 / second * 10 - 80, -- Values are per tick, reduced by physical resistance, both percentual and flat
+      not_producing = -72 / second * 10 - 80
     },
     result_inventory_size = 0,
     source_inventory_size = 1,
@@ -181,6 +181,7 @@ local vault_crafter = {
       not_producing = 100,
       producing = 100
   },
+  friendly_map_color = {0.3, 1, 0.3},
   map_generator_bounding_box = {{-16, -16}, {16, 16}},
   collision_box = {{-2.4, -1.9},{2.4, 2.2}},
   selection_box = {{-2.5, -2.5},{2.5, 2.5}},
