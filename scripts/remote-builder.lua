@@ -291,7 +291,7 @@ function M.finalize_build_ghost(pod)
     if not (item.valid and item.valid_for_read) then return end
     local is_tile = item.prototype.place_as_tile_result ~= nil
     local ghost = pod.surface.find_entity({name = is_tile and "tile-ghost" or "entity-ghost", quality = item.quality }, pod.position)
-    if ghost and ghost.valid and ghost.ghost_prototype and ghost.custom_status then
+    if ghost and ghost.valid and ghost.ghost_prototype then
         ghost.custom_status = nil
         local required = ghost.ghost_prototype.items_to_place_this
         if required and #required > 0 and required[1].name == item.name and required[1].count <= item.count then
