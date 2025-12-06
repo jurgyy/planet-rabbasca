@@ -1,7 +1,7 @@
 
 local bunnyhop_engine = data.raw["item"]["bunnyhop-engine-equipment"]
 local warp_pylon = data.raw["assembling-machine"]["rabbasca-warp-pylon"]
-local console = data.raw["furnace"]["rabbasca-vault-console"]
+local console = data.raw["assembling-machine"]["rabbasca-vault-console"]
 console.result_inventory_size = 0 -- castra compatibility; not required but looks nicer
 console.crafting_speed_quality_multiplier = { }
 for _, quality in pairs(data.raw["quality"]) do
