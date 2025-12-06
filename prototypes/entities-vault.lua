@@ -285,7 +285,7 @@ pylon.created_effect = nil
 pylon.resistances = {
   { type = "physical", percent = 99 },
   { type = "explosion", percent = 10, decrease = 80 },
-  { type = "fire", percent = 100 },
+  { type = "fire", percent = 25 },
   { type = "poison", percent = 100 },
   { type = "acid", percent = 100 },
   { type = "laser", percent = 99 },
