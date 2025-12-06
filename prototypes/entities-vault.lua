@@ -118,19 +118,22 @@ local access_console = util.merge{
   table.deepcopy(spawner),
   {
     name = "rabbasca-vault-console",
-    type = "furnace",
+    type = "assembling-machine",
     max_health = 7200,
-    healing_per_tick = 0, -- should be same as production_health_effect for factoriopedia, but the units don't match
+    healing_per_tick = -72 / second, -- does not do anything; just for factoriopedia
     production_health_effect = {
       producing = -12 / second * 10 - 80, -- Values are per tick, reduced by physical resistance, both percentual and flat
       not_producing = -72 / second * 10 - 80
     },
+    enable_logistic_control_behavior = false,
+    -- show_recipe_icon = false,
     result_inventory_size = 0,
     source_inventory_size = 1,
     crafting_speed = 1,
     energy_usage = "1MW",
     allow_copy_paste = true,
     module_slots = 0,
+    fixed_recipe = "rabbasca-extend-hack-vault-security-key",
     return_ingredients_on_change = true,
     ignore_output_full = true,
     is_military_target = true,
@@ -285,7 +288,7 @@ pylon.created_effect = nil
 pylon.resistances = {
   { type = "physical", percent = 99 },
   { type = "explosion", percent = 10, decrease = 80 },
-  { type = "fire", percent = 100 },
+  { type = "fire", percent = 25 },
   { type = "poison", percent = 100 },
   { type = "acid", percent = 100 },
   { type = "laser", percent = 99 },
@@ -400,7 +403,7 @@ local capture_bot = {
   icon_size = 64,
   name = "rabbasca-capture-robot",
   capture_speed = 1,
-  max_health = 80,
+  max_health = 100,
   speed = 0.01,
   hidden_in_factoriopedia = true,
   alert_when_damaged = false,
@@ -411,8 +414,8 @@ local capture_bot_2 = {
   icon = "__Krastorio2Assets__/icons/cards/advanced-tech-card.png",
   icon_size = 64,
   name = "rabbasca-capture-robot-2",
-  capture_speed = 1.25,
-  max_health = 620,
+  capture_speed = 1.4,
+  max_health = 800,
   speed = 0.01,
   hidden_in_factoriopedia = true,
   alert_when_damaged = false,

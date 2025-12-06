@@ -20,6 +20,10 @@ if not Rabbasca.is_aps_planet() then
   end
 end
 
+local flamethrower_fluids = data.raw["fluid-turret"]["flamethrower-turret"].attack_parameters.fluids
+table.insert(flamethrower_fluids, {type = "energetic-residue", damage_modifier = 0.15})
+table.insert(flamethrower_fluids, {type = "harenic-lava", damage_modifier = 2})
+
 require("scripts.not-on-my-lawn")
 require("scripts.machine-assembly")
 require("scripts.create-ears-variants")

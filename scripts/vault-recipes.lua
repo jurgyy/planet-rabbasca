@@ -88,24 +88,6 @@ Rabbasca.create_vault_recipe("vault-protocol-warp-pylon", {
 data:extend {
     {
         type = "recipe",
-        name = "rabbasca-extend-hack-vault-access-key",
-        localised_name = {"recipe-name.rabbasca-extend-hack"},
-        localised_description = {"recipe-description.rabbasca-extend-hack"},
-        subgroup = "rabbasca-security",
-        order = "h[hack-extension]-a",
-        icons = { 
-          { icon = data.raw["ammo"]["vault-access-key"].icon, icon_size = 64 },
-          { icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png", icon_size = 64, scale = 0.3, shift = { 8, 8 } },
-        },
-        enabled = true,
-        category = "rabbasca-vault-hacking",
-        hide_from_player_crafting = true,
-        energy_required = 6,
-        ingredients = {{ type = "item", name = "vault-access-key", amount = 1 }},
-        auto_recycle = false
-    },
-    {
-        type = "recipe",
         name = "rabbasca-extend-hack-vault-security-key",
         localised_name = {"recipe-name.rabbasca-extend-hack"},
         localised_description = {"recipe-description.rabbasca-extend-hack"},

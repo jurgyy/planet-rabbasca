@@ -247,7 +247,7 @@ local defender_spawny = util.merge {
     order = "r[rabbasca]-d",
     max_health = 320,
     move_while_shooting = false,
-    healing_per_tick = -3.2 / second,
+    healing_per_tick = -16 / second,
     movement_speed = 1.4,
     distance_per_frame = 0.4,
     distraction_cooldown = 20,
@@ -263,7 +263,7 @@ defender_spawny.created_effect = {
     source_effects =
     {
       -- { type = "create-entity", entity_name = "rabbasca-vault-warp-spawner", offset_deviation = {{-20, -20}, {20, 20}}, repeat_count = 1, check_buildability = true, find_non_colliding_position = true },
-      { type = "create-entity", entity_name = "vault-defender-1", offset_deviation = {{-12, -12}, {12, 12}}, repeat_count = 7 },
+      { type = "create-entity", entity_name = "vault-defender-1", offset_deviation = {{-12, -12}, {12, 12}}, repeat_count = 6 },
       { type = "create-entity", entity_name = "vault-defender-heavy", offset_deviation = {{-7, -7}, {7, 7}}, repeat_count = 3 },
     }
   }
@@ -281,12 +281,12 @@ defender_spawny.attack_parameters = {
   type = "projectile",
   animation = table.deepcopy(data.raw["combat-robot"]["destroyer"].idle),
   activation_type = "throw",
-  cooldown = 3 * second,
+  cooldown = 6 * second,
   cooldown_deviation = 0.3,
   projectile_center = {0, 1},
   projectile_creation_distance = 0.6,
-  range = 6.5,
-  warmup = 2 * second,
+  range = 8,
+  warmup = 1 * second,
   ammo_category = "capsule",
   ammo_type =
   {
