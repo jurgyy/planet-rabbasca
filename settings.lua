@@ -26,6 +26,13 @@ data:extend{
   },
   {
     type = "bool-setting",
+    name = "rabbasca-no-extra-category",
+    setting_type = "startup",
+    default_value = false,
+    allow_blank = false
+  },
+  {
+    type = "bool-setting",
     name = "rabbasca-bunnyhop-rabbasca-only",
     setting_type = "startup",
     default_value = false,
