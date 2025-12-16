@@ -4,6 +4,7 @@ local gleba = data.raw["planet"][parent_name]
 local tau = 2*math.pi
 local planet_catalogue_aquilo = require("__space-age__.prototypes.planet.procession-catalogue-aquilo")
 
+local rabbasca_seed_offset = 2702224236 -- CRC of "rabbasca", default for rabbasca, but needs to be same for underground
 
 data:extend{
 {
@@ -58,14 +59,14 @@ data:extend {
     data.raw["optimized-decorative"]["crater-large"],
     {
       name = "rabbasca-crater-large",
-      autoplace = { probability_expression = "crater_large * (1.3 - max(rabbasca_down, rabbasca_fertile))" } 
+      autoplace = { probability_expression = "crater_large * (1.3 - max(rabbasca_down(1), rabbasca_fertile))" } 
     }
   },
   util.merge{
     data.raw["optimized-decorative"]["vulcanus-dune-decal"],
     {
       name = "rabbasca-dune-decal",
-      autoplace = { probability_expression = "vulcanus_dune_decal * rpi(0.2) * decorative_knockout - max(rabbasca_fertile, rabbasca_rocks(4)) - rabbasca_down" }
+      autoplace = { probability_expression = "vulcanus_dune_decal * rpi(0.2) * decorative_knockout - max(rabbasca_fertile, rabbasca_rocks(4)) - rabbasca_down(1)" }
     }
   },
   util.merge{
@@ -96,10 +97,17 @@ data:extend {
       autoplace = { probability_expression = "rabbasca_carrot_noise" }
     }
   },
+  util.merge {
+    data.raw["cliff"]["cliff-vulcanus"],
+    {
+      name = "rabbasca-underground-cliff",
+      collision_mask = { layers = { } }
+    }
+  }
 }
 
 local map_gen = {
-    cliff_settings = { },
+    cliff_settings = {},
     autoplace_controls = 
     {
         ["harene"] = {},
@@ -108,7 +116,7 @@ local map_gen = {
         ["rabbasca_vaults"] = {},
     },
     autoplace_settings = {
-      ["tile"] =
+      tile =
       {
         settings =
         {
@@ -118,7 +126,7 @@ local map_gen = {
           ["rabbasca-rough-2"] = {},
         }
       },
-      ["decorative"] =
+      decorative =
       {
         settings =
         {
@@ -133,7 +141,7 @@ local map_gen = {
           ["rabbasca-gravewort"] = {},
         }
       },
-        ["entity"] =
+      entity =
       {
         settings =
         {
@@ -158,6 +166,7 @@ PlanetsLib:extend({
     icon_size = 64,
     starmap_icon = "__rabbasca-assets__/graphics/recolor/icons/vulcanus-bw.png",
     starmap_icon_size = 64,
+    map_seed_offset = rabbasca_seed_offset,
     draw_orbit = true,
     solar_power_in_space = gleba.solar_power_in_space,
     auto_save_on_first_trip = true,
@@ -175,8 +184,8 @@ PlanetsLib:extend({
     surface_properties = {
         ["gravity"] = 1,
         ["solar-power"] = 0,
-        ["pressure"] = 14,
         ["day-night-cycle"] = 12 * minute,
+        ["pressure"] = 14,
         ["magnetic-field"] = 0.01,
         ["harenic-energy-signatures"] = Rabbasca.surface_megawatts(),
     },
@@ -231,4 +240,77 @@ data:extend{
   name = "harenic-energy-signatures",
   default_value = 0
 },
+}
+
+data:extend { 
+  {
+    type = "planet",
+    name = "rabbasca-underground",
+    icons = {
+      { icon = "__rabbasca-assets__/graphics/recolor/icons/vulcanus-bw.png", icon_size = 64 },
+      { icon = data.raw["simple-entity"]["rabbasca-underground-rock"].icon, icon_size = 64, shift = {8, 8}, scale = 0.3 },
+    },
+    hidden = true,
+    draw_orbit = false,
+    distance = 10,
+    orientation = 0,
+    map_seed_offset = rabbasca_seed_offset,
+    surface_properties = {
+        ["gravity"] = 8,
+        ["solar-power"] = 0,
+        ["pressure"] = 150000,
+        ["magnetic-field"] = 0.01,
+        ["harenic-energy-signatures"] = Rabbasca.surface_megawatts() * 5,
+        ["day-night-cycle"] = 30 * second,
+    },
+    map_gen_settings = {
+      cliff_settings = {
+        name = "rabbasca-underground-cliff",
+        cliff_elevation_0 = 0.255,
+        cliff_elevation_interval = 0.4,
+        cliff_smoothing = 0,
+        -- richness = 10,
+      },
+      property_expression_names = {
+        elevation = "rabbasca_underground_elevation",
+        cliff_elevation = "rabbasca_underground_elevation",
+        cliffiness = "1",
+      },
+      autoplace_settings = {
+      tile = { settings = {
+        ["rabbasca-underground-rubble"] = {},
+        -- ["rabbasca-underground-out-of-map"] = {},
+        ["harenic-lava"] = {},
+      }},
+      entity = { settings = {
+        ["rabbasca-energy-source-big"] = {},
+        ["rabbasca-underground-rock"] = {},
+      }}
+      },
+      territory_settings =
+      {
+        units = {"big-demolisher"},
+        territory_index_expression = "rabbasca_devourer_territory_expression",
+        territory_variation_expression = "demolisher_variation_expression",
+        minimum_territory_size = 8
+      },
+    },
+    surface_render_parameters = {
+      shadow_opacity = 0.8,
+      draw_sprite_clouds = false,
+      clouds = nil,
+      day_night_cycle_color_lookup = {
+          {0.0, "__planet-rabbasca__/lut-underground.png"},
+          {0.5, "__planet-rabbasca__/lut-black.png"} -- TODO: Put into assets
+      },
+      fog = util.merge {
+        data.raw["planet"]["vulcanus"].surface_render_parameters.fog,
+        {
+          color1 = {0.45, 0.3706, 1},
+          color2 = {0.4, 0.2706,  0.9902},
+          tick_factor = 0.0005,
+        }
+      }
+    },
+  }
 }

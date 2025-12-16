@@ -28,6 +28,49 @@ local function handle_script_events(event)
       local vault = from.surface.find_entity("rabbasca-vault-crafter", position)
       rutil.rabbasca_set_vault_active(vault, true)
     end
+  elseif effect_id == "rabbasca_on_send_pylon_underground" then
+    local from = event.source_entity or event.target_entity
+    if not from then return end
+    local surface = game.planets["rabbasca-underground"].surface or game.planets["rabbasca-underground"].create_surface()
+    if not surface then return end
+    local offset = from.position
+    local radius = 3 * 32
+    surface.request_to_generate_chunks(offset, 3)
+    surface.force_generate_chunk_requests()
+    local pos = surface.find_non_colliding_position("electromagnetic-plant", offset, radius, 1)
+    if not pos then
+      game.forces.player.print(string.format("[Error] Could not build [entity=rabbasca-warp-pylon] here: [gps=%s,%s,rabbasca-underground]", offset.x, offset.y))
+      return 
+    end
+    local tiles = {
+      { position = {pos.x, pos.y}, name = "rabbasca-energetic-concrete" },
+      { position = {pos.x+ 1, pos.y}, name = "rabbasca-energetic-concrete" },
+      { position = {pos.x, pos.y+ 1}, name = "rabbasca-energetic-concrete" },
+      { position = {pos.x+ 1, pos.y+ 1}, name = "rabbasca-energetic-concrete" },
+    }
+    surface.set_tiles(tiles)
+    local spawner = surface.create_entity {
+      name = "rabbasca-warp-pylon",
+      position = pos,
+      force = game.forces.player,
+      snap_to_grid = true,
+    }
+    if spawner then
+      game.forces.player.print(string.format("Built [entity=rabbasca-warp-pylon] here: %s", spawner.gps_tag))
+      for _, p in pairs({
+        { pos.x + 1.5, pos.y + 1.5 },
+        { pos.x - 1.5, pos.y + 1.5 },
+        { pos.x + 1.5, pos.y - 1.5 },
+        { pos.x - 1.5, pos.y - 1.5 },
+      }) do
+        surface.create_entity {
+          name = "small-lamp",
+          position = p,
+          force = game.forces.player,
+          snap_to_grid = true,
+        }
+      end
+    end
   elseif effect_id == "rabbasca_init_spawner" then
     local from = event.source_entity or event.target_entity
     if not from then return end
@@ -45,10 +88,10 @@ local function handle_script_events(event)
     local surface = game.surfaces[event.surface_index]
     if not surface then return end
     local tiles = {
-      { position = {pos.x,    pos.y - 1}, name = "harenic-lava" },
-      { position = {pos.x,    pos.y + 1}, name = "harenic-lava" },
-      { position = {pos.x + 1,    pos.y}, name = "harenic-lava" },
-      { position = {pos.x - 1,    pos.y}, name = "harenic-lava" },
+      { position = { pos.x,    pos.y - 1}, name = "harenic-lava" },
+      { position = { pos.x,    pos.y + 1}, name = "harenic-lava" },
+      { position = { pos.x + 1,    pos.y}, name = "harenic-lava" },
+      { position = { pos.x - 1,    pos.y}, name = "harenic-lava" },
     }
     local center = { position = {pos.x,    pos.y}, name = "harenic-lava" }
     if math.random() < 0.22 then 
@@ -132,9 +175,20 @@ script.on_event(defines.events.on_player_changed_surface, function(event)
 end)
 
 script.on_event(defines.events.on_surface_created, function(event)
-  if not game.planets["rabbasca"] or not game.planets["rabbasca"].surface then return end
-  if event.surface_index ~= game.planets["rabbasca"].surface.index then return end
-  game.planets["rabbasca"].surface.create_global_electric_network()
+  if (game.planets["rabbasca"].surface and event.surface_index == game.planets["rabbasca"].surface.index)
+  or (game.planets["rabbasca-underground"].surface and event.surface_index == game.planets["rabbasca-underground"].surface.index) then
+    local surface = game.surfaces[event.surface_index]
+    surface.create_global_electric_network()
+    surface.request_to_generate_chunks({0, 0}, 1)
+    -- for _, force in pairs(game.forces) do
+    --   force.chart(surface, {{-1, -1}, {1, 1}})
+    -- end
+    if surface.name == "rabbasca-underground" then
+      surface.min_brightness = 0
+      surface.daytime = 0.5
+      surface.freeze_daytime = true
+    end
+  end
 end)
 
 local function give_starter_items()

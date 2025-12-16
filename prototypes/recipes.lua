@@ -576,7 +576,7 @@ data:extend {
 
 local rocket_part = table.deepcopy(data.raw["recipe"]["rocket-part"])
 rocket_part.name = "rocket-part-from-turbofuel"
-rocket_part.surface_conditions = { Rabbasca.above_harenic_threshold() }
+rocket_part.surface_conditions = { Rabbasca.within_harenic_threshold(1, 3) }
 rocket_part.ingredients = {
     { type = "item", name = "rabbasca-turbofuel", amount = 1 },
     { type = "item", name = "haronite-rocket-frame", amount = 1 },
@@ -585,3 +585,84 @@ rocket_part.ingredients = {
 
 data:extend { rocket_part }
 PlanetsLib.assign_rocket_part_recipe("rabbasca", "rocket-part-from-turbofuel")
+
+data:extend {
+    {
+        type = "recipe",
+        name = "rabbbasca-petroleum-gas-from-atmosphere",
+        enabled = false,
+        energy_required = 2,
+        ingredients = { },
+        results = { 
+            { type = "fluid", name = "petroleum-gas", amount = 50 },
+        },
+        enabled = false,
+        allow_productivity = false,
+        category = "chemistry-or-cryogenics",
+        surface_conditions = { Rabbasca.above_harenic_threshold(), { property = "pressure", min = 10000 } }
+    },
+    {
+        type = "recipe",
+        name = "rabbbasca-steam-from-atmosphere",
+        enabled = false,
+        energy_required = 2,
+        ingredients = { },
+        results = { 
+            { type = "fluid", name = "steam", amount = 15 },
+        },
+        enabled = false,
+        allow_productivity = false,
+        category = "chemistry-or-cryogenics",
+        surface_conditions = { Rabbasca.above_harenic_threshold(), { property = "pressure", min = 10000 } }
+    },
+    {
+        type = "recipe",
+        name = "rabbbasca-sulfuric-acid-from-atmosphere",
+        enabled = false,
+        energy_required = 2,
+        ingredients = { },
+        results = { 
+            { type = "fluid", name = "sulfuric-acid", amount = 90 },
+        },
+        enabled = false,
+        allow_productivity = false,
+        category = "chemistry-or-cryogenics",
+        surface_conditions = { Rabbasca.above_harenic_threshold(), { property = "pressure", min = 10000 } }
+    },
+    {
+        type = "recipe",
+        name = "molten-iron-from-harene",
+        enabled = false,
+        energy_required = 10,
+        ingredients = {
+            { type = "fluid", name = "harenic-lava", amount = 5000 }, 
+            { type = "fluid", name = "harene", amount = 5 },
+            { type = "item",  name = "calcite", amount = 10 },
+        },
+        results = { 
+            { type = "fluid", name = "molten-iron", amount = 2500 },
+        },
+        enabled = false,
+        allow_productivity = false,
+        category = "metallurgy",
+        surface_conditions = { Rabbasca.above_harenic_threshold(), { property = "pressure", min = 10000 } }
+    },
+    {
+        type = "recipe",
+        name = "molten-copper-from-harene",
+        enabled = false,
+        energy_required = 10,
+        ingredients = {
+            { type = "fluid", name = "harenic-lava", amount = 5000 }, 
+            { type = "fluid", name = "harene", amount = 2 },
+            { type = "item",  name = "calcite", amount = 10 },
+        },
+        results = { 
+            { type = "fluid", name = "molten-copper", amount = 2500 },
+        },
+        enabled = false,
+        allow_productivity = false,
+        category = "metallurgy",
+        surface_conditions = { Rabbasca.above_harenic_threshold(), { property = "pressure", min = 10000 } }
+    },
+}

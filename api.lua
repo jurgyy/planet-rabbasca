@@ -27,22 +27,26 @@ function Rabbasca.bunnyhop.dont_allow(name)
   Rabbasca.bunnyhop.set_requirements(name, { "bunnyhop-never" })
 end
 
-function Rabbasca.below_harenic_threshold()
-    return { property = "harenic-energy-signatures", max = Rabbasca.surface_megawatts() / 2.5 }
+function Rabbasca.below_harenic_threshold(multiplier)
+    return { property = "harenic-energy-signatures", max = Rabbasca.surface_megawatts() / 2.5 * (multiplier or 1) }
 end
 
-function Rabbasca.above_harenic_threshold()
-    return { property = "harenic-energy-signatures", min = Rabbasca.surface_megawatts() / 2.5 }
+function Rabbasca.above_harenic_threshold(multiplier)
+    return { property = "harenic-energy-signatures", min = Rabbasca.surface_megawatts() / 2.5 * (multiplier or 1) }
 end
 
-function Rabbasca.not_on_harenic_surface(proto)
+function Rabbasca.within_harenic_threshold(multiplier_min, multiplier_max)
+    return { property = "harenic-energy-signatures", min = Rabbasca.surface_megawatts() / 2.5 * multiplier_min, max = Rabbasca.surface_megawatts() / 2.5 * multiplier_max }
+end
+
+function Rabbasca.not_on_harenic_surface(proto, multiplier)
 proto.surface_conditions = proto.surface_conditions or { }
-table.insert(proto.surface_conditions, Rabbasca.below_harenic_threshold())
+table.insert(proto.surface_conditions, Rabbasca.below_harenic_threshold(multiplier))
 end
 
-function Rabbasca.only_on_harenic_surface(proto)
+function Rabbasca.only_on_harenic_surface(proto, multiplier)
 proto.surface_conditions = proto.surface_conditions or { }
-table.insert(proto.surface_conditions, Rabbasca.above_harenic_threshold())
+table.insert(proto.surface_conditions, Rabbasca.above_harenic_threshold(multiplier))
 end
 
 function Rabbasca.ears_flooring_rule(bbox)
