@@ -276,15 +276,20 @@ data:extend {
         cliff_elevation = "rabbasca_underground_elevation",
         cliffiness = "1",
       },
+      autoplace_controls = 
+      {
+          ["rabbasca_vaults"] = {},
+      },
       autoplace_settings = {
       tile = { settings = {
         ["rabbasca-underground-rubble"] = {},
-        -- ["rabbasca-underground-out-of-map"] = {},
+        ["rabbasca-underground-out-of-map"] = {},
         ["harenic-lava"] = {},
       }},
       entity = { settings = {
         ["rabbasca-energy-source-big"] = {},
         ["rabbasca-underground-rock"] = {},
+        ["rabbasca-carbonic-ore"] = {},
       }}
       },
       territory_settings =

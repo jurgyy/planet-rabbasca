@@ -186,4 +186,60 @@ local harene_resource = {
   map_grid = false
 }
 
-data:extend{ harene_resource, carrot_ore, battle_scrap }
+local carbonic_ore = util.merge {
+  table.deepcopy(data.raw["resource"]["coal"]),
+  {
+    name = "rabbasca-carbonic-ore",
+    icon = data.raw["item"]["coal"].icon,
+    minimum = 100,
+    normal = 100,
+    infinite = true,
+    map_color = { 0.03, 0.1, 0.07 },
+    -- stages = { sheet = { filename = "__rabbasca-assets__/graphics/recolor/icons/carotenoid-ore.png" } },
+    cliff_removal_probability = 0,
+    tree_removal_probability = 0,
+  }
+}
+carbonic_ore.minable.results =
+{
+  { type = "item", name = "carbon",    amount = 1, probability = 0.3, },
+  { type = "item", name = "stone",    amount = 1, probability = 0.1, },
+  { type = "item", name = "sulfur",   amount = 1, probability = 0.03, },
+  { type = "item", name = "haronite",  amount = 1, probability = 0.03, },
+}
+carbonic_ore.autoplace = {
+  tile_restriction = { "rabbasca-underground-rubble" },
+  probability_expression = "rabbasca_underground_resources",
+  richness_expression = "100",
+}
+
+local battle_scrap = util.merge {
+  table.deepcopy(data.raw["resource"]["scrap"]),
+  {
+    name = "rabbascan-scrap",
+    map_color = { 0.83, 0.217, 0.13 }
+  },
+}
+battle_scrap.minable =
+{
+  mining_time = 0.75,
+  results =
+  {
+    { type = "item", name = "firearm-magazine", amount = 1, probability = 0.15 },
+    { type = "item", name = "grenade", amount = 1, probability = 0.13 },
+    { type = "item", name = "rocket", amount = 1, probability = 0.09 },
+    { type = "item", name = "flamethrower-ammo", amount = 1, probability = 0.07 },
+    { type = "item", name = "vault-access-key", amount = 1, probability = 0.06 },
+  }
+}
+battle_scrap.collision_mask = { layers = { resource = true } }
+battle_scrap.autoplace = {
+  tile_restriction = { "rabbasca-rough", "rabbasca-rough-2" },
+  probability_expression = "rabbasca_vaults * (rabbasca_vaults < 0.7) * (0.53 + 0.8 * multioctave_noise{x = x, y = y, persistence = 0.8, seed0 = map_seed, input_scale = 0.86, seed1 = 'scrappening', octaves = 4 })",
+  richness_expression = "(17 + 9\z 
+    * multioctave_noise{x = x, y = y, persistence = 0.44, seed0 = map_seed, input_scale = 1.5, seed1 = 'whoneedscircuits', octaves = 4 })\z
+    * lerp(2, 20, distance / 2000)\z
+    * control:rabbasca_vaults:richness",
+}
+
+data:extend{ harene_resource, carrot_ore, battle_scrap, carbonic_ore }

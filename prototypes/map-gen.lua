@@ -12,14 +12,10 @@ data:extend{
                       starting_spot_at_angle{angle = aquilo_angle + 120, distance = 77, radius = rabbasca_camp_size, x_distortion = 0, y_distortion = 0})"
   },
   {
-    type = "noise-expression",
+    type = "noise-function",
     name = "rabbasca_starting_camp",
-    expression = "starting_spot_at_angle{angle = aquilo_angle + 150, distance = 120, radius = rabbasca_camp_size, x_distortion = 0, y_distortion = 0}"
-  },
-  {
-    type = "noise-expression",
-    name = "rabbasca_starting_camp_hole",
-    expression = "starting_spot_at_angle{angle = aquilo_angle + 150, distance = 120, radius = rabbasca_ug_hole_size, x_distortion = 0, y_distortion = 0}"
+    parameters = { "radius" },
+    expression = "starting_spot_at_angle{angle = aquilo_angle + 150, distance = 120, radius = radius, x_distortion = 0, y_distortion = 0}"
   },
   {
     type = "noise-expression",
@@ -40,7 +36,7 @@ data:extend{
   {
     type = "noise-expression",
     name = "rabbasca_ug_hole_size",
-    expression = "96"
+    expression = "58"
   },
   {
     type = "noise-expression",
@@ -97,26 +93,26 @@ data:extend{
   {
     type = "noise-expression",
     name = "rabbasca_vaults",
-    expression = "clamp(max(rabbasca_starting_camp, \z
-                      min(rabbasca_starting_mask, aquilo_spot_noise{seed = 9312,\z
-                                    count = 3 + 3 * control:rabbasca_vaults:frequency,\z
-                                    skip_offset = 0,\z
-                                    region_size = 300 + 500 / control:rabbasca_vaults:size,\z
-                                    density = 1,\z
-                                    radius = rabbasca_camp_size,\z
-                                    favorability = 3})), 0, 1)"
+    expression = "rabbasca_vault_spots(rabbasca_camp_size)"
   },
   {
     type = "noise-expression",
     name = "rabbasca_vaults_holes",
-    expression = "clamp(max(rabbasca_starting_camp_hole, \z
-                      min(rabbasca_starting_mask, aquilo_spot_noise{seed = 9312,\z
-                                    count = 3 + 3 * control:rabbasca_vaults:frequency,\z
-                                    skip_offset = 0,\z
-                                    region_size = 300 + 500 / 1,\z
-                                    density = 1,\z
-                                    radius = rabbasca_ug_hole_size,\z
-                                    favorability = 3})), 0, 1)"
+    expression = "rabbasca_vault_spots(rabbasca_ug_hole_size)"
+  },
+  {
+    type = "noise-function",
+    name = "rabbasca_vault_spots",
+    parameters = {"spot_size"},
+    expression = "clamp(max(rabbasca_starting_camp(spot_size), \z
+                            aquilo_spot_noise{seed = 9312,\z
+                              count = 3 + 3 * control:rabbasca_vaults:frequency,\z
+                              skip_offset = 0,\z
+                              region_size = 300 + 500 / control:rabbasca_vaults:size,\z
+                              density = 1,\z
+                              radius = spot_size,\z
+                              favorability = 3\z
+                            }), 0, 1)"
   },
   {
     type = "noise-expression",
@@ -172,5 +168,22 @@ data:extend{
     type = "noise-expression",
     name = "rabbasca_underground_elevation",
     expression = "1 - rabbasca_vaults_holes"
+  },
+  {
+    type = "noise-expression",
+    name = "rabbasca_underground_lava",
+    expression = "(rabbasca_underground_elevation > 0.9)\z
+                  * min(\z
+                    basis_noise{x = x, y = y, seed0 = map_seed, seed1 = 'lavalava', input_scale = 1/80 },  \z
+                    basis_noise{x = x, y = y, seed0 = map_seed, seed1 = 'lavaaval', input_scale = 1/65 },  \z
+                    basis_noise{x = x, y = y, seed0 = map_seed, seed1 = 57123, input_scale = 1/96 }, \z
+                    multioctave_noise{x = x, y = y, persistence = 0.5, seed0 = map_seed, seed1 = 'lavaoncrack', input_scale = 1/5, octaves = 3 }\z
+                  ) - 0.25"
+  },
+  {
+    type = "noise-expression",
+    name = "rabbasca_underground_resources",
+    expression = "(0.7 - rabbasca_underground_elevation)\z
+                  * (0.7 + multioctave_noise{x = x, y = y, persistence = 0.57, seed0 = map_seed, seed1 = 'kindoflikeasteroidcrushing', input_scale = 0.5, output_scale = 0.3, octaves = 3 })"
   },
 }
