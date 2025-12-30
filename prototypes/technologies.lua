@@ -698,10 +698,39 @@ data:extend {
 },
 {
     type = "technology",
+    name = "rabbasca-security-modulation",
+    icons = {
+      { icon = "__rabbasca-assets__/graphics/recolor/icons/harene.png", icon_size = 64, scale = 0.8 },
+      { icon = data.raw["item"]["rabbasca-hyperfuel"].icon,  icon_size = 64, shift = {12, 12}, scale = 0.5 },
+    },
+    prerequisites = { "interplanetary-construction-2" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-security-modulation-up",
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-security-modulation-down",
+      },
+    },
+    unit = {
+      time = 60,
+      count = 2000,
+      ingredients = {
+        {"military-science-pack", 1},
+        {"utility-science-pack", 1},
+        {"athletic-science-pack", 1},
+      }
+  }
+},
+{
+    type = "technology",
     name = "rabbasca-underground",
     icon = "__rabbasca-assets__/graphics/recolor/technologies/rabbasca-big.png",
     icon_size = 256,
-    prerequisites = { "interplanetary-construction-2", "promethium-science-pack" },
+    prerequisites = { "interplanetary-construction-2", "fusion-reactor" },
     effects = {
       {
         type = "unlock-space-location",
@@ -714,16 +743,16 @@ data:extend {
       },
       {
         type = "unlock-recipe",
+        recipe = "rabbbasca-perfluorosulfonic-acid-from-atmosphere"
+      },
+      {
+        type = "unlock-recipe",
         recipe = "rabbbasca-petroleum-gas-from-atmosphere"
       },
       {
         type = "unlock-recipe",
-        recipe = "rabbbasca-steam-from-atmosphere"
+        recipe = "rabbbasca-decompose-perfluorosulfonic-acid"
       },
-      {
-        type = "unlock-recipe",
-        recipe = "rabbbasca-sulfuric-acid-from-atmosphere"
-      }
     },
     unit = {
         count = 1000,

@@ -10,6 +10,8 @@ function Rabbasca.parent() return settings.startup["rabbasca-orbits"].value end
 function Rabbasca.surface_megawatts() return settings.startup["rabbasca-surface-megawatts"].value end
 function Rabbasca.get_warp_radius(quality) return math.min(120, (quality and (1 + quality.level * 0.5) or 1) * 20) end
 function Rabbasca.high_energy_device_threshold() return "5MW" end
+function Rabbasca.alertness_modulation_step() return 10 end
+function Rabbasca.alertness_modulation_max() return 50 end
 
 if not data then return end
 

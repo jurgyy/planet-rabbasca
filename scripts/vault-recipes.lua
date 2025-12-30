@@ -83,6 +83,36 @@ Rabbasca.create_vault_recipe("vault-protocol-warp-pylon", {
   energy_required = 600,
   allow_productivity = true,
 })
+Rabbasca.create_vault_recipe("rabbasca-security-modulation-up", {
+  icons = {
+    {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
+    {icon = data.raw["item"]["laser-turret"].icon, icon_size = 64, shift = {8, 8}, scale = 0.4, tint = {0, 0, 0}},
+  },
+  ingredients = {
+      { type = "item", name = "vault-security-key", amount = 5 },
+      { type = "item",  name = "haronite-plate", amount = 1 },
+  },
+  results = { 
+      { type = "item", name = "rabbasca-security-modulator", amount = 1 },
+  },
+  energy_required = 60,
+  allow_productivity = false,
+})
+Rabbasca.create_vault_recipe("rabbasca-security-modulation-down", {
+  icons = {
+    {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
+    {icon = data.raw["item"]["laser-turret"].icon, icon_size = 64, shift = {8, 8}, scale = 0.4, tint = {0, 0, 0}},
+  },
+  ingredients = {
+      { type = "item", name = "vault-security-key", amount = 5 },
+      { type = "item",  name = "haronite-plate", amount = 1 },
+  },
+  results = { 
+      { type = "item", name = "rabbasca-security-modulator", amount = 1 },
+  },
+  energy_required = 60,
+  allow_productivity = false,
+})
 Rabbasca.create_vault_recipe("rabbasca-packaged-pylon", {
   icons = {
     {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
