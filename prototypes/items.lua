@@ -26,7 +26,7 @@ data:extend {
     weight = 20*kg,
     subgroup = "rabbasca-processes",
     order = "h[haronite]-a[haronite]",
-    spoil_ticks = 5 * minute,
+    spoil_ticks = 15 * minute,
     spoil_result = "stone"
 },
 {
@@ -95,7 +95,7 @@ data:extend {
 },
 {
     type = "item",
-    icon = "__base__/graphics/icons/steam-engine.png",
+    icon = "__rabbasca-assets__/graphics/recolor/icons/bunnyhop-engine.png",
     icon_size = 64,
     name = "bunnyhop-engine-equipment",
     stack_size = 1,
@@ -122,7 +122,7 @@ util.merge {
 },
 {
     type = "capsule",
-    icon = "__base__/graphics/icons/steam-engine.png",
+    icon = "__rabbasca-assets__/graphics/recolor/icons/bunnyhop-engine.png",
     icon_size = 64,
     name = "bunnyhop-engine",
     flags = {"only-in-cursor", "not-stackable", "spawnable"},
