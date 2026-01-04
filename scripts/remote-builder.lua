@@ -44,6 +44,10 @@ local function try_deconstruct(entity)
         end
     end
     local builder = storage.rabbasca_remote_builder
+    if not builder.valid or builder.to_be_deconstructed() then 
+        return false, status_no_builder
+    end
+     
     if not is_tile then
         for k = 1, entity.get_max_inventory_index() do 
             local inventory = entity.get_inventory(k)
