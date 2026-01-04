@@ -171,7 +171,7 @@ data:extend{
   },
   {
     type = "noise-expression",
-    name = "rabbasca_underground_lava",
+    name = "rabbasca_underground_lithium_amide",
     expression = "(rabbasca_underground_elevation > 0.9)\z
                   * min(\z
                     basis_noise{x = x, y = y, seed0 = map_seed, seed1 = 'lavalava', input_scale = 1/80 },  \z

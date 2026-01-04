@@ -172,7 +172,7 @@ PlanetsLib:extend({
     auto_save_on_first_trip = true,
     gravity_pull = 10,
     subgroup = "satellites",
-    order = gleba.order .. "a",
+    order = gleba.order .. "-r[rabbasca]",
     label_orientation = 0.14,
     magnitude = gleba.magnitude*3/5,
     persistent_ambient_sounds=data.raw["space-platform-hub"]["space-platform-hub"].persistent_ambient_sounds,
@@ -252,13 +252,14 @@ data:extend {
     draw_orbit = false,
     distance = 10,
     orientation = 0,
+    gleba.order .. "-r[rabbasca-underground]",
     map_seed_offset = rabbasca_seed_offset,
     surface_properties = {
         ["gravity"] = 8,
         ["solar-power"] = 0,
-        ["pressure"] = 150000,
+        ["pressure"] = 50000,
         ["magnetic-field"] = 0.01,
-        ["harenic-energy-signatures"] = Rabbasca.surface_megawatts() * 5,
+        ["harenic-energy-signatures"] = Rabbasca.surface_megawatts() * 0.1,
         ["day-night-cycle"] = 30 * second,
     },
     map_gen_settings = {
@@ -282,12 +283,12 @@ data:extend {
       tile = { settings = {
         ["rabbasca-underground-rubble"] = {},
         ["rabbasca-underground-out-of-map"] = {},
-        ["harenic-lava"] = {},
       }},
       entity = { settings = {
         ["rabbasca-energy-source-big"] = {},
-        ["rabbasca-underground-rock"] = {},
+        -- ["rabbasca-underground-rock"] = {},
         ["rabbasca-carbonic-ore"] = {},
+        ["rabbasca-lithium-amide-ore"] = {},
       }}
       },
       territory_settings =

@@ -202,6 +202,40 @@ data:extend {
         buffer_capacity = (Rabbasca.surface_megawatts() * 5 / 6) .. "MJ", 
         output_flow_limit = Rabbasca.surface_megawatts() * 5 .. "MW",
       },
+      created_effect = {
+        type = "direct",
+        action_delivery = {
+          {
+            type = "instant",
+            target_effects =
+            {
+              {
+                type = "create-entity",
+                entity_name = "rabbasca-energy-consumer-big",
+                offsets = {{0, 0}},
+                protected = true,
+              },
+            }
+          }
+        }
+      }
     },
+  },
+  util.merge {
+    data.raw["electric-energy-interface"]["rabbasca-energy-source"],
+    {
+      name = "rabbasca-energy-consumer-big",
+      icon = data.raw["segmented-unit"]["big-demolisher"].icon,
+      type = "beacon",
+      flags = data.raw["electric-energy-interface"]["rabbasca-energy-source"].flags,
+      energy_source = {
+        type = "electric",
+        usage_priority = "secondary-input",
+      },
+      energy_usage = Rabbasca.surface_megawatts() * 20 .. "MW",
+      supply_area_distance = 0,
+      distribution_effectivity = 0,
+      module_slots = 0,
+    }
   }
 }

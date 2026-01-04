@@ -86,7 +86,8 @@ Rabbasca.create_vault_recipe("vault-protocol-warp-pylon", {
 Rabbasca.create_vault_recipe("rabbasca-security-modulation-up", {
   icons = {
     {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
-    {icon = data.raw["item"]["laser-turret"].icon, icon_size = 64, shift = {8, 8}, scale = 0.4, tint = {0, 0, 0}},
+    {icon = data.raw["unit"]["vault-defender-heavy"].icon, icon_size = 64, shift = {-8, 8}, scale = 0.4 },
+    {icon = data.raw["virtual-signal"]["up-arrow"].icon,   icon_size = 64, shift = { 8, 8}, scale = 0.4, tint = {1, 0, 0} },
   },
   ingredients = {
       { type = "item", name = "vault-security-key", amount = 5 },
@@ -101,7 +102,8 @@ Rabbasca.create_vault_recipe("rabbasca-security-modulation-up", {
 Rabbasca.create_vault_recipe("rabbasca-security-modulation-down", {
   icons = {
     {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
-    {icon = data.raw["item"]["laser-turret"].icon, icon_size = 64, shift = {8, 8}, scale = 0.4, tint = {0, 0, 0}},
+    {icon = data.raw["unit"]["vault-defender-heavy"].icon, icon_size = 64, shift = {-8, 8}, scale = 0.4 },
+    {icon = data.raw["virtual-signal"]["down-arrow"].icon, icon_size = 64, shift = { 8, 8}, scale = 0.4, tint = {0, 1, 0} },
   },
   ingredients = {
       { type = "item", name = "vault-security-key", amount = 5 },

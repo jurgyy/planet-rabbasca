@@ -700,8 +700,10 @@ data:extend {
     type = "technology",
     name = "rabbasca-security-modulation",
     icons = {
-      { icon = "__rabbasca-assets__/graphics/recolor/icons/harene.png", icon_size = 64, scale = 0.8 },
-      { icon = data.raw["item"]["rabbasca-hyperfuel"].icon,  icon_size = 64, shift = {12, 12}, scale = 0.5 },
+      { icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
+      { icon = data.raw["unit"]["vault-defender-heavy"].icon, icon_size = 64, shift = {-24,  32}, scale = 1.5 },
+      { icon = data.raw["virtual-signal"]["down-arrow"].icon, icon_size = 64, shift = { 24,  24}, scale = 1.3, tint = {0, 1, 0} },
+      { icon = data.raw["virtual-signal"]["up-arrow"].icon,   icon_size = 64, shift = { 24, -24}, scale = 1.3, tint = {1, 0, 0} },
     },
     prerequisites = { "interplanetary-construction-2" },
     effects =
@@ -717,7 +719,7 @@ data:extend {
     },
     unit = {
       time = 60,
-      count = 2000,
+      count = 2500,
       ingredients = {
         {"military-science-pack", 1},
         {"utility-science-pack", 1},

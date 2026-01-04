@@ -24,6 +24,12 @@ data:extend {
     },
     {
         type = "item-subgroup",
+        name = "rabbasca-fluid-processes",
+        group = "fluids",
+        order = "r[rabbasca]"
+    },
+    {
+        type = "item-subgroup",
         name = "rabbasca-security",
         group = "combat",
         order = "x"
@@ -602,8 +608,10 @@ data:extend {
         },
         enabled = false,
         allow_productivity = false,
-        category = "chemistry-or-cryogenics",
-        surface_conditions = { Rabbasca.above_harenic_threshold(), { property = "pressure", min = 10000 } }
+        category = "cryogenics",
+        surface_conditions = { Rabbasca.above_harenic_threshold(), { property = "pressure", min = 10000 } },
+        subgroup = "fluid-recipes",
+        order = "r[rabbasca]-a[petroleum-gas]",
     },
     {
         type = "recipe",
@@ -620,8 +628,10 @@ data:extend {
         },
         enabled = false,
         allow_productivity = false,
-        category = "chemistry-or-cryogenics",
-        surface_conditions = { Rabbasca.above_harenic_threshold(), { property = "pressure", min = 10000 } }
+        category = "cryogenics",
+        surface_conditions = { Rabbasca.above_harenic_threshold(), { property = "pressure", min = 10000 } },
+        subgroup = "fluid-recipes",
+        order = "r[rabbasca]-a[perfluorosulfonic-acid]",
     },
     {
         type = "recipe",
@@ -644,42 +654,8 @@ data:extend {
         enabled = false,
         allow_productivity = false,
         category = "chemistry-or-cryogenics",
-        surface_conditions = { Rabbasca.above_harenic_threshold(), { property = "pressure", min = 10000 } }
-    },
-    {
-        type = "recipe",
-        name = "molten-iron-from-harene",
-        enabled = false,
-        energy_required = 10,
-        ingredients = {
-            { type = "fluid", name = "harenic-lava", amount = 5000 }, 
-            { type = "fluid", name = "harene", amount = 5 },
-            { type = "item",  name = "calcite", amount = 10 },
-        },
-        results = { 
-            { type = "fluid", name = "molten-iron", amount = 2500 },
-        },
-        enabled = false,
-        allow_productivity = false,
-        category = "metallurgy",
-        surface_conditions = { Rabbasca.above_harenic_threshold(), { property = "pressure", min = 10000 } }
-    },
-    {
-        type = "recipe",
-        name = "molten-copper-from-harene",
-        enabled = false,
-        energy_required = 10,
-        ingredients = {
-            { type = "fluid", name = "harenic-lava", amount = 5000 }, 
-            { type = "fluid", name = "harene", amount = 2 },
-            { type = "item",  name = "calcite", amount = 10 },
-        },
-        results = { 
-            { type = "fluid", name = "molten-copper", amount = 2500 },
-        },
-        enabled = false,
-        allow_productivity = false,
-        category = "metallurgy",
-        surface_conditions = { Rabbasca.above_harenic_threshold(), { property = "pressure", min = 10000 } }
+        surface_conditions = { Rabbasca.above_harenic_threshold(), { property = "pressure", min = 10000 } },
+        subgroup = "fluid-recipes",
+        order = "r[rabbasca]-a[perfluorosulfonic-acid-decompose]",
     },
 }
