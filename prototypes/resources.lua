@@ -185,34 +185,4 @@ local harene_resource = {
   map_color = color,
   map_grid = false
 }
-
-local battle_scrap = util.merge {
-  table.deepcopy(data.raw["resource"]["scrap"]),
-  {
-    name = "rabbascan-scrap",
-    map_color = { 0.83, 0.217, 0.13 }
-  },
-}
-battle_scrap.minable =
-{
-  mining_time = 0.75,
-  results =
-  {
-    { type = "item", name = "firearm-magazine", amount = 1, probability = 0.15 },
-    { type = "item", name = "grenade", amount = 1, probability = 0.13 },
-    { type = "item", name = "rocket", amount = 1, probability = 0.09 },
-    { type = "item", name = "flamethrower-ammo", amount = 1, probability = 0.07 },
-    { type = "item", name = "vault-access-key", amount = 1, probability = 0.06 },
-  }
-}
-battle_scrap.collision_mask = { layers = { resource = true } }
-battle_scrap.autoplace = {
-  tile_restriction = { "rabbasca-rough", "rabbasca-rough-2" },
-  probability_expression = "rabbasca_vaults * (rabbasca_vaults < 0.7) * (0.53 + 0.8 * multioctave_noise{x = x, y = y, persistence = 0.8, seed0 = map_seed, input_scale = 0.86, seed1 = 'scrappening', octaves = 4 })",
-  richness_expression = "(17 + 9\z 
-    * multioctave_noise{x = x, y = y, persistence = 0.44, seed0 = map_seed, input_scale = 1.5, seed1 = 'whoneedscircuits', octaves = 4 })\z
-    * lerp(2, 20, distance / 2000)\z
-    * control:rabbasca_vaults:richness",
-}
-
 data:extend{ harene_resource, carrot_ore, battle_scrap }

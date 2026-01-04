@@ -24,12 +24,6 @@ data:extend {
     },
     {
         type = "item-subgroup",
-        name = "rabbasca-fluid-processes",
-        group = "fluids",
-        order = "r[rabbasca]"
-    },
-    {
-        type = "item-subgroup",
         name = "rabbasca-security",
         group = "combat",
         order = "x"
